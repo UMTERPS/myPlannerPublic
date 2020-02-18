@@ -38,3 +38,6 @@ dist
 
 # json-server db
 db.json
+
+# .npmrc
+.npmrc
