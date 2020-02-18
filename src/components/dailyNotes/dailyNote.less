@@ -1,0 +1,26 @@
+.daily-note {
+  border-bottom: thin solid #888888;
+  min-height: 200px;
+  height: fit-content;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+
+  .daily-note-date {
+    flex: 0 1 auto;
+    text-align: right;
+    width: 100%;
+    padding-right: 20px;
+    border-bottom: thin solid #aaaaaa;
+  }
+
+  .daily-note-content-container {
+    flex: 1 1 auto;
+    height: fit-content;
+    .ck-editor__editable_inline {
+      min-height: 200px;
+      max-height: 200px;
+      overflow-y: scroll;
+    }
+  }
+}
