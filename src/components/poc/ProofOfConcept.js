@@ -1,14 +1,14 @@
 import React from "react";
 import "react-calendar/dist/Calendar.css";
 import CalendarPopup from "../calendar/CalendarPopup";
-import DailyNote from "../dailyNotes/dailyNote";
+import DailyNoteCollection from "../dailyNotes/dailyNoteCollection";
 
 class ProofOfConceptPage extends React.Component {
   render() {
     return (
       <div>
-        <CalendarPopup />
-        <DailyNote date={new Date()} />
+        {/* <CalendarPopup /> */}
+        <DailyNoteCollection date={new Date()} />
       </div>
     );
   }

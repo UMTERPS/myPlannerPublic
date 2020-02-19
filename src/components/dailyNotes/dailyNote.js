@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./dailyNote.less";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import InlineEditor from "@ckeditor/ckeditor5-build-inline";
+import { FaLock, FaLockOpen } from "react-icons/fa";
 
 const monthMap = [
   "Jan",
@@ -19,33 +20,51 @@ const monthMap = [
   "Dec"
 ];
 
+const weekMap = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
 class DailyNote extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditable: true
+      content: props.content || "",
+      isEditable: false,
+      noteDateClass: "daily-note-date disabled"
     };
     this.lockContent = this.lockContent.bind(this);
   }
 
   handleEditorChange = (content, editor) => {
-    console.log(editor);
     console.log("Content was updated:", content);
   };
 
   lockContent() {
-    console.log(this.state.isEditable);
-    this.setState({ isEditable: !this.state.isEditable });
+    const isEditable = !this.state.isEditable;
+    // if (isEditable) {
+    // }
+    this.setState({
+      isEditable,
+      noteDateClass: "daily-note-date" + (isEditable ? " enabled" : " disabled")
+    });
   }
 
-  getDisplayDate() {
-    return (
-      monthMap[this.props.date.getMonth()] +
-      " " +
-      this.props.date.getDate() +
-      ", " +
-      this.props.date.getFullYear()
-    );
+  // getDisplayDate() {
+  //   return (
+  //     weekMap[this.props.date.getDay()] +
+  //     " " +
+  //     this.props.date.getDate() +
+  //   );
+  // }
+
+  setNoteDateClassName() {
+    return "daily-note-date" + (this.isEditable ? " enabled" : " disabled");
   }
 
   render() {
@@ -56,22 +75,27 @@ class DailyNote extends React.Component {
           (this.props.dailyClassName ? " " + this.props.dailyClassName : "")
         }
       >
-        <div className="daily-note-date">
-          {" "}
-          {this.getDisplayDate()}{" "}
-          <button
-            className="btn btn-outline-success btn-sm"
-            onClick={this.lockContent}
-          >
-            Lock
-          </button>
+        <div className={this.state.noteDateClass}>
+          <div className="row-one">{weekMap[this.props.date.getDay()]}</div>
+          <div className="row-two">
+            <div className="date-of-month">{this.props.date.getDate()}</div>
+            <div className="lock-container">
+              {this.state.isEditable ? (
+                <FaLockOpen onClick={this.lockContent} />
+              ) : (
+                <FaLock onClick={this.lockContent} />
+              )}
+            </div>
+          </div>
         </div>
-        <div className="daily-note-content-container">
+        <div
+          className="daily-note-content-container"
+          onDoubleClick={this.lockContent}
+        >
           <CKEditor
             disabled={!this.state.isEditable}
-            className="ckeditor"
             editor={InlineEditor}
-            data="<p>Hello from CKEditor 5!</p>"
+            data={this.state.content}
             config={{
               toolbar: [
                 "heading",
@@ -111,7 +135,7 @@ class DailyNote extends React.Component {
             }}
             onChange={(event, editor) => {
               const data = editor.getData();
-              console.log({ event, editor, data });
+              // console.log({ event, editor, data });
             }}
             onBlur={(event, editor) => {
               console.log("Blur.", editor);
@@ -127,6 +151,7 @@ class DailyNote extends React.Component {
 }
 
 DailyNote.propTypes = {
+  content: PropTypes.string,
   dailyClassName: PropTypes.string,
   date: PropTypes.object.isRequired
 };
