@@ -21,28 +21,25 @@ const monthMap = [
 class DailyNoteHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentDate: this.props.currentDate
-    };
   }
 
   render() {
     return (
-      <div className='daily-note-header-container'>
-        <div className='daily-note-header-left'>
-          <span className='month-title'>
-            {monthMap[this.props.currentDate.getMonth()]}
+      <div className="daily-note-header-container">
+        <div className="daily-note-header-left">
+          <span className="month-title">
+            {monthMap[this.props.date.getMonth()]}
           </span>
-          <span className='week-number'>
+          <span className="week-number">
             (week{' '}
-            {moment(this.props.currentDate)
+            {moment(this.props.date)
               .week()
               .toString()}
             )
           </span>
         </div>
-        <div className='daily-note-header-right'>
-          {this.state.currentDate.getFullYear()}
+        <div className="daily-note-header-right">
+          {this.props.date.getFullYear()}
         </div>
       </div>
     );
@@ -50,7 +47,7 @@ class DailyNoteHeader extends React.Component {
 }
 
 DailyNoteHeader.propTypes = {
-  currentDate: PropTypes.object.isRequired
+  date: PropTypes.object.isRequired
 };
 
 export default DailyNoteHeader;
