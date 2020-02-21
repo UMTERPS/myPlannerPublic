@@ -1,0 +1,56 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import './dailyNoteHeader.less';
+
+const monthMap = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'Septempber',
+  'October',
+  'November',
+  'December'
+];
+
+class DailyNoteHeader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentDate: this.props.currentDate
+    };
+  }
+
+  render() {
+    return (
+      <div className='daily-note-header-container'>
+        <div className='daily-note-header-left'>
+          <span className='month-title'>
+            {monthMap[this.props.currentDate.getMonth()]}
+          </span>
+          <span className='week-number'>
+            (week{' '}
+            {moment(this.props.currentDate)
+              .week()
+              .toString()}
+            )
+          </span>
+        </div>
+        <div className='daily-note-header-right'>
+          {this.state.currentDate.getFullYear()}
+        </div>
+      </div>
+    );
+  }
+}
+
+DailyNoteHeader.propTypes = {
+  currentDate: PropTypes.object.isRequired
+};
+
+export default DailyNoteHeader;

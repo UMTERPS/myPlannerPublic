@@ -1,33 +1,44 @@
-const webpack = require("webpack");
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const webpackBundleAnalyzer = require("webpack-bundle-analyzer");
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { styles } = require('@ckeditor/ckeditor5-dev-utils');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpackBundleAnalyzer = require('webpack-bundle-analyzer');
 
-process.env.NODE_ENV = "production";
+process.env.NODE_ENV = 'production';
+
+const postcssLoaderOptions = styles.getPostCssConfig({
+  themeImporter: {
+    themePath: require.resolve('@ckeditor/ckeditor5-theme-lark')
+  },
+  minify: true,
+  sourceMap: true
+});
+
+// postcssLoaderOptions.plugins.push(() => [require('cssnano')]);
 
 module.exports = {
-  mode: "production",
-  target: "web",
-  devtool: "source-map",
-  entry: "./src/index",
+  mode: 'production',
+  target: 'web',
+  devtool: 'source-map',
+  entry: './src/index',
   output: {
-    path: path.resolve(__dirname, "build"),
-    publicPath: "app://",
-    filename: "bundle.js"
+    path: path.resolve(__dirname, 'build'),
+    publicPath: 'app://',
+    filename: 'bundle.js'
   },
   plugins: [
-    new webpackBundleAnalyzer.BundleAnalyzerPlugin({ analyzerMode: "static" }),
+    new webpackBundleAnalyzer.BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css"
+      filename: '[name].[contenthash].css'
     }),
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-      "process.env.API_URL": JSON.stringify("http://localhost:3001")
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.API_URL': JSON.stringify('http://localhost:3001')
     }),
     new HtmlWebpackPlugin({
-      template: "src/index.html",
-      favicon: "src/favicon.ico",
+      template: 'src/index.html',
+      favicon: './favicon.ico',
       minify: {
         // see https://github.com/kangax/html-minifier#options-quick-reference
         removeComments: true,
@@ -48,24 +59,21 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader", "eslint-loader"]
+        use: ['babel-loader', 'eslint-loader']
       },
       {
         test: /(\.css)$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               sourceMap: true
             }
           },
           {
-            loader: "postcss-loader",
-            options: {
-              plugins: () => [require("cssnano")],
-              sourceMap: true
-            }
+            loader: 'postcss-loader',
+            options: postcssLoaderOptions
           }
         ]
       },
@@ -73,13 +81,13 @@ module.exports = {
         test: /\.less$/,
         use: [
           {
-            loader: "style-loader" // creates style nodes from JS strings
+            loader: 'style-loader' // creates style nodes from JS strings
           },
           {
-            loader: "css-loader" // translates CSS into CommonJS
+            loader: 'css-loader' // translates CSS into CommonJS
           },
           {
-            loader: "less-loader" // compiles Less to CSS
+            loader: 'less-loader' // compiles Less to CSS
           }
         ]
       }

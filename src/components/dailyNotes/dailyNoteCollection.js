@@ -1,17 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import DailyNote from "./dailyNote";
-import "./dailyNoteCollection.less";
+import React from 'react';
+import PropTypes from 'prop-types';
+import DailyNote from './dailyNote';
+import DailyNoteHeader from './dailyNoteHeader';
+import './dailyNoteCollection.less';
 
 const getWeekData = date => {
   let week = new Array();
   // Starting Monday not Sunday
-  date.setDate(date.getDate() - date.getDay() + 1);
+  const _date = getMondayOfWeek(date);
   for (var i = 0; i < 7; i++) {
-    week.push(new Date(date));
-    date.setDate(date.getDate() + 1);
+    week.push(new Date(_date));
+    _date.setDate(date.getDate() + 1);
   }
   return week;
+};
+
+const getMondayOfWeek = date => {
+  const _date = new Date(date);
+  _date.setDate(date.getDate() - date.getDay() + 1);
+  return _date;
 };
 
 class DailyNoteCollection extends React.Component {
@@ -29,11 +36,11 @@ class DailyNoteCollection extends React.Component {
       );
     });
     dailys.push(
-      <div className="weekend-row">
-        <div key={5} className="column-one">
+      <div key='weekend-key' className='weekend-row'>
+        <div key={5} className='column-one'>
           <DailyNote date={days[5]} />
         </div>
-        <div key={6} className="column-two">
+        <div key={6} className='column-two'>
           <DailyNote date={days[6]} />
         </div>
       </div>
@@ -44,7 +51,8 @@ class DailyNoteCollection extends React.Component {
 
   render() {
     return (
-      <div className="daily-collection">
+      <div className='daily-collection'>
+        <DailyNoteHeader currentDate={getMondayOfWeek(this.props.date)} />
         <div>{this.generateDailys()}</div>
       </div>
     );
