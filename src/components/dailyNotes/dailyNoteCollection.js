@@ -27,6 +27,7 @@ class DailyNoteCollection extends React.Component {
     super(props);
     this.generateDailys = this.generateDailys.bind(this);
   }
+
   generateDailys() {
     const days = getWeekData(this.props.date);
     const dailys = [];

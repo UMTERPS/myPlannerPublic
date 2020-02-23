@@ -1,55 +1,91 @@
 import React from 'react';
-import * as dateActions from '../../redux/actions/dateActions';
 import { Calendar } from 'react-calendar';
-import { connect } from 'react-redux';
+import moment from 'moment';
 import Proptypes from 'prop-types';
 import './CalendarPopup.less';
-import { bindActionCreators } from 'redux';
 
 class CalendarPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: this.props.date,
-      showCalendar: false
+      showCalendar: false,
+      date: props.date
     };
-    this.updateDate = props.updateDate;
+    this.setDate = props.setDate;
     this.handleCalendarChange = this.handleCalendarChange.bind(this);
+    this.generateBackToTodayButton = this.generateBackToTodayButton.bind(this);
+    this.goBackToToday = this.goBackToToday.bind(this);
+  }
+
+  goBackToToday() {
+    this.setDate(new Date());
   }
 
   handleCalendarChange = date => {
-    this.updateDate(date);
-    this.setState({ showCalendar: !this.state.showCalendar, date });
+    this.setDate(date);
+    this.setState({ date });
   };
 
-  handleButtonClick = () => {
-    this.setState({ showCalendar: !this.state.showCalendar });
+  toggleCalendar = event => {
+    console.log(event.target);
+    if (
+      event.target.id === 'popup-button' ||
+      event.target.id === 'calendar-popup-container-id'
+    ) {
+      this.setState({ showCalendar: !this.state.showCalendar });
+    }
+  };
+
+  generateBackToTodayButton = () => {
+    // const _today = new Date();
+    console.log(moment().isSame(this.props.date, 'day'));
+    if (this.state.showCalendar && !moment().isSame(this.props.date, 'day')) {
+      return (
+        <div className="go-today-container">
+          <button className="btn">Back to today</button>
+        </div>
+      );
+    }
   };
 
   render() {
     return (
-      <div>
-        <div className="calendar-popup">
-          <div className="popup-button-container">
-            <button
-              id="popup-button"
-              onClick={this.handleButtonClick}
-              className="btn btn-sm btn-light"
-            >
-              Calendar &gt;&gt;
-            </button>
-          </div>
-          <div className="calendar-container">
-            {this.state.showCalendar ? (
+      <div className="calendar-popup" id="calendar-popup-id">
+        <div className="popup-button-container">
+          <button
+            id="popup-button"
+            onClick={this.toggleCalendar}
+            className="btn btn-sm btn-light"
+          >
+            Calendar
+          </button>
+        </div>
+        {this.state.showCalendar ? (
+          <div
+            className="calendar-modal-background"
+            id="calendar-popup-container-id"
+            onClick={this.toggleCalendar}
+          >
+            <div className="calendar-container">
               <Calendar
                 onChange={this.handleCalendarChange}
                 calendarType="US"
-                value={this.state.date}
+                value={this.props.date}
                 defaultView="decade"
               />
-            ) : null}
+              <div className="go-today-container">
+                {!moment().isSame(this.props.date, 'day') ? (
+                  <button
+                    className="btn btn-sm btn-outline-dark go-today-button"
+                    onClick={this.goBackToToday}
+                  >
+                    Back to today
+                  </button>
+                ) : null}
+              </div>
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     );
   }
@@ -57,19 +93,7 @@ class CalendarPopup extends React.Component {
 
 CalendarPopup.propTypes = {
   date: Proptypes.object.isRequired,
-  updateDate: Proptypes.func.isRequired
+  setDate: Proptypes.func.isRequired
 };
 
-const mapStateToProps = state => {
-  return {
-    date: state.date.selectedDate
-  };
-};
-
-const mapDisptchToProps = dispatch => {
-  return {
-    updateDate: bindActionCreators(dateActions.updateSelectedDate, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDisptchToProps)(CalendarPopup);
+export default CalendarPopup;

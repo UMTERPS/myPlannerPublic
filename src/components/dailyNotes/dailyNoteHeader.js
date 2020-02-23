@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import './dailyNoteHeader.less';
+import DateNavigation from '../dateNavigation/DateNavigation';
 
 const monthMap = [
   'January',
@@ -37,6 +38,9 @@ class DailyNoteHeader extends React.Component {
               .toString()}
             )
           </span>
+        </div>
+        <div className="daily-note-header-center">
+          <DateNavigation />
         </div>
         <div className="daily-note-header-right">
           {this.props.date.getFullYear()}

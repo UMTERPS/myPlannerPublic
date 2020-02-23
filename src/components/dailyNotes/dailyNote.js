@@ -70,10 +70,10 @@ class DailyNote extends React.Component {
         }
       >
         <div className={this.state.noteDateClass}>
-          <div className='row-one'>{weekMap[this.props.date.getDay()]}</div>
-          <div className='row-two'>
-            <div className='date-of-month'>{this.props.date.getDate()}</div>
-            <div className='lock-container'>
+          <div className="row-one">{weekMap[this.props.date.getDay()]}</div>
+          <div className="row-two">
+            <div className="date-of-month">{this.props.date.getDate()}</div>
+            <div className="lock-container">
               {this.state.isEditable ? (
                 <FaLockOpen onClick={this.lockContent} />
               ) : (
@@ -83,8 +83,8 @@ class DailyNote extends React.Component {
           </div>
         </div>
         <div
-          className='daily-note-content-container'
-          title='Double click to edit'
+          className="daily-note-content-container"
+          title="Double click to edit"
           onDoubleClick={this.lockContent}
           onBlur={this.onBlur}
         >

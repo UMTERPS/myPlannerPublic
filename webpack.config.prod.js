@@ -24,7 +24,7 @@ module.exports = {
   entry: './src/index',
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: 'app://',
+    publicPath: 'local://',
     filename: 'bundle.js'
   },
   plugins: [
@@ -56,6 +56,10 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.svg$/,
+        use: ['raw-loader']
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,

@@ -1,13 +1,12 @@
 .daily-note-header-container {
   display: flex;
   justify-content: space-between;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 5px;
+  padding: 5px 10px 5px 10px;
   background-color: #f0f0f0;
   border-bottom: 1px solid black;
 
   .daily-note-header-left {
+    min-width: 160px;
     .month-title {
       font-weight: 700;
       font-size: 20px;
@@ -22,6 +21,8 @@
   }
 
   .daily-note-header-right {
+    width: 160px;
+    text-align: right;
     padding-top: 2px;
     font-size: 18px;
     font-weight: 800;
