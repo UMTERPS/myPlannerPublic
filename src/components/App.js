@@ -12,6 +12,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 class App extends React.Component {
+  componentDidMount() {
+    const spinner = document.getElementById('index-loading-spinner');
+    spinner.style.display = 'none';
+  }
+
   render() {
     return (
       <div className="container-fluid">

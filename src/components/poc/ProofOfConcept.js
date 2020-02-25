@@ -21,6 +21,9 @@ class ProofOfConceptPage extends React.Component {
   }
 
   componentDidMount() {
+    const spinner = document.getElementById('index-loading-spinner');
+    spinner.style.display = 'none';
+
     this.updateComponetSize();
     window.addEventListener('resize', this.updateComponetSize);
   }
