@@ -26,7 +26,10 @@ class DailyNoteHeader extends React.Component {
 
   render() {
     return (
-      <div className="daily-note-header-container">
+      <div
+        className="daily-note-header-container"
+        style={{ height: this.props.size.height + 'px' }}
+      >
         <div className="daily-note-header-left">
           <span className="month-title">
             {monthMap[this.props.date.getMonth()]}
@@ -51,7 +54,8 @@ class DailyNoteHeader extends React.Component {
 }
 
 DailyNoteHeader.propTypes = {
-  date: PropTypes.object.isRequired
+  date: PropTypes.object.isRequired,
+  size: PropTypes.object.isRequired
 };
 
 export default DailyNoteHeader;

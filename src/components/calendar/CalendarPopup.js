@@ -27,7 +27,6 @@ class CalendarPopup extends React.Component {
   };
 
   toggleCalendar = event => {
-    console.log(event.target);
     if (
       event.target.id === 'popup-button' ||
       event.target.id === 'calendar-popup-container-id'
@@ -37,8 +36,6 @@ class CalendarPopup extends React.Component {
   };
 
   generateBackToTodayButton = () => {
-    // const _today = new Date();
-    console.log(moment().isSame(this.props.date, 'day'));
     if (this.state.showCalendar && !moment().isSame(this.props.date, 'day')) {
       return (
         <div className="go-today-container">
@@ -93,7 +90,8 @@ class CalendarPopup extends React.Component {
 
 CalendarPopup.propTypes = {
   date: Proptypes.object.isRequired,
-  setDate: Proptypes.func.isRequired
+  setDate: Proptypes.func.isRequired,
+  appSize: Proptypes.object.isRequired
 };
 
 export default CalendarPopup;

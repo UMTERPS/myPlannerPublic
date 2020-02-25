@@ -1,7 +1,5 @@
 .daily-note {
   border-bottom: thin solid #888888;
-  min-height: 60px;
-  height: fit-content;
   display: flex;
   flex-direction: row;
 
@@ -51,7 +49,6 @@
 
   .daily-note-content-container {
     flex: 1 1 auto;
-    height: fit-content;
 
     .ck.ck-editor__editable_inline > :last-child {
       margin-bottom: 0px;
@@ -62,8 +59,7 @@
     }
 
     div.ck-editor__editable_inline {
-      min-height: 60px;
-      max-height: 100px;
+      height: 100%;
       overflow-y: auto;
       outline: none;
       font-size: 0.8em;
@@ -82,6 +78,7 @@
 
       &.ck-read-only {
         background-color: #f0f0f0f0;
+        border-radius: 0px;
       }
     }
   }

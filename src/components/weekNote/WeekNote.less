@@ -1,0 +1,65 @@
+.week-note-container {
+  border-bottom: 1px solid #888888;
+  height: inherit;
+  max-width: 50%;
+  min-width: 30%;
+  resize: horizontal;
+  position: relative;
+
+  .week-note-title {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 1px;
+    top: 0;
+    background-color: #f0f0f0;
+    z-index: 3;
+    border-bottom: 1px solid black;
+    cursor: default;
+  }
+
+  .ck-editor {
+    height: inherit;
+
+    .ck.ck-eidtor__top {
+      height: 40px;
+    }
+    .ck-editor__main {
+      .ck.ck-editor__editable_inline > :last-child {
+        margin-bottom: 0px;
+      }
+
+      .ck.ck-editor__editable_inline > :first-child {
+        margin-top: 0px;
+      }
+
+      div.ck-editor__editable_inline {
+        height: 100%;
+        overflow-y: auto;
+        outline: none;
+        font-size: 0.8em;
+        border-right: none;
+
+        p {
+          margin-bottom: 0px;
+        }
+
+        ol {
+          padding-inline-start: 12px;
+        }
+
+        ul {
+          padding-inline-start: 12px;
+        }
+
+        &.ck-read-only {
+          background-color: #f0f0f0f0;
+          border-radius: 0px;
+        }
+      }
+    }
+  }
+}

@@ -22,10 +22,28 @@ const getMondayOfWeek = date => {
   return _date;
 };
 
+const HEADER_HEIGHT = 40;
+
 class DailyNoteCollection extends React.Component {
   constructor(props) {
     super(props);
     this.generateDailys = this.generateDailys.bind(this);
+    this.getHeaderSize = this.getHeaderSize.bind(this);
+    this.getDailyNoteSize = this.getDailyNoteSize.bind(this);
+  }
+
+  getHeaderSize() {
+    return {
+      width: this.props.size.width,
+      height: HEADER_HEIGHT
+    };
+  }
+
+  getDailyNoteSize(weekendRow = false) {
+    return {
+      width: weekendRow ? this.props.size.width / 2 : this.props.size.width,
+      height: (this.props.size.height - HEADER_HEIGHT) / 6
+    };
   }
 
   generateDailys() {
@@ -34,17 +52,18 @@ class DailyNoteCollection extends React.Component {
     days.slice(0, 5).forEach((day, index) => {
       dailys.push(
         <div key={index}>
-          <DailyNote date={day} />
+          <DailyNote date={day} size={this.getDailyNoteSize()} />
         </div>
       );
     });
+
     dailys.push(
       <div key="weekend-key" className="weekend-row">
         <div key={5} className="column-one">
-          <DailyNote date={days[5]} />
+          <DailyNote date={days[5]} size={this.getDailyNoteSize(true)} />
         </div>
         <div key={6} className="column-two">
-          <DailyNote date={days[6]} />
+          <DailyNote date={days[6]} size={this.getDailyNoteSize(true)} />
         </div>
       </div>
     );
@@ -55,7 +74,10 @@ class DailyNoteCollection extends React.Component {
   render() {
     return (
       <div className="daily-collection">
-        <DailyNoteHeader date={getMondayOfWeek(this.props.date)} />
+        <DailyNoteHeader
+          date={getMondayOfWeek(this.props.date)}
+          size={this.getHeaderSize()}
+        />
         <div>{this.generateDailys()}</div>
       </div>
     );
@@ -63,7 +85,8 @@ class DailyNoteCollection extends React.Component {
 }
 
 DailyNoteCollection.propTypes = {
-  date: PropTypes.object.isRequired
+  date: PropTypes.object.isRequired,
+  size: PropTypes.object
 };
 
 const mapStateToProps = state => {

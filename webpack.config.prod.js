@@ -21,14 +21,17 @@ module.exports = {
   mode: 'production',
   target: 'web',
   devtool: 'source-map',
-  entry: './src/index',
+  entry: './src/index-prod',
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: 'local://',
     filename: 'bundle.js'
   },
   plugins: [
-    new webpackBundleAnalyzer.BundleAnalyzerPlugin({ analyzerMode: 'static' }),
+    new webpackBundleAnalyzer.BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'
     }),

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './dailyNote.less';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import InlineEditor from '../../../vendor/ckeditor5';
+import { EditorInlineBuild } from '../../../vendor/ckeditor5';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
 
 const weekMap = [
@@ -22,11 +22,19 @@ class DailyNote extends React.Component {
       editor: {},
       content: props.content || '',
       isEditable: false,
-      noteDateClass: 'daily-note-date disabled'
+      noteDateClass: 'daily-note-date disabled',
+      inlineStyle: { height: this.props.size.height + 'px' }
     };
     this.lockContent = this.lockContent.bind(this);
+    this.getInlineStyle = this.getInlineStyle.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onInit = this.onInit.bind(this);
+  }
+
+  getInlineStyle() {
+    return {
+      height: this.props.size.height + 'px'
+    };
   }
 
   handleEditorChange = content => {
@@ -63,12 +71,7 @@ class DailyNote extends React.Component {
 
   render() {
     return (
-      <div
-        className={
-          'daily-note' +
-          (this.props.dailyClassName ? ' ' + this.props.dailyClassName : '')
-        }
-      >
+      <div className="daily-note" style={this.getInlineStyle()}>
         <div className={this.state.noteDateClass}>
           <div className="row-one">{weekMap[this.props.date.getDay()]}</div>
           <div className="row-two">
@@ -90,7 +93,7 @@ class DailyNote extends React.Component {
         >
           <CKEditor
             disabled={!this.state.isEditable}
-            editor={InlineEditor}
+            editor={EditorInlineBuild}
             data={this.state.content}
             onInit={this.onInit}
             onChange={(event, editor) => {
@@ -106,8 +109,8 @@ class DailyNote extends React.Component {
 
 DailyNote.propTypes = {
   content: PropTypes.string,
-  dailyClassName: PropTypes.string,
-  date: PropTypes.object.isRequired
+  date: PropTypes.object.isRequired,
+  size: PropTypes.object.isRequired
 };
 
 export default DailyNote;
