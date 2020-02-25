@@ -15,6 +15,8 @@ protocols.register(
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
+    minHeight: 460,
+    minWidth: 600,
     width: 800,
     height: 600,
     webPreferences: {
