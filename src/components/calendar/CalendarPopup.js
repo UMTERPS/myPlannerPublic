@@ -90,8 +90,7 @@ class CalendarPopup extends React.Component {
 
 CalendarPopup.propTypes = {
   date: Proptypes.object.isRequired,
-  setDate: Proptypes.func.isRequired,
-  appSize: Proptypes.object.isRequired
+  setDate: Proptypes.func.isRequired
 };
 
 export default CalendarPopup;
