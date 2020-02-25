@@ -38,7 +38,6 @@ class WeekNote extends React.Component {
 
   getContainerHeight() {
     const inlineEditor = document.getElementsByClassName('ck-editor__main')[0];
-    console.log(inlineEditor);
     if (inlineEditor) {
       inlineEditor.style.height = this.props.size.height - 40 + 'px';
     }
