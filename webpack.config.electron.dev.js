@@ -2,16 +2,17 @@ const path = require('path');
 const { styles } = require('@ckeditor/ckeditor5-dev-utils');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'production';
 
 module.exports = {
   mode: 'development',
-  target: 'web',
+  target: 'electron-renderer',
   devtool: 'cheap-module-source-map',
   entry: './src/index',
+  watch: true,
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: '/',
+    publicPath: 'local://',
     filename: 'bundle.js'
   },
   devServer: {
@@ -19,7 +20,6 @@ module.exports = {
     overlay: true,
     historyApiFallback: true,
     disableHostCheck: true,
-    headers: { 'Access-Control-Allow-Origin': '*' },
     https: false
   },
   plugins: [

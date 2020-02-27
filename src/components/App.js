@@ -1,37 +1,57 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-
-import HomePage from './home/HomePage';
-import AboutPage from './about/AboutPage';
-import Header from './common/Header';
-import PageNotFound from './PageNotFound';
-import CoursesPage from './courses/CoursesPage';
-import ManageCoursePage from './courses/ManageCoursePage';
-import ProofOfConceptPage from './poc/ProofOfConcept';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-calendar/dist/Calendar.css';
+import DailyNoteCollection from '../components/dailyNotes/dailyNoteCollection';
+import WeekNote from '../components/weekNote/WeekNote';
+import './App.less';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dailyNoteCollectionSize: {
+        width: -1,
+        height: -1
+      },
+      weekNoteSize: {
+        width: -1,
+        height: -1
+      }
+    };
+    this.updateComponetSize = this.updateComponetSize.bind(this);
+  }
+
   componentDidMount() {
     const spinner = document.getElementById('index-loading-spinner');
     spinner.style.display = 'none';
+
+    this.updateComponetSize();
+    window.addEventListener('resize', this.updateComponetSize);
+  }
+
+  updateComponetSize() {
+    const rootDiv = document.getElementById('app');
+    const rootDivWidth = rootDiv.clientWidth;
+    const rootDivHeight = rootDiv.clientHeight;
+    this.setState({
+      dailyNoteCollectionSize: {
+        width: rootDivWidth * 0.6,
+        height: rootDivHeight
+      },
+      weekNoteSize: {
+        width: rootDivWidth * 0.4,
+        height: rootDivHeight
+      }
+    });
   }
 
   render() {
     return (
-      <div className="container-fluid">
-        <Header />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/courses" component={CoursesPage} />
-          <Route path="/course/:slug" component={ManageCoursePage} />
-          <Route path="/course" component={ManageCoursePage} />
-          <Route path="/poc" component={ProofOfConceptPage} />
-          <Route component={PageNotFound} />
-        </Switch>
-        <ToastContainer autoClose={3000} hideProgressBar />
-      </div>
+      <React.Fragment>
+        <div className="my-planner-container" id="my-plainer-container-id">
+          <DailyNoteCollection size={this.state.dailyNoteCollectionSize} />
+          <WeekNote size={this.state.weekNoteSize} />
+        </div>
+      </React.Fragment>
     );
   }
 }
