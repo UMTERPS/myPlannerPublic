@@ -19,7 +19,7 @@ const postcssLoaderOptions = styles.getPostCssConfig({
 
 module.exports = {
   mode: 'production',
-  target: 'web',
+  target: 'electron-renderer',
   devtool: 'source-map',
   entry: './src/index-prod',
   output: {
