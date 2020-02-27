@@ -15,13 +15,11 @@ const postcssLoaderOptions = styles.getPostCssConfig({
   sourceMap: true
 });
 
-// postcssLoaderOptions.plugins.push(() => [require('cssnano')]);
-
 module.exports = {
   mode: 'production',
   target: 'electron-renderer',
   devtool: 'source-map',
-  entry: './src/index-prod',
+  entry: './src/index',
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: 'local://',
