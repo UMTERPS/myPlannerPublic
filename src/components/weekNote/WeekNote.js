@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './WeekNote.less';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import { EditorClassicBuild } from '../../../vendor/ckeditor5';
+import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
+// const electron = require('electron');
+// const { ipcRenderer: ipc } = electron;
 
 class WeekNote extends React.Component {
   constructor(props) {
@@ -13,9 +15,12 @@ class WeekNote extends React.Component {
       content: '',
       editor: {}
     };
+    this.data = '';
     this.onInit = this.onInit.bind(this);
     this.lockContent = this.lockContent.bind(this);
     this.getContainerHeight = this.getContainerHeight.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   onInit = editor => {
@@ -46,13 +51,27 @@ class WeekNote extends React.Component {
     };
   }
 
+  onBlur() {
+    console.log(this.data);
+    // ipc.send('ping', {
+    //   key: '/weekly/dummyKey',
+    //   value: this.data
+    // });
+    this.lockContent();
+  }
+
+  onChange(event, editor) {
+    this.data = editor.getData();
+    // console.log(this.data);
+  }
+
   render() {
     return (
       <div
         className="week-note-container"
         title="Double click to edit"
         onDoubleClick={this.lockContent}
-        onBlur={this.lockContent}
+        onBlur={this.onBlur}
         style={this.getContainerHeight()}
       >
         {this.state.isEditable ? null : (
@@ -65,10 +84,7 @@ class WeekNote extends React.Component {
           editor={EditorClassicBuild}
           data={this.state.content}
           onInit={this.onInit}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          }}
+          onChange={this.onChange}
         />
       </div>
     );

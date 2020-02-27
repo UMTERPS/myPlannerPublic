@@ -1,7 +1,16 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 const protocols = require('electron-protocols');
+
+const JsonDB = require('node-json-db').JsonDB;
+const Config = require('node-json-db/dist/lib/JsonDBConfig').Config;
+
+// The second argument is used to tell the DB to save after each push
+// If you put false, you'll have to call the save() method.
+// The third argument is to ask JsonDB to save the database in an human readable format. (default false)
+// The last argument is the separator. By default it's slash (/)
+var db = new JsonDB(new Config('myPlannerDB', true, false, '/'));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -33,7 +42,7 @@ function createWindow() {
   });
 
   // Open the DevTools.
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -68,3 +77,9 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+ipcMain.on('ping', (event, data) => {
+  console.log(event);
+  console.log(data);
+  db.push(data.key, data.value, true);
+});
