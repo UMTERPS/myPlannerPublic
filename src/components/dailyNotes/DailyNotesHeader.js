@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import './dailyNoteHeader.less';
+import './DailyNotesHeader.less';
 import DateNavigation from '../dateNavigation/DateNavigation';
 
 const monthMap = [
@@ -19,7 +19,7 @@ const monthMap = [
   'December'
 ];
 
-class DailyNoteHeader extends React.Component {
+class DailyNotesHeader extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -53,9 +53,9 @@ class DailyNoteHeader extends React.Component {
   }
 }
 
-DailyNoteHeader.propTypes = {
+DailyNotesHeader.propTypes = {
   date: PropTypes.object.isRequired,
   size: PropTypes.object.isRequired
 };
 
-export default DailyNoteHeader;
+export default DailyNotesHeader;
