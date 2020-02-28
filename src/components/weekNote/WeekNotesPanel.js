@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './WeekNote.less';
+import './WeekNotesPanel.less';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import { EditorClassicBuild } from '../../../vendor/ckeditor5';
+import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 
-class WeekNote extends React.Component {
+class WeekNotesPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,7 +75,7 @@ class WeekNote extends React.Component {
   }
 }
 
-WeekNote.propTypes = {
+WeekNotesPanel.propTypes = {
   date: PropTypes.object.isRequired,
   size: PropTypes.object.isRequired
 };
@@ -86,4 +86,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(WeekNote);
+export default connect(mapStateToProps)(WeekNotesPanel);

@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-calendar/dist/Calendar.css';
-import DailyNoteCollection from '../components/dailyNotes/dailyNoteCollection';
-import WeekNote from '../components/weekNote/WeekNote';
+import DailyNotesPanel from '../components/dailyNotes/DailyNotesPanel';
+import WeekNotesPanel from './weekNote/WeekNotesPanel';
 import './App.less';
 
 class App extends React.Component {
@@ -48,8 +48,8 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <div className="my-planner-container" id="my-plainer-container-id">
-          <DailyNoteCollection size={this.state.dailyNoteCollectionSize} />
-          <WeekNote size={this.state.weekNoteSize} />
+          <DailyNotesPanel size={this.state.dailyNoteCollectionSize} />
+          <WeekNotesPanel size={this.state.weekNoteSize} />
         </div>
       </React.Fragment>
     );

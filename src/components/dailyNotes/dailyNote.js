@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './dailyNote.less';
+import './DailyNote.less';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import { EditorInlineBuild } from '../../../vendor/ckeditor5';
+import { EditorInlineBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
 
 const weekMap = [
