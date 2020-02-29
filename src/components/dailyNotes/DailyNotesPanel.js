@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DailyNotesHeader from './DailyNotesHeader';
 import DailyNotesCollection from './DailyNotesCollection';
+import { LayoutIds } from '../../constants/constants';
 import './DailyNotesPanel.less';
 import { connect } from 'react-redux';
 
@@ -37,7 +38,7 @@ DailyNotesPanel.propTypes = {
 const mapStateToProps = state => {
   return {
     date: state.date.selectedDate,
-    size: state.layout[DailyNotesPanel.name]
+    size: state.layout[LayoutIds.DailyNotesPanel]
   };
 };
 

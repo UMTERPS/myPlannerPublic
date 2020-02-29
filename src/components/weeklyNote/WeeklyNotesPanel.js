@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './WeeklyNotesPanel.less';
+import { LayoutIds } from '../../constants/constants';
 import { StyleConstants } from '../../constants/constants';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
@@ -86,7 +87,7 @@ WeeklyNotesPanel.propTypes = {
 const mapStateToProps = state => {
   return {
     date: state.date.selectedDate,
-    size: state.layout[WeeklyNotesPanel.name]
+    size: state.layout[LayoutIds.WeeklyNotesPanel]
   };
 };
 

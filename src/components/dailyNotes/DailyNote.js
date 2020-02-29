@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorInlineBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
+import { LayoutIds } from '../../constants/constants';
 
 const weekMap = [
   'Sunday',
@@ -116,7 +117,7 @@ DailyNote.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    size: state.layout[DailyNote.name]
+    size: state.layout[LayoutIds.DailyNote]
   };
 };
 

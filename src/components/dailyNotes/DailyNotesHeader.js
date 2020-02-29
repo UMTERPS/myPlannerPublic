@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import './DailyNotesHeader.less';
 import { connect } from 'react-redux';
+import { LayoutIds } from '../../constants/constants';
 import DateNavigation from '../dateNavigation/DateNavigation';
 
 const monthMap = [
@@ -61,7 +62,7 @@ DailyNotesHeader.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    size: state.layout[DailyNotesHeader.name]
+    size: state.layout[LayoutIds.DailyNotesHeader]
   };
 };
 
