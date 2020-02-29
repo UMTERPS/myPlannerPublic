@@ -16,7 +16,7 @@ function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     minHeight: 460,
-    minWidth: 640,
+    minWidth: 660,
     width: 800,
     height: 600,
     webPreferences: {

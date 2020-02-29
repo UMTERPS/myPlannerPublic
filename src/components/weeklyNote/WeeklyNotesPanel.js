@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './WeekNotesPanel.less';
+import './WeeklyNotesPanel.less';
+import { StyleConstants } from '../../constants/constants';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 
-class WeekNotesPanel extends React.Component {
+class WeeklyNotesPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +16,7 @@ class WeekNotesPanel extends React.Component {
     };
     this.onInit = this.onInit.bind(this);
     this.lockContent = this.lockContent.bind(this);
-    this.getContainerHeight = this.getContainerHeight.bind(this);
+    this.getStyle = this.getStyle.bind(this);
   }
 
   onInit = editor => {
@@ -36,12 +37,14 @@ class WeekNotesPanel extends React.Component {
     );
   }
 
-  getContainerHeight() {
+  getStyle() {
     const inlineEditor = document.getElementsByClassName('ck-editor__main')[0];
     if (inlineEditor) {
-      inlineEditor.style.height = this.props.size.height - 40 + 'px';
+      inlineEditor.style.height =
+        this.props.size.height - StyleConstants.DailyNotesHeaderHeight + 'px';
     }
     return {
+      width: this.props.size.width + 'px',
       height: this.props.size.height + 'px'
     };
   }
@@ -53,7 +56,7 @@ class WeekNotesPanel extends React.Component {
         title="Double click to edit"
         onDoubleClick={this.lockContent}
         onBlur={this.lockContent}
-        style={this.getContainerHeight()}
+        style={this.getStyle()}
       >
         {this.state.isEditable ? null : (
           <div className="week-note-title">
@@ -75,15 +78,16 @@ class WeekNotesPanel extends React.Component {
   }
 }
 
-WeekNotesPanel.propTypes = {
+WeeklyNotesPanel.propTypes = {
   date: PropTypes.object.isRequired,
-  size: PropTypes.object.isRequired
+  size: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    date: state.date.selectedDate
+    date: state.date.selectedDate,
+    size: state.layout[WeeklyNotesPanel.name]
   };
 };
 
-export default connect(mapStateToProps)(WeekNotesPanel);
+export default connect(mapStateToProps)(WeeklyNotesPanel);

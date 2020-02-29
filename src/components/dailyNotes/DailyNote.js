@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './DailyNote.less';
+import { connect } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorInlineBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
@@ -113,4 +114,10 @@ DailyNote.propTypes = {
   size: PropTypes.object.isRequired
 };
 
-export default DailyNote;
+const mapStateToProps = state => {
+  return {
+    size: state.layout[DailyNote.name]
+  };
+};
+
+export default connect(mapStateToProps)(DailyNote);
