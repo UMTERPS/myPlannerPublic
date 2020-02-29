@@ -11,8 +11,9 @@ class LayoutRoot {
     this.width = width;
     this.height = Math.max(height, 460);
     const dailyNoteWidth = Math.max(width * 0.6, 480);
+    const weekNoteWidth = Math.max(width - dailyNoteWidth, 180);
     this.children = [
-      new WeekNotesPanel(width - dailyNoteWidth, height),
+      new WeekNotesPanel(weekNoteWidth, height),
       new DailyNotesPanel(dailyNoteWidth, height)
     ];
   }
