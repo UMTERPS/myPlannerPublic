@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import DailyNote from './DailyNote';
 import './DailyNotesCollection.less';
 import { connect } from 'react-redux';
+import { LayoutIds } from '../../constants/constants';
 
 const getWeekData = date => {
   let week = new Array();
@@ -77,7 +78,7 @@ DailyNotesCollection.propTypes = {
 const mapStateToProps = state => {
   return {
     date: state.date.selectedDate,
-    size: state.layout[DailyNotesCollection.name]
+    size: state.layout[LayoutIds.DailyNotesCollection]
   };
 };
 
