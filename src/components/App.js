@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-calendar/dist/Calendar.css';
 import DailyNotesPanel from '../components/dailyNotes/DailyNotesPanel';
-import WeekNotesPanel from './weekNote/WeekNotesPanel';
+import WeeklyNotesPanel from './weeklyNote/WeeklyNotesPanel';
 import './App.less';
 
 class App extends React.Component {
@@ -32,6 +32,7 @@ class App extends React.Component {
     const rootDiv = document.getElementById('app');
     const rootDivWidth = rootDiv.clientWidth;
     const rootDivHeight = rootDiv.clientHeight;
+    // console.log('actual: ' + rootDivWidth + ' ' + rootDivHeight);
     this.setState({
       dailyNoteCollectionSize: {
         width: rootDivWidth * 0.6,
@@ -46,12 +47,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <div className="my-planner-container" id="my-plainer-container-id">
-          <DailyNotesPanel size={this.state.dailyNoteCollectionSize} />
-          <WeekNotesPanel size={this.state.weekNoteSize} />
-        </div>
-      </React.Fragment>
+      <div className="my-planner-container" id="my-plainer-container-id">
+        <DailyNotesPanel />
+        <WeeklyNotesPanel />
+      </div>
     );
   }
 }

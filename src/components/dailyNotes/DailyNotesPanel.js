@@ -11,42 +11,19 @@ const getMondayOfWeek = date => {
   return _date;
 };
 
-const HEADER_HEIGHT = 40;
-
 class DailyNotesPanel extends React.Component {
   constructor(props) {
     super(props);
-    this.getHeaderSize = this.getHeaderSize.bind(this);
-    this.getDailyNotesCollectionSize = this.getDailyNotesCollectionSize.bind(
-      this
-    );
-  }
-
-  getHeaderSize() {
-    return {
-      width: this.props.size.width,
-      height: HEADER_HEIGHT
-    };
-  }
-
-  getDailyNotesCollectionSize() {
-    return {
-      width: this.props.size.width,
-      height: this.props.size.height - HEADER_HEIGHT
-    };
   }
 
   render() {
     return (
-      <div className="daily-panel">
-        <DailyNotesHeader
-          date={getMondayOfWeek(this.props.date)}
-          size={this.getHeaderSize()}
-        />
-        <DailyNotesCollection
-          size={this.getDailyNotesCollectionSize()}
-          date={this.props.date}
-        />
+      <div
+        className="daily-panel"
+        style={{ minWidth: this.props.size.width + 'px' }}
+      >
+        <DailyNotesHeader date={getMondayOfWeek(this.props.date)} />
+        <DailyNotesCollection date={this.props.date} />
       </div>
     );
   }
@@ -59,7 +36,8 @@ DailyNotesPanel.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    date: state.date.selectedDate
+    date: state.date.selectedDate,
+    size: state.layout[DailyNotesPanel.name]
   };
 };
 

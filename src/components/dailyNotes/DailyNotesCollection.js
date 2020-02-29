@@ -41,7 +41,7 @@ class DailyNotesCollection extends React.Component {
     days.slice(0, 5).forEach((day, index) => {
       dailys.push(
         <div key={index}>
-          <DailyNote date={day} size={this.getDailyNoteSize()} />
+          <DailyNote date={day} />
         </div>
       );
     });
@@ -49,10 +49,10 @@ class DailyNotesCollection extends React.Component {
     dailys.push(
       <div key="weekend-key" className="weekend-row">
         <div key={5} className="column-one">
-          <DailyNote date={days[5]} size={this.getDailyNoteSize(true)} />
+          <DailyNote date={days[5]} />
         </div>
         <div key={6} className="column-two">
-          <DailyNote date={days[6]} size={this.getDailyNoteSize(true)} />
+          <DailyNote date={days[6]} />
         </div>
       </div>
     );
@@ -76,7 +76,8 @@ DailyNotesCollection.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    date: state.date.selectedDate
+    date: state.date.selectedDate,
+    size: state.layout[DailyNotesCollection.name]
   };
 };
 
