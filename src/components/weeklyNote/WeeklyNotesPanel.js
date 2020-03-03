@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './WeeklyNotesPanel.less';
-import { LayoutIds } from '../../constants/constants';
-import { StyleConstants } from '../../constants/constants';
+import { LayoutIds, StyleConstants } from '../../constants/constants';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 

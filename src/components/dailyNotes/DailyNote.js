@@ -94,6 +94,11 @@ class DailyNote extends React.Component {
           onBlur={this.onBlur}
         >
           <CKEditor
+            config={{
+              toolbar: {
+                viewportTopOffset: 20
+              }
+            }}
             disabled={!this.state.isEditable}
             editor={EditorInlineBuild}
             data={this.state.content}
