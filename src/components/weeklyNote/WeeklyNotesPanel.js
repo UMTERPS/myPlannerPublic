@@ -68,10 +68,6 @@ class WeeklyNotesPanel extends React.Component {
           editor={EditorClassicBuild}
           data={this.state.content}
           onInit={this.onInit}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          }}
         />
       </div>
     );

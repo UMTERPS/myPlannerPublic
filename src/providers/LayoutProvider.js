@@ -84,6 +84,7 @@ const getLayout = (root, layout) => {
   }
 };
 
+// TODO: To convert this into a non react component
 class LayoutProvider extends React.Component {
   constructor(props) {
     super(props);
