@@ -6,6 +6,7 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorInlineBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
 import { LayoutIds } from '../../constants/constants';
+import { updateContent } from '../../providers/IpcSenderProvider';
 
 const weekMap = [
   'Sunday',
@@ -64,6 +65,7 @@ class DailyNote extends React.Component {
   }
 
   onBlur() {
+    updateContent(this.state.editor.getData());
     this.lockContent();
   }
 
@@ -103,10 +105,6 @@ class DailyNote extends React.Component {
             editor={EditorInlineBuild}
             data={this.state.content}
             onInit={this.onInit}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              console.log({ event, editor, data });
-            }}
           />
         </div>
       </div>
