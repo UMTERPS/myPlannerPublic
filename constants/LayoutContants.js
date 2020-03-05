@@ -1,4 +1,4 @@
-const LayoutIds = {
+export default {
   WeeklyNotesPanel: 'WeeklyNotesPanel',
   DailyNotesPanel: 'DailyNotesPanel',
   DailyNotesCollection: 'DailyNotesCollection',
@@ -6,9 +6,3 @@ const LayoutIds = {
   DailyNote: 'DailyNote',
   DateNavigation: 'DateNavigation'
 };
-
-const StyleConstants = {
-  DailyNotesHeaderHeight: 40
-};
-
-module.exports = { LayoutIds, StyleConstants };

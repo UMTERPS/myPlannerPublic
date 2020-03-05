@@ -1,5 +1,6 @@
 import React from 'react';
-import { LayoutIds, StyleConstants } from '../constants/constants';
+import LayoutIds from '../../constants/LayoutContants';
+import StyleConstants from '../../constants/StyleContants';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import * as layoutActions from '../redux/actions/layoutActions';

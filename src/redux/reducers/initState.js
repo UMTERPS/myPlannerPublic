@@ -2,5 +2,8 @@ export default {
   date: {
     selectedDate: new Date()
   },
-  layout: {}
+  layout: {},
+  notes: {
+    status: 'loaded'
+  }
 };

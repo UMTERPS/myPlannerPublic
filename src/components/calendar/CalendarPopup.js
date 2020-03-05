@@ -21,21 +21,21 @@ class CalendarPopup extends React.Component {
     this.setDate(new Date());
   }
 
-  handleCalendarChange = date => {
+  handleCalendarChange(date) {
     this.setDate(date);
     this.setState({ date });
-  };
+  }
 
-  toggleCalendar = event => {
+  toggleCalendar(event) {
     if (
       event.target.id === 'popup-button' ||
       event.target.id === 'calendar-popup-container-id'
     ) {
       this.setState({ showCalendar: !this.state.showCalendar });
     }
-  };
+  }
 
-  generateBackToTodayButton = () => {
+  generateBackToTodayButton() {
     if (this.state.showCalendar && !moment().isSame(this.props.date, 'day')) {
       return (
         <div className="go-today-container">
@@ -43,7 +43,7 @@ class CalendarPopup extends React.Component {
         </div>
       );
     }
-  };
+  }
 
   render() {
     return (

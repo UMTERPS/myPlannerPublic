@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorInlineBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
-import { LayoutIds } from '../../constants/constants';
-import { updateContent } from '../../providers/IpcSenderProvider';
+import LayoutIds from '../../../constants/LayoutContants';
+import { updateContent } from '../../redux/actions/notesActions';
+import { bindActionCreators } from 'redux';
 
 const weekMap = [
   'Sunday',
@@ -40,10 +41,6 @@ class DailyNote extends React.Component {
     };
   }
 
-  handleEditorChange = content => {
-    console.log('Content was updated:', content);
-  };
-
   lockContent() {
     const isEditable = !this.state.isEditable;
     this.setState(
@@ -65,7 +62,7 @@ class DailyNote extends React.Component {
   }
 
   onBlur() {
-    updateContent(this.state.editor.getData());
+    this.props.updateContent(this.state.editor.getData());
     this.lockContent();
   }
 
@@ -114,14 +111,23 @@ class DailyNote extends React.Component {
 
 DailyNote.propTypes = {
   content: PropTypes.string,
+  updateContent: PropTypes.func.isRequired,
   date: PropTypes.object.isRequired,
-  size: PropTypes.object.isRequired
+  size: PropTypes.object.isRequired,
+  notes: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    size: state.layout[LayoutIds.DailyNote]
+    size: state.layout[LayoutIds.DailyNote],
+    notes: state.notes
   };
 };
 
-export default connect(mapStateToProps)(DailyNote);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateContent: bindActionCreators(updateContent, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DailyNote);

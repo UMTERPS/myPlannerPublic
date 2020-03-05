@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import './DailyNotesHeader.less';
 import { connect } from 'react-redux';
-import { LayoutIds } from '../../constants/constants';
+import LayoutIds from '../../../constants/LayoutContants';
 import DateNavigation from '../dateNavigation/DateNavigation';
 
 const monthMap = [

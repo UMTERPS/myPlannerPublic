@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 const protocols = require('electron-protocols');
+const ipcConstants = require('./constants/IPCContants');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -66,8 +67,30 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('update-content', (event, content) => {
-  console.log('ipc main: update-content');
-  console.log(content);
-  win.webContents.send('content-updated', content);
+ipcMain.on(ipcConstants.UPDATE_CONTENT, async (event, data) => {
+  try {
+    event.sender.send(
+      `${ipcConstants.UPDATE_CONTENT}_SUCCESS`,
+      'data updated:' + data
+    );
+  } catch (error) {
+    event.sender.send(
+      `${ipcConstants.UPDATE_CONTENT}_FAILED`,
+      'data updated:' + data
+    );
+  }
+});
+
+ipcMain.on(ipcConstants.FETCH_CONTENT, async (event, data) => {
+  try {
+    event.sender.send(
+      `${ipcConstants.FETCH_CONTENT}_SUCCESS`,
+      'data fetched:' + data
+    );
+  } catch (error) {
+    event.sender.send(
+      `${ipcConstants.FETCH_CONTENT}_FAILED`,
+      'data fetched:' + data
+    );
+  }
 });
