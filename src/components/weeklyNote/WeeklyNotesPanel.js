@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './WeeklyNotesPanel.less';
-import { LayoutIds, StyleConstants } from '../../constants/constants';
+import LayoutIds from '../../../constants/LayoutContants';
+import StyleConstants from '../../../constants/StyleContants';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 
@@ -19,9 +20,9 @@ class WeeklyNotesPanel extends React.Component {
     this.getStyle = this.getStyle.bind(this);
   }
 
-  onInit = editor => {
+  onInit(editor) {
     this.setState({ editor });
-  };
+  }
 
   lockContent() {
     const isEditable = !this.state.isEditable;

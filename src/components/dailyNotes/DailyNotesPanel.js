@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DailyNotesHeader from './DailyNotesHeader';
 import DailyNotesCollection from './DailyNotesCollection';
-import { LayoutIds } from '../../constants/constants';
+import LayoutIds from '../../../constants/LayoutContants';
 import './DailyNotesPanel.less';
 import { connect } from 'react-redux';
 

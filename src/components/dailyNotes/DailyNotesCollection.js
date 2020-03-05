@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import DailyNote from './DailyNote';
 import './DailyNotesCollection.less';
 import { connect } from 'react-redux';
-import { LayoutIds } from '../../constants/constants';
+import LayoutIds from '../../../constants/LayoutContants';
 
 const getWeekData = date => {
   let week = new Array();
-  // Starting Monday not Sunday
+  // Starting with Monday not Sunday
   const _date = getMondayOfWeek(date);
   for (var i = 0; i < 7; i++) {
     week.push(new Date(_date));

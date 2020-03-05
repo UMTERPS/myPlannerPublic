@@ -1,0 +1,4 @@
+module.exports = {
+  UPDATE_CONTENT: 'UPDATE_CONTENT',
+  FETCH_CONTENT: 'FETCH_CONTENT'
+};
