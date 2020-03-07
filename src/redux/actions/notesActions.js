@@ -12,7 +12,8 @@ export function updateContent(content) {
   return dispatch => {
     dispatch(updateNoteStatus('loading'));
     return update(content).then(() => {
-      fetch('dummyKey').then(() => {
+      fetch('dummyKey').then(data => {
+        console.log(data);
         dispatch(updateNoteStatus('loaded'));
       });
     });
@@ -23,7 +24,8 @@ export function updateContent(content) {
 export async function fetchContent(key) {
   return dispatch => {
     dispatch(updateNoteStatus('loading'));
-    return fetch(key).then(() => {
+    return fetch(key).then(data => {
+      console.log(data);
       dispatch(updateNoteStatus('loaded'));
     });
   };

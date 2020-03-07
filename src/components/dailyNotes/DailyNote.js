@@ -62,7 +62,10 @@ class DailyNote extends React.Component {
   }
 
   onBlur() {
-    this.props.updateContent(this.state.editor.getData());
+    this.props.updateContent({
+      key: 'dummyKey',
+      value: this.state.editor.getData()
+    });
     this.lockContent();
   }
 

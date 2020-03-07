@@ -37,7 +37,7 @@ dist
 .DS_Store
 
 # json-server db
-db.json
+myPlanner.json
 
 # .npmrc
 .npmrc

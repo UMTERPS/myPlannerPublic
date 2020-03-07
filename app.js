@@ -1,8 +1,16 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-
+const JsonDB = require('node-json-db').JsonDB;
+const Config = require('node-json-db/dist/lib/JsonDBConfig').Config;
 const protocols = require('electron-protocols');
 const ipcConstants = require('./constants/IPCContants');
+
+const _SAVE_AFTER_PUSH = true;
+const _HUMAN_READABLE = false;
+const _SEPARATOR = '/';
+const db = new JsonDB(
+  new Config('myPlanner', _SAVE_AFTER_PUSH, _HUMAN_READABLE, _SEPARATOR)
+);
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -69,6 +77,7 @@ app.on('activate', () => {
 
 ipcMain.on(ipcConstants.UPDATE_CONTENT, async (event, data) => {
   try {
+    db.push('/' + data.key, data.value);
     event.sender.send(
       `${ipcConstants.UPDATE_CONTENT}_SUCCESS`,
       'data updated:' + data
@@ -81,8 +90,9 @@ ipcMain.on(ipcConstants.UPDATE_CONTENT, async (event, data) => {
   }
 });
 
-ipcMain.on(ipcConstants.FETCH_CONTENT, async (event, data) => {
+ipcMain.on(ipcConstants.FETCH_CONTENT, async (event, key) => {
   try {
+    const data = db.getData('/' + key);
     event.sender.send(
       `${ipcConstants.FETCH_CONTENT}_SUCCESS`,
       'data fetched:' + data
@@ -90,7 +100,7 @@ ipcMain.on(ipcConstants.FETCH_CONTENT, async (event, data) => {
   } catch (error) {
     event.sender.send(
       `${ipcConstants.FETCH_CONTENT}_FAILED`,
-      'data fetched:' + data
+      'failed to fetch data'
     );
   }
 });
