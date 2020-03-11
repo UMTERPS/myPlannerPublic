@@ -4,45 +4,39 @@ import DailyNote from './DailyNote';
 import './DailyNotesCollection.less';
 import { connect } from 'react-redux';
 import LayoutIds from '../../../constants/LayoutContants';
-
-const getWeekData = date => {
-  let week = new Array();
-  // Starting with Monday not Sunday
-  const _date = getMondayOfWeek(date);
-  for (var i = 0; i < 7; i++) {
-    week.push(new Date(_date));
-    _date.setDate(_date.getDate() + 1);
-  }
-  return week;
-};
-
-const getMondayOfWeek = date => {
-  const _date = new Date(date);
-  _date.setDate(date.getDate() - date.getDay() + 1);
-  return _date;
-};
+import { getDailyData } from '../../services/DateUtilService';
+import { bindActionCreators } from 'redux';
+import { fetchAllDailyNotes } from '../../redux/actions/notesActions';
+import moment from 'moment';
 
 class DailyNotesCollection extends React.Component {
   constructor(props) {
     super(props);
     this.generateDailys = this.generateDailys.bind(this);
-    this.getDailyNoteSize = this.getDailyNoteSize.bind(this);
   }
 
-  getDailyNoteSize(weekendRow = false) {
-    return {
-      width: weekendRow ? this.props.size.width / 2 : this.props.size.width,
-      height: this.props.size.height / 6
-    };
+  shouldComponentUpdate(nextProps) {
+    if (!moment(nextProps.date).isSame(this.props.date)) {
+      this.props.fetchAllDailyNotes(nextProps.date);
+    }
+    return true;
+  }
+
+  componentDidMount() {
+    this.props.fetchAllDailyNotes(this.props.date);
   }
 
   generateDailys() {
-    const days = getWeekData(this.props.date);
+    const days = getDailyData(this.props.date);
     const dailys = [];
     days.slice(0, 5).forEach((day, index) => {
       dailys.push(
         <div key={index}>
-          <DailyNote date={day} />
+          <DailyNote
+            date={day.date}
+            udid={day.udid}
+            content={this.props.contents[day.udid]}
+          />
         </div>
       );
     });
@@ -50,10 +44,18 @@ class DailyNotesCollection extends React.Component {
     dailys.push(
       <div key="weekend-key" className="weekend-row">
         <div key={5} className="column-one">
-          <DailyNote date={days[5]} />
+          <DailyNote
+            date={days[5].date}
+            udid={days[5].udid}
+            content={this.props.contents[days[5].udid]}
+          />
         </div>
         <div key={6} className="column-two">
-          <DailyNote date={days[6]} />
+          <DailyNote
+            date={days[6].date}
+            udid={days[6].udid}
+            content={this.props.contents[days[6].udid]}
+          />
         </div>
       </div>
     );
@@ -72,14 +74,26 @@ class DailyNotesCollection extends React.Component {
 
 DailyNotesCollection.propTypes = {
   date: PropTypes.object.isRequired,
-  size: PropTypes.object
+  fetchAllDailyNotes: PropTypes.func.isRequired,
+  size: PropTypes.object,
+  contents: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
     date: state.date.selectedDate,
-    size: state.layout[LayoutIds.DailyNotesCollection]
+    size: state.layout[LayoutIds.DailyNotesCollection],
+    contents: state.notes.contents
   };
 };
 
-export default connect(mapStateToProps)(DailyNotesCollection);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchAllDailyNotes: bindActionCreators(fetchAllDailyNotes, dispatch)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DailyNotesCollection);

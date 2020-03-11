@@ -4,7 +4,7 @@ const JsonDB = require('node-json-db').JsonDB;
 const Config = require('node-json-db/dist/lib/JsonDBConfig').Config;
 const protocols = require('electron-protocols');
 const ipcConstants = require('./constants/IPCContants');
-
+const _ = require('lodash');
 const _SAVE_AFTER_PUSH = true;
 const _HUMAN_READABLE = false;
 const _SEPARATOR = '/';
@@ -75,32 +75,46 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on(ipcConstants.UPDATE_CONTENT, async (event, data) => {
+ipcMain.on(ipcConstants.UPDATE_CONTENT, async (event, _token, key, value) => {
   try {
-    db.push('/' + data.key, data.value);
+    db.push('/' + key, value);
     event.sender.send(
-      `${ipcConstants.UPDATE_CONTENT}_SUCCESS`,
-      'data updated:' + data
+      `${ipcConstants.UPDATE_CONTENT + _token}_SUCCESS`,
+      'data updated: {' + key + ': ' + value + ' }'
     );
   } catch (error) {
     event.sender.send(
-      `${ipcConstants.UPDATE_CONTENT}_FAILED`,
-      'data updated:' + data
+      `${ipcConstants.UPDATE_CONTENT + _token}_FAILED`,
+      'Failed to update data'
     );
   }
 });
 
-ipcMain.on(ipcConstants.FETCH_CONTENT, async (event, key) => {
+ipcMain.on(ipcConstants.FETCH_CONTENT, async (event, _token, keys) => {
+  const _keys = _.isArray(keys) ? keys : new Array(keys);
+  const results = {};
   try {
-    const data = db.getData('/' + key);
+    _.each(_keys, key => {
+      try {
+        const _result = db.getData('/' + key);
+        _.extend(results, { [key]: _result });
+      } catch (error) {
+        if (error.id === ipcConstants.DATA_NOT_FOUND) {
+          _.extend(results, { [key]: '' });
+        } else {
+          throw error;
+        }
+      }
+    });
+
     event.sender.send(
-      `${ipcConstants.FETCH_CONTENT}_SUCCESS`,
-      'data fetched:' + data
+      `${ipcConstants.FETCH_CONTENT + _token}_SUCCESS`,
+      results
     );
   } catch (error) {
     event.sender.send(
-      `${ipcConstants.FETCH_CONTENT}_FAILED`,
-      'failed to fetch data'
+      `${ipcConstants.FETCH_CONTENT + _token}_FAILED`,
+      'Failed to fetch data!'
     );
   }
 });

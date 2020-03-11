@@ -4,6 +4,7 @@ export default {
   },
   layout: {},
   notes: {
-    status: 'loaded'
+    status: 'loaded',
+    contents: {}
   }
 };

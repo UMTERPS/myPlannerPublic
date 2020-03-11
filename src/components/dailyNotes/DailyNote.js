@@ -6,9 +6,9 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorInlineBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
 import LayoutIds from '../../../constants/LayoutContants';
-import { updateContent } from '../../redux/actions/notesActions';
+import { saveDailyNote } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
-
+import DailyNotesHeaderHeight from '../../../constants/StyleContants';
 const weekMap = [
   'Sunday',
   'Monday',
@@ -23,16 +23,21 @@ class DailyNote extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editor: {},
-      content: props.content || '',
       isEditable: false,
-      noteDateClass: 'daily-note-date disabled',
-      inlineStyle: { height: this.props.size.height + 'px' }
+      noteDateClass: 'daily-note-date disabled'
     };
+    this.editor = null;
     this.lockContent = this.lockContent.bind(this);
     this.getInlineStyle = this.getInlineStyle.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onInit = this.onInit.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.editor && !this.state.isEditable) {
+      this.editor.setData(nextProps.content || '');
+    }
+    return true;
   }
 
   getInlineStyle() {
@@ -51,20 +56,20 @@ class DailyNote extends React.Component {
       },
       () => {
         if (this.state.isEditable) {
-          this.state.editor.editing.view.focus();
+          this.editor.editing.view.focus();
         }
       }
     );
   }
 
   onInit(editor) {
-    this.setState({ editor });
+    this.editor = editor;
   }
 
   onBlur() {
-    this.props.updateContent({
-      key: 'dummyKey',
-      value: this.state.editor.getData()
+    this.props.saveNote({
+      date: this.props.date,
+      value: this.editor.getData()
     });
     this.lockContent();
   }
@@ -98,12 +103,11 @@ class DailyNote extends React.Component {
           <CKEditor
             config={{
               toolbar: {
-                viewportTopOffset: 20
+                viewportTopOffset: DailyNotesHeaderHeight
               }
             }}
             disabled={!this.state.isEditable}
             editor={EditorInlineBuild}
-            data={this.state.content}
             onInit={this.onInit}
           />
         </div>
@@ -114,22 +118,21 @@ class DailyNote extends React.Component {
 
 DailyNote.propTypes = {
   content: PropTypes.string,
-  updateContent: PropTypes.func.isRequired,
+  udid: PropTypes.string,
   date: PropTypes.object.isRequired,
-  size: PropTypes.object.isRequired,
-  notes: PropTypes.object
+  saveNote: PropTypes.func.isRequired,
+  size: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    size: state.layout[LayoutIds.DailyNote],
-    notes: state.notes
+    size: state.layout[LayoutIds.DailyNote]
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateContent: bindActionCreators(updateContent, dispatch)
+    saveNote: bindActionCreators(saveDailyNote, dispatch)
   };
 };
 
