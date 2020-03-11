@@ -15,6 +15,7 @@ class CalendarPopup extends React.Component {
     this.handleCalendarChange = this.handleCalendarChange.bind(this);
     this.generateBackToTodayButton = this.generateBackToTodayButton.bind(this);
     this.goBackToToday = this.goBackToToday.bind(this);
+    this.toggleCalendar = this.toggleCalendar.bind(this);
   }
 
   goBackToToday() {

@@ -6,6 +6,13 @@ import LayoutIds from '../../../constants/LayoutContants';
 import StyleConstants from '../../../constants/StyleContants';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
+import moment from 'moment';
+import {
+  fetchWeeklyNote,
+  saveWeeklyNote
+} from '../../redux/actions/notesActions';
+import { bindActionCreators } from 'redux';
+import { getMondayOfWeek, generateUwid } from '../../services/DateUtilService';
 
 class WeeklyNotesPanel extends React.Component {
   constructor(props) {
@@ -15,13 +22,31 @@ class WeeklyNotesPanel extends React.Component {
       content: '',
       editor: {}
     };
+    this.editor = null;
     this.onInit = this.onInit.bind(this);
     this.lockContent = this.lockContent.bind(this);
     this.getStyle = this.getStyle.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (!moment(nextProps.date).isSame(this.props.date)) {
+      this.props.fetchWeeklyNote(nextProps.date);
+    }
+    if (this.editor && !this.state.isEditable) {
+      const _content =
+        nextProps.contents[generateUwid(getMondayOfWeek(nextProps.date))];
+      this.editor.setData(_content || '');
+    }
+    return true;
+  }
+
+  componentDidMount() {
+    this.props.fetchWeeklyNote(this.props.date);
   }
 
   onInit(editor) {
-    this.setState({ editor });
+    this.editor = editor;
   }
 
   lockContent() {
@@ -32,10 +57,18 @@ class WeeklyNotesPanel extends React.Component {
       },
       () => {
         if (this.state.isEditable) {
-          this.state.editor.editing.view.focus();
+          this.editor.editing.view.focus();
         }
       }
     );
+  }
+
+  onBlur() {
+    this.props.saveNote({
+      date: this.props.date,
+      value: this.editor.getData()
+    });
+    this.lockContent();
   }
 
   getStyle() {
@@ -56,7 +89,7 @@ class WeeklyNotesPanel extends React.Component {
         className="week-note-container"
         title="Double click to edit"
         onDoubleClick={this.lockContent}
-        onBlur={this.lockContent}
+        onBlur={this.onBlur}
         style={this.getStyle()}
       >
         {this.state.isEditable ? null : (
@@ -77,14 +110,25 @@ class WeeklyNotesPanel extends React.Component {
 
 WeeklyNotesPanel.propTypes = {
   date: PropTypes.object.isRequired,
-  size: PropTypes.object
+  size: PropTypes.object,
+  contents: PropTypes.object,
+  fetchWeeklyNote: PropTypes.func.isRequired,
+  saveNote: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
   return {
     date: state.date.selectedDate,
-    size: state.layout[LayoutIds.WeeklyNotesPanel]
+    size: state.layout[LayoutIds.WeeklyNotesPanel],
+    contents: state.notes.contents
   };
 };
 
-export default connect(mapStateToProps)(WeeklyNotesPanel);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchWeeklyNote: bindActionCreators(fetchWeeklyNote, dispatch),
+    saveNote: bindActionCreators(saveWeeklyNote, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WeeklyNotesPanel);
