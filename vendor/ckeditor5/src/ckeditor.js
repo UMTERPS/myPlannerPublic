@@ -110,6 +110,7 @@ EditorInlineBuild.builtinPlugins = [
 // Editor configuration.
 EditorInlineBuild.defaultConfig = {
   toolbar: {
+    viewportTopOffset: 40,
     items: [
       // first row
       'bold',

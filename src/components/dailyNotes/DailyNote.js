@@ -8,7 +8,6 @@ import { FaLock, FaLockOpen } from 'react-icons/fa';
 import LayoutIds from '../../../constants/LayoutContants';
 import { saveDailyNote } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
-import DailyNotesHeaderHeight from '../../../constants/StyleContants';
 const weekMap = [
   'Sunday',
   'Monday',
@@ -101,11 +100,6 @@ class DailyNote extends React.Component {
           onBlur={this.onBlur}
         >
           <CKEditor
-            config={{
-              toolbar: {
-                viewportTopOffset: DailyNotesHeaderHeight
-              }
-            }}
             disabled={!this.state.isEditable}
             editor={EditorInlineBuild}
             onInit={this.onInit}

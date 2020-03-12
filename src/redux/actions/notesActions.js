@@ -14,8 +14,9 @@ export function setNoteStatus(status) {
 export function saveDailyNote(data) {
   return dispatch => {
     dispatch(setNoteStatus('loading'));
-    return updateDailyNote(data).then(() => {
+    return updateDailyNote(data).then(result => {
       dispatch(setNoteStatus('loaded'));
+      dispatch(updateNotes(result));
     });
   };
 }
@@ -23,8 +24,9 @@ export function saveDailyNote(data) {
 export function saveWeeklyNote(data) {
   return dispatch => {
     dispatch(setNoteStatus('loading'));
-    return updateWeeklyNote(data).then(() => {
+    return updateWeeklyNote(data).then(result => {
       dispatch(setNoteStatus('loaded'));
+      dispatch(updateNotes(result));
     });
   };
 }
