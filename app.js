@@ -75,13 +75,12 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on(ipcConstants.UPDATE_CONTENT, async (event, _token, key, value) => {
+ipcMain.on(ipcConstants.UPDATE_CONTENT, (event, _token, key, value) => {
   try {
     db.push('/' + key, value);
-    event.sender.send(
-      `${ipcConstants.UPDATE_CONTENT + _token}_SUCCESS`,
-      'data updated: {' + key + ': ' + value + ' }'
-    );
+    event.sender.send(`${ipcConstants.UPDATE_CONTENT + _token}_SUCCESS`, {
+      [key]: value
+    });
   } catch (error) {
     event.sender.send(
       `${ipcConstants.UPDATE_CONTENT + _token}_FAILED`,
@@ -90,7 +89,7 @@ ipcMain.on(ipcConstants.UPDATE_CONTENT, async (event, _token, key, value) => {
   }
 });
 
-ipcMain.on(ipcConstants.FETCH_CONTENT, async (event, _token, keys) => {
+ipcMain.on(ipcConstants.FETCH_CONTENT, (event, _token, keys) => {
   const _keys = _.isArray(keys) ? keys : new Array(keys);
   const results = {};
   try {
