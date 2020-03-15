@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DailyNotesHeader from './DailyNotesHeader';
 import DailyNotesCollection from './DailyNotesCollection';
-import LayoutIds from '../../../constants/LayoutContants';
+import LayoutIds from '../../../constants/LayoutConstants';
 import './DailyNotesPanel.less';
 import { connect } from 'react-redux';
 
@@ -21,7 +21,7 @@ class DailyNotesPanel extends React.Component {
     return (
       <div
         className="daily-panel"
-        style={{ minWidth: this.props.size.width + 'px' }}
+        style={{ width: this.props.size.width + 'px' }}
       >
         <DailyNotesHeader date={getMondayOfWeek(this.props.date)} />
         <DailyNotesCollection date={this.props.date} />

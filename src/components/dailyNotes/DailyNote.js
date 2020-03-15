@@ -5,8 +5,11 @@ import { connect } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorInlineBuild } from '../../../vendor/ckeditor5/src/ckeditor';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
-import LayoutIds from '../../../constants/LayoutContants';
-import { saveDailyNote } from '../../redux/actions/notesActions';
+import LayoutIds from '../../../constants/LayoutConstants';
+import {
+  saveDailyNote,
+  fetchSingleDailyNote
+} from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
 const weekMap = [
   'Sunday',
@@ -32,11 +35,12 @@ class DailyNote extends React.Component {
     this.onInit = this.onInit.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.editor && !this.state.isEditable) {
-      this.editor.setData(nextProps.content || '');
+  componentDidUpdate() {
+    if (this.editor) {
+      this.props.fetchSingleDailyNote(this.props.date).then(content => {
+        this.editor.setData(content || '');
+      });
     }
-    return true;
   }
 
   getInlineStyle() {
@@ -63,6 +67,9 @@ class DailyNote extends React.Component {
 
   onInit(editor) {
     this.editor = editor;
+    this.props.fetchSingleDailyNote(this.props.date).then(content => {
+      this.editor.setData(content || '');
+    });
   }
 
   onBlur() {
@@ -111,10 +118,10 @@ class DailyNote extends React.Component {
 }
 
 DailyNote.propTypes = {
-  content: PropTypes.string,
   udid: PropTypes.string,
   date: PropTypes.object.isRequired,
   saveNote: PropTypes.func.isRequired,
+  fetchSingleDailyNote: PropTypes.func.isRequired,
   size: PropTypes.object.isRequired
 };
 
@@ -126,7 +133,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveNote: bindActionCreators(saveDailyNote, dispatch)
+    saveNote: bindActionCreators(saveDailyNote, dispatch),
+    fetchSingleDailyNote: bindActionCreators(fetchSingleDailyNote, dispatch)
   };
 };
 

@@ -5,7 +5,7 @@ import {
   fetchDailyNotes,
   fetchWeeklyNote as fetchWeekly,
   fetchDailyNote
-} from '../../services/contentService';
+} from '../../services/NotesService';
 
 export function setNoteStatus(status) {
   return { type: UPDATE_NOTE_STATUS, status };
@@ -14,9 +14,8 @@ export function setNoteStatus(status) {
 export function saveDailyNote(data) {
   return dispatch => {
     dispatch(setNoteStatus('loading'));
-    return updateDailyNote(data).then(result => {
+    return updateDailyNote(data).then(() => {
       dispatch(setNoteStatus('loaded'));
-      dispatch(updateNotes(result));
     });
   };
 }
@@ -24,9 +23,8 @@ export function saveDailyNote(data) {
 export function saveWeeklyNote(data) {
   return dispatch => {
     dispatch(setNoteStatus('loading'));
-    return updateWeeklyNote(data).then(result => {
+    return updateWeeklyNote(data).then(() => {
       dispatch(setNoteStatus('loaded'));
-      dispatch(updateNotes(result));
     });
   };
 }
@@ -40,7 +38,7 @@ export function fetchWeeklyNote(date) {
     dispatch(setNoteStatus('loading'));
     return fetchWeekly(date).then(data => {
       dispatch(setNoteStatus('loaded'));
-      dispatch(updateNotes(data));
+      return data;
     });
   };
 }
@@ -50,7 +48,7 @@ export function fetchSingleDailyNote(date) {
     dispatch(setNoteStatus('loading'));
     return fetchDailyNote(date).then(data => {
       dispatch(setNoteStatus('loaded'));
-      dispatch(updateNotes(data));
+      return data;
     });
   };
 }

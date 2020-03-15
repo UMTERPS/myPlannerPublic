@@ -1,4 +1,4 @@
-import * as ipcProvider from '../providers/IpcSenderProvider';
+import * as ipcProvider from '../providers/IpcRendererProvider';
 import {
   generateUwid,
   generateUdid,
@@ -17,12 +17,17 @@ const updateWeeklyNote = data => {
 };
 
 const fetchWeeklyNote = date => {
-  return ipcProvider.fetchContentByUdids(generateUwid(getMondayOfWeek(date)));
+  const _uwid = generateUwid(getMondayOfWeek(date));
+  return ipcProvider.fetchContentByUdids(_uwid).then(data => {
+    return data[_uwid];
+  });
 };
 
 const fetchDailyNote = date => {
   const udid = generateUdid(date);
-  return ipcProvider.fetchContentByUdids(udid);
+  return ipcProvider.fetchContentByUdids(udid).then(data => {
+    return data[udid];
+  });
 };
 
 const fetchDailyNotes = date => {

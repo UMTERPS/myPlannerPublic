@@ -1,6 +1,5 @@
 import React from 'react';
-import LayoutIds from '../../constants/LayoutContants';
-import StyleConstants from '../../constants/StyleContants';
+import LayoutConstants from '../../constants/LayoutConstants';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import * as layoutActions from '../redux/actions/layoutActions';
@@ -10,9 +9,9 @@ const _ = require('lodash');
 class LayoutRoot {
   constructor(width, height) {
     this.width = width;
-    this.height = Math.max(height, 460);
-    const dailyNoteWidth = Math.max(width * 0.6, 480);
-    const weekNoteWidth = Math.max(width - dailyNoteWidth, 180);
+    this.height = Math.max(height, LayoutConstants.AppMinHeight);
+    const dailyNoteWidth = Math.max(width, LayoutConstants.AppMinWidth) * 0.6;
+    const weekNoteWidth = Math.max(width, LayoutConstants.AppMinWidth) * 0.4;
     this.children = [
       new WeekNotesPanel(weekNoteWidth, height),
       new DailyNotesPanel(dailyNoteWidth, height)
@@ -22,7 +21,7 @@ class LayoutRoot {
 
 class WeekNotesPanel {
   constructor(width, height) {
-    this.id = LayoutIds.WeeklyNotesPanel;
+    this.id = LayoutConstants.WeeklyNotesPanel;
     this.width = width;
     this.height = height;
   }
@@ -30,14 +29,14 @@ class WeekNotesPanel {
 
 class DailyNotesPanel {
   constructor(width, height) {
-    this.id = LayoutIds.DailyNotesPanel;
+    this.id = LayoutConstants.DailyNotesPanel;
     this.width = width;
     this.height = height;
     this.children = [
-      new DailyNotesHeader(width, StyleConstants.DailyNotesHeaderHeight),
+      new DailyNotesHeader(width, LayoutConstants.DailyNotesHeaderHeight),
       new DailyNotesCollection(
         width,
-        height - StyleConstants.DailyNotesHeaderHeight
+        height - LayoutConstants.DailyNotesHeaderHeight
       )
     ];
   }
@@ -45,7 +44,7 @@ class DailyNotesPanel {
 
 class DailyNotesHeader {
   constructor(width, height) {
-    this.id = LayoutIds.DailyNotesHeader;
+    this.id = LayoutConstants.DailyNotesHeader;
     this.width = width;
     this.height = height;
   }
@@ -53,7 +52,7 @@ class DailyNotesHeader {
 
 class DailyNotesCollection {
   constructor(width, height) {
-    this.id = LayoutIds.DailyNotesCollection;
+    this.id = LayoutConstants.DailyNotesCollection;
     this.width = width;
     this.height = height;
     this.children = [new DailyNote(width, height / 6)];
@@ -62,7 +61,7 @@ class DailyNotesCollection {
 
 class DailyNote {
   constructor(width, height) {
-    this.id = LayoutIds.DailyNote;
+    this.id = LayoutConstants.DailyNote;
     this.width = width;
     this.height = height;
   }
