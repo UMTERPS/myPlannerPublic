@@ -2,25 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './WeeklyNotesPanel.less';
-import LayoutIds from '../../../constants/LayoutContants';
-import StyleConstants from '../../../constants/StyleContants';
+import LayoutConstants from '../../../constants/LayoutConstants';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
-import moment from 'moment';
 import {
   fetchWeeklyNote,
   saveWeeklyNote
 } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
-import { getMondayOfWeek, generateUwid } from '../../services/DateUtilService';
 
 class WeeklyNotesPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditable: false,
-      content: '',
-      editor: {}
+      isEditable: false
     };
     this.editor = null;
     this.onInit = this.onInit.bind(this);
@@ -29,24 +24,19 @@ class WeeklyNotesPanel extends React.Component {
     this.onBlur = this.onBlur.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (!moment(nextProps.date).isSame(this.props.date)) {
-      this.props.fetchWeeklyNote(nextProps.date);
+  componentDidUpdate() {
+    if (this.editor) {
+      this.props.fetchWeeklyNote(this.props.date).then(content => {
+        this.editor.setData(content || '');
+      });
     }
-    if (this.editor && !this.state.isEditable) {
-      const _content =
-        nextProps.contents[generateUwid(getMondayOfWeek(nextProps.date))];
-      this.editor.setData(_content || '');
-    }
-    return true;
-  }
-
-  componentDidMount() {
-    this.props.fetchWeeklyNote(this.props.date);
   }
 
   onInit(editor) {
     this.editor = editor;
+    this.props.fetchWeeklyNote(this.props.date).then(content => {
+      this.editor.setData(content || '');
+    });
   }
 
   lockContent() {
@@ -75,7 +65,7 @@ class WeeklyNotesPanel extends React.Component {
     const inlineEditor = document.getElementsByClassName('ck-editor__main')[0];
     if (inlineEditor) {
       inlineEditor.style.height =
-        this.props.size.height - StyleConstants.DailyNotesHeaderHeight + 'px';
+        this.props.size.height - LayoutConstants.DailyNotesHeaderHeight + 'px';
     }
     return {
       width: this.props.size.width + 'px',
@@ -100,7 +90,6 @@ class WeeklyNotesPanel extends React.Component {
         <CKEditor
           disabled={!this.state.isEditable}
           editor={EditorClassicBuild}
-          data={this.state.content}
           onInit={this.onInit}
         />
       </div>
@@ -111,7 +100,6 @@ class WeeklyNotesPanel extends React.Component {
 WeeklyNotesPanel.propTypes = {
   date: PropTypes.object.isRequired,
   size: PropTypes.object,
-  contents: PropTypes.object,
   fetchWeeklyNote: PropTypes.func.isRequired,
   saveNote: PropTypes.func.isRequired
 };
@@ -119,8 +107,7 @@ WeeklyNotesPanel.propTypes = {
 const mapStateToProps = state => {
   return {
     date: state.date.selectedDate,
-    size: state.layout[LayoutIds.WeeklyNotesPanel],
-    contents: state.notes.contents
+    size: state.layout[LayoutConstants.WeeklyNotesPanel]
   };
 };
 

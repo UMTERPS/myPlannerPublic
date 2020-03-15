@@ -1,8 +1,16 @@
 export default {
+  // Layout component Ids
   WeeklyNotesPanel: 'WeeklyNotesPanel',
   DailyNotesPanel: 'DailyNotesPanel',
   DailyNotesCollection: 'DailyNotesCollection',
   DailyNotesHeader: 'DailyNotesHeader',
   DailyNote: 'DailyNote',
-  DateNavigation: 'DateNavigation'
+  DateNavigation: 'DateNavigation',
+
+  // Layout size
+  AppMinHeight: 460,
+  AppMinWidth: 660,
+  AppDefaultHeight: 800,
+  AppDefaultWidth: 600,
+  DailyNotesHeaderHeight: 40
 };

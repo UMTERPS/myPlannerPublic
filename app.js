@@ -1,16 +1,21 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const JsonDB = require('node-json-db').JsonDB;
 const Config = require('node-json-db/dist/lib/JsonDBConfig').Config;
 const protocols = require('electron-protocols');
-const ipcConstants = require('./constants/IPCContants');
-const _ = require('lodash');
+const registerIpcListeners = require('./electron/services/IpcMainService');
+
 const _SAVE_AFTER_PUSH = true;
 const _HUMAN_READABLE = false;
 const _SEPARATOR = '/';
 const db = new JsonDB(
   new Config('myPlanner', _SAVE_AFTER_PUSH, _HUMAN_READABLE, _SEPARATOR)
 );
+
+import layoutConstants from './constants/LayoutConstants';
+
+// register Ipc Main listeners, which handle saving & updating requests from Renderer
+registerIpcListeners(db);
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -22,18 +27,18 @@ protocols.register(
 );
 
 function createWindow() {
-  // Create the browser window.
+  // Creating the browser window.
   win = new BrowserWindow({
-    minHeight: 460,
-    minWidth: 660,
-    width: 800,
-    height: 600,
+    minHeight: layoutConstants.AppMinHeight,
+    minWidth: layoutConstants.AppMinWidth,
+    height: layoutConstants.AppDefaultHeight,
+    width: layoutConstants.AppDefaultWidth,
     webPreferences: {
       nodeIntegration: true
     }
   });
 
-  // and load the index.html of the app.
+  // load index html
   win.loadURL('local://index.html');
 
   win.on('reload', event => {
@@ -72,48 +77,5 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (win === null) {
     createWindow();
-  }
-});
-
-ipcMain.on(ipcConstants.UPDATE_CONTENT, (event, _token, key, value) => {
-  try {
-    db.push('/' + key, value);
-    event.sender.send(`${ipcConstants.UPDATE_CONTENT + _token}_SUCCESS`, {
-      [key]: value
-    });
-  } catch (error) {
-    event.sender.send(
-      `${ipcConstants.UPDATE_CONTENT + _token}_FAILED`,
-      'Failed to update data'
-    );
-  }
-});
-
-ipcMain.on(ipcConstants.FETCH_CONTENT, (event, _token, keys) => {
-  const _keys = _.isArray(keys) ? keys : new Array(keys);
-  const results = {};
-  try {
-    _.each(_keys, key => {
-      try {
-        const _result = db.getData('/' + key);
-        _.extend(results, { [key]: _result });
-      } catch (error) {
-        if (error.id === ipcConstants.DATA_NOT_FOUND) {
-          _.extend(results, { [key]: '' });
-        } else {
-          throw error;
-        }
-      }
-    });
-
-    event.sender.send(
-      `${ipcConstants.FETCH_CONTENT + _token}_SUCCESS`,
-      results
-    );
-  } catch (error) {
-    event.sender.send(
-      `${ipcConstants.FETCH_CONTENT + _token}_FAILED`,
-      'Failed to fetch data!'
-    );
   }
 });
