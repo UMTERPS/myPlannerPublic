@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   // Layout component Ids
   WeeklyNotesPanel: 'WeeklyNotesPanel',
   DailyNotesPanel: 'DailyNotesPanel',
@@ -10,7 +10,7 @@ export default {
   // Layout size
   AppMinHeight: 460,
   AppMinWidth: 660,
-  AppDefaultHeight: 800,
-  AppDefaultWidth: 600,
+  AppDefaultHeight: 600,
+  AppDefaultWidth: 800,
   DailyNotesHeaderHeight: 40
 };
