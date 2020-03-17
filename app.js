@@ -12,7 +12,7 @@ const db = new JsonDB(
   new Config('myPlanner', _SAVE_AFTER_PUSH, _HUMAN_READABLE, _SEPARATOR)
 );
 
-import layoutConstants from './constants/LayoutConstants';
+const layoutConstants = require('./constants/LayoutConstants');
 
 // register Ipc Main listeners, which handle saving & updating requests from Renderer
 registerIpcListeners(db);
