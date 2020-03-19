@@ -5,11 +5,17 @@ const Config = require('node-json-db/dist/lib/JsonDBConfig').Config;
 const protocols = require('electron-protocols');
 const registerIpcListeners = require('./electron/services/IpcMainService');
 
+const _USER_HOME_DIRECTORY = require('os').homedir();
 const _SAVE_AFTER_PUSH = true;
 const _HUMAN_READABLE = false;
 const _SEPARATOR = '/';
 const db = new JsonDB(
-  new Config('myPlanner', _SAVE_AFTER_PUSH, _HUMAN_READABLE, _SEPARATOR)
+  new Config(
+    _USER_HOME_DIRECTORY + '/Library/Application Support/myPlanner/myPlanner',
+    _SAVE_AFTER_PUSH,
+    _HUMAN_READABLE,
+    _SEPARATOR
+  )
 );
 
 const layoutConstants = require('./constants/LayoutConstants');
