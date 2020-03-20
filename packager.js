@@ -3,14 +3,21 @@ const fse = require('fs-extra');
 const rimraf = require('rimraf');
 const path = require('path');
 const CICDConstants = require('./constants/CICDConstants');
+const { serialHooks } = require('electron-packager/src/hooks');
 
 const config_darwin = {
   dir: CICDConstants.TEMPORARY_BUNDLE_BUILD_PATH,
   icon: './favicon.icns',
   overwrite: true,
-  platform: ['darwin'],
+  platform: 'darwin',
   ignore: 'report.html',
-  afterCopy: [postCleanUp]
+  afterCopy: [
+    serialHooks([
+      () => {
+        postCleanUp();
+      }
+    ])
+  ]
 };
 
 // TODO: Currently, unable to packager win32 exe on Mac
@@ -20,7 +27,14 @@ const config_windows = {
   overwrite: true,
   platform: 'win32',
   arch: 'x64',
-  ignore: 'report.html'
+  ignore: 'report.html',
+  afterCopy: [
+    serialHooks([
+      () => {
+        postCleanUp();
+      }
+    ])
+  ]
 };
 
 const ELECTRON_SOURCE_ENTRY = path.join(
@@ -37,7 +51,7 @@ const PACKAGE_JSON = path.join(
 );
 
 function postCleanUp() {
-  console.log('testing');
+  console.log('cleaning up temporary dir...');
   rimraf.sync(CICDConstants.FRONTEND_BUILD_PATH);
   rimraf.sync(CICDConstants.BACKEND_BUILD_PATH);
   rimraf.sync(CICDConstants.TEMPORARY_BUNDLE_BUILD_PATH);
@@ -62,11 +76,10 @@ function combine() {
 }
 
 async function bundleElectronApp(options) {
-  console.log('starting bundling........');
+  console.log('start bundling........');
   const appPaths = await packager(options);
   console.log(`Electron app bundles created:\n${appPaths.join('\n')}`);
 }
 
 combine();
 bundleElectronApp(config_darwin);
-// postCleanUp();
