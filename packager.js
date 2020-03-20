@@ -9,9 +9,11 @@ const config_darwin = {
   icon: './favicon.icns',
   overwrite: true,
   platform: ['darwin'],
-  ignore: 'report.html'
+  ignore: 'report.html',
+  afterCopy: [postCleanUp]
 };
 
+// TODO: Currently, unable to packager win32 exe on Mac
 const config_windows = {
   dir: CICDConstants.TEMPORARY_BUNDLE_BUILD_PATH,
   icon: './favicon.icns',
@@ -35,6 +37,7 @@ const PACKAGE_JSON = path.join(
 );
 
 function postCleanUp() {
+  console.log('testing');
   rimraf.sync(CICDConstants.FRONTEND_BUILD_PATH);
   rimraf.sync(CICDConstants.BACKEND_BUILD_PATH);
   rimraf.sync(CICDConstants.TEMPORARY_BUNDLE_BUILD_PATH);
@@ -66,4 +69,4 @@ async function bundleElectronApp(options) {
 
 combine();
 bundleElectronApp(config_darwin);
-postCleanUp();
+// postCleanUp();
