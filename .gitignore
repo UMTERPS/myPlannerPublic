@@ -28,7 +28,8 @@ node_modules
 
 # Build folder
 build
-dist
+dist*
+MyPlanner-*
 
 # Webstorm metadata
 .idea

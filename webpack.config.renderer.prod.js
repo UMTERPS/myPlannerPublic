@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { styles } = require('@ckeditor/ckeditor5-dev-utils');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpackBundleAnalyzer = require('webpack-bundle-analyzer');
+const CICDConstants = require('./constants/CICDConstants');
 
 process.env.NODE_ENV = 'production';
 
@@ -21,7 +22,7 @@ module.exports = {
   devtool: 'source-map',
   entry: './src/index',
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, CICDConstants.FRONTEND_BUILD_PATH),
     publicPath: 'local://',
     filename: 'bundle.js'
   },
