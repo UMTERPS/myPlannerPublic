@@ -1,7 +1,7 @@
 import React from 'react';
 import * as dateActions from '../../redux/actions/dateActions';
 import { bindActionCreators } from 'redux';
-import CalendarPopup from '../calendar/CalendarPopup';
+import CalendarPopup from '../calendar/CalendarPopup.tsx';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './DateNavigation.less';

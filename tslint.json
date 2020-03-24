@@ -1,0 +1,4 @@
+{
+  "extends": ["tslint:recommended", "tslint-react"],
+  "exclude": ["tsconig.json"]
+}

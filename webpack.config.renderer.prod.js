@@ -67,6 +67,18 @@ module.exports = {
         use: ['babel-loader', 'eslint-loader']
       },
       {
+        test: /\.(ts|tsx)$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            compilerOptions: {
+              declarationMap: false
+            }
+          }
+        }
+      },
+      {
         test: /(\.css)$/,
         use: [
           MiniCssExtractPlugin.loader,

@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.less';
 
-import App from './components/App';
+import App from './components/App.tsx';
 import configureStore from './redux/configureStore';
 import { Provider as ReduxProvider } from 'react-redux';
 import LayoutProvider from './providers/LayoutProvider';
