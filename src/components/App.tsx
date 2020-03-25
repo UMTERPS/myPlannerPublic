@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'react-calendar/dist/Calendar.css';
 import DailyNotesPanel from './dailyNotes/DailyNotesPanel';
-import WeeklyNotesPanel from './weeklyNote/WeeklyNotesPanel.tsx';
+import WeeklyNotesPanel from './weeklyNote/WeeklyNotesPanel';
 import './App.less';
 
 class App extends React.Component<any, any> {

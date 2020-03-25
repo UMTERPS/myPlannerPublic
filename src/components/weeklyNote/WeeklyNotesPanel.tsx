@@ -9,18 +9,16 @@ import {
   saveWeeklyNote
 } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
+import { Size } from '../../types/commonTypes';
 
 interface WeeklyNotesPanelProps {
   date: Date;
-  size: {
-    height: number;
-    width: number;
-  };
+  size: Size;
   fetchWeeklyNote: Function;
   saveNote: Function;
 }
 
-let editor;
+let editor: any;
 
 const WeeklyNotesPanel = ({
   date,
@@ -35,25 +33,22 @@ const WeeklyNotesPanel = ({
       fetchWeeklyNote(date).then(content => {
         editor.setData(content || '');
       });
+
+      if (isEditable) {
+        editor.editing.view.focus();
+      }
     }
   });
-
-  useEffect(() => {
-    if (isEditable) {
-      editor.editing.view.focus();
-    }
-  }, [editor]);
 
   const onInit = initeditor => {
     editor = initeditor;
     fetchWeeklyNote(date).then(content => {
-      editor.setData(content || '');
+      initeditor.setData(content || '');
     });
   };
 
   const lockContent = () => {
-    const _isEditable = !isEditable;
-    setIsEditable(_isEditable);
+    setIsEditable(!isEditable);
   };
 
   const onBlur = () => {

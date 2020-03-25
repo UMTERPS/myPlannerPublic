@@ -26,6 +26,9 @@ module.exports = {
     publicPath: 'local://',
     filename: 'bundle.js'
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
+  },
   plugins: [
     new webpackBundleAnalyzer.BundleAnalyzerPlugin({
       analyzerMode: 'static',

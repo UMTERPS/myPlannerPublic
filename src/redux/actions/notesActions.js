@@ -5,7 +5,7 @@ import {
   fetchDailyNotes,
   fetchWeeklyNote as fetchWeekly,
   fetchDailyNote
-} from '../../services/NotesService';
+} from '../../services/NotesService.ts';
 
 export function setNoteStatus(status) {
   return { type: UPDATE_NOTE_STATUS, status };

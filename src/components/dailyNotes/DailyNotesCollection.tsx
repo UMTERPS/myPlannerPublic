@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 import DailyNote from './DailyNote';
 import './DailyNotesCollection.less';
 import { connect } from 'react-redux';
@@ -7,20 +6,26 @@ import LayoutIds from '../../../constants/LayoutConstants';
 import { getDailyData } from '../../services/DateUtilService';
 import { bindActionCreators } from 'redux';
 import { fetchAllDailyNotes } from '../../redux/actions/notesActions';
+import { Size } from '../../types/commonTypes';
 
-class DailyNotesCollection extends React.Component {
-  constructor(props) {
-    super(props);
-    this.generateDailys = this.generateDailys.bind(this);
-  }
+interface DailyNotesCollectionProps {
+  date: Date;
+  fetchAllDailyNotes: Function;
+  size: Size;
+}
 
-  generateDailys() {
-    const days = getDailyData(this.props.date);
-    const dailys = [];
+const DailyNotesCollection = ({
+  date,
+  fetchAllDailyNotes,
+  size
+}: DailyNotesCollectionProps) => {
+  const generateDailys = () => {
+    const days = getDailyData(date);
+    const dailys: ReactNode[] = [];
     days.slice(0, 5).forEach((day, index) => {
       dailys.push(
         <div key={index}>
-          <DailyNote date={day.date} udid={day.udid} />
+          <DailyNote date={day.date} uid={index} />
         </div>
       );
     });
@@ -28,40 +33,32 @@ class DailyNotesCollection extends React.Component {
     dailys.push(
       <div key="weekend-key" className="weekend-row">
         <div key={5} className="column-one">
-          <DailyNote date={days[5].date} udid={days[5].udid} />
+          <DailyNote date={days[5].date} uid={5} />
         </div>
         <div key={6} className="column-two">
-          <DailyNote date={days[6].date} udid={days[6].udid} />
+          <DailyNote date={days[6].date} uid={6} />
         </div>
       </div>
     );
 
     return dailys;
-  }
+  };
 
-  render() {
-    return (
-      <div className="daily-collection">
-        <div>{this.generateDailys()}</div>
-      </div>
-    );
-  }
-}
-
-DailyNotesCollection.propTypes = {
-  date: PropTypes.object.isRequired,
-  fetchAllDailyNotes: PropTypes.func.isRequired,
-  size: PropTypes.object
+  return (
+    <div className="daily-collection">
+      <div>{generateDailys()}</div>
+    </div>
+  );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps: any = (state: any) => {
   return {
     date: state.date.selectedDate,
     size: state.layout[LayoutIds.DailyNotesCollection]
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps: any = dispatch => {
   return {
     fetchAllDailyNotes: bindActionCreators(fetchAllDailyNotes, dispatch)
   };

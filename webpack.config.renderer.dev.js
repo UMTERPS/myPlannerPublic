@@ -28,6 +28,9 @@ module.exports = {
       favicon: './favicon.ico'
     })
   ],
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
+  },
   module: {
     rules: [
       {
