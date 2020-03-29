@@ -9,11 +9,11 @@ import {
   saveWeeklyNote
 } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
-import { Size } from '../../types/commonTypes';
+import { ISize } from '../../types/commonTypes';
 
-interface WeeklyNotesPanelProps {
+interface IWeeklyNotesPanelProps {
   date: Date;
-  size: Size;
+  size: ISize;
   fetchWeeklyNote: Function;
   saveNote: Function;
 }
@@ -25,7 +25,7 @@ const WeeklyNotesPanel = ({
   size,
   fetchWeeklyNote,
   saveNote
-}: WeeklyNotesPanelProps) => {
+}: IWeeklyNotesPanelProps) => {
   const [isEditable, setIsEditable] = useState(false);
 
   useEffect(() => {

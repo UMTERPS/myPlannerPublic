@@ -5,12 +5,12 @@ import CalendarPopup from '../calendar/CalendarPopup';
 import { connect } from 'react-redux';
 import './DateNavigation.less';
 
-interface DateNavigationProps {
+interface IDateNavigationProps {
   date: Date;
   setDate: Function;
 }
 
-const DateNavigation = ({ date, setDate }: DateNavigationProps) => {
+const DateNavigation = ({ date, setDate }: IDateNavigationProps) => {
   const goPrevWeek = () => {
     const _date = new Date(date);
     _date.setDate(date.getDate() - 7);

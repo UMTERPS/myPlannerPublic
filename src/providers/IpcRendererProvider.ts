@@ -1,7 +1,7 @@
 import { ipcRenderer as ipc } from 'electron';
 import ipcConstants from '../../constants/IPCContants';
 
-const _generateEventToken = (length = 16) => {
+const _generateEventToken = (length: number = 16): string => {
   let random_string = '';
   let random_ascii;
   for (let i = 0; i < length; i++) {
@@ -11,7 +11,7 @@ const _generateEventToken = (length = 16) => {
   return random_string.toUpperCase();
 };
 
-const updateContent = (key, value) => {
+const updateContent = (key: string, value: string): Promise<void> => {
   const _token = _generateEventToken();
   ipc.send(ipcConstants.UPDATE_CONTENT, _token, key, value);
   return new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@ const updateContent = (key, value) => {
   });
 };
 
-const fetchContentByUdids = udids => {
+const fetchContentByUdids = (udids: string | [string]): Promise<string> => {
   const _token = _generateEventToken();
   ipc.send(ipcConstants.FETCH_CONTENT, _token, udids);
   return new Promise((resolve, reject) => {

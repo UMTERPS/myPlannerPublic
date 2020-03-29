@@ -3,12 +3,12 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import './CalendarPopup.less';
 
-interface CalendarPopupProps {
+interface ICalendarPopupProps {
   date: Date;
   setDate: Function;
 }
 
-const CalendarPopup = ({ date, setDate }: CalendarPopupProps) => {
+const CalendarPopup = ({ date, setDate }: ICalendarPopupProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
 
   const goBackToToday = () => {

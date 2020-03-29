@@ -14,6 +14,22 @@ module.exports = {
     publicPath: 'local://',
     filename: 'bundle.js'
   },
+  module: {
+    rules: [
+      {
+        test: /\.(ts)$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            compilerOptions: {
+              declarationMap: false
+            }
+          }
+        }
+      }
+    ]
+  },
   plugins: [
     new webpackBundleAnalyzer.BundleAnalyzerPlugin({
       analyzerMode: 'static',

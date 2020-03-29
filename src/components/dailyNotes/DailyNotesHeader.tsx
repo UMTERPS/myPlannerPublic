@@ -4,7 +4,7 @@ import './DailyNotesHeader.less';
 import { connect } from 'react-redux';
 import LayoutIds from '../../../constants/LayoutConstants';
 import DateNavigation from '../dateNavigation/DateNavigation';
-import { Size } from '../../types/commonTypes';
+import { ISize } from '../../types/commonTypes';
 
 const monthMap = [
   'January',
@@ -21,12 +21,12 @@ const monthMap = [
   'December'
 ];
 
-interface DailyNotesHeaderProps {
+interface IDailyNotesHeaderProps {
   date: Date;
-  size: Size;
+  size: ISize;
 }
 
-const DailyNotesHeader = ({ date, size }: DailyNotesHeaderProps) => {
+const DailyNotesHeader = ({ date, size }: IDailyNotesHeaderProps) => {
   return (
     <div
       className="daily-note-header-container"

@@ -10,7 +10,7 @@ import {
   fetchSingleDailyNote
 } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
-import { Size } from '../../types/commonTypes';
+import { ISize } from '../../types/commonTypes';
 const weekMap = [
   'Sunday',
   'Monday',
@@ -21,12 +21,12 @@ const weekMap = [
   'Saturday'
 ];
 
-interface DailyNoteProps {
+interface IDailyNoteProps {
   uid: string;
   date: Date;
   saveNote: Function;
   fetchSingleDailyNote: Function;
-  size: Size;
+  size: ISize;
 }
 
 let editors: any = {};
@@ -37,7 +37,7 @@ const DailyNote = ({
   saveNote,
   fetchSingleDailyNote,
   size
-}: DailyNoteProps) => {
+}: IDailyNoteProps) => {
   const [isEditable, setIsEditable] = useState(false);
   let editor = editors[uid];
   useEffect(() => {

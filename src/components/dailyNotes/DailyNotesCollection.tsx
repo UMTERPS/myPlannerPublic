@@ -4,21 +4,14 @@ import './DailyNotesCollection.less';
 import { connect } from 'react-redux';
 import LayoutIds from '../../../constants/LayoutConstants';
 import { getDailyData } from '../../services/DateUtilService';
-import { bindActionCreators } from 'redux';
-import { fetchAllDailyNotes } from '../../redux/actions/notesActions';
-import { Size } from '../../types/commonTypes';
+// import { bindActionCreators } from 'redux';
+// import { fetchAllDailyNotes } from '../../redux/actions/notesActions';
 
-interface DailyNotesCollectionProps {
+interface IDailyNotesCollectionProps {
   date: Date;
-  fetchAllDailyNotes: Function;
-  size: Size;
 }
 
-const DailyNotesCollection = ({
-  date,
-  fetchAllDailyNotes,
-  size
-}: DailyNotesCollectionProps) => {
+const DailyNotesCollection = ({ date }: IDailyNotesCollectionProps) => {
   const generateDailys = () => {
     const days = getDailyData(date);
     const dailys: ReactNode[] = [];
@@ -58,13 +51,13 @@ const mapStateToProps: any = (state: any) => {
   };
 };
 
-const mapDispatchToProps: any = dispatch => {
-  return {
-    fetchAllDailyNotes: bindActionCreators(fetchAllDailyNotes, dispatch)
-  };
-};
+// const mapDispatchToProps: any = dispatch => {
+//   return {
+//     fetchAllDailyNotes: bindActionCreators(fetchAllDailyNotes, dispatch)
+//   };
+// };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
+  // mapDispatchToProps
 )(DailyNotesCollection);

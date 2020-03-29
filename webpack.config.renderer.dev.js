@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   target: 'electron-renderer',
   devtool: 'cheap-module-source-map',
-  entry: './src/index',
+  entry: './src/index.tsx',
   watch: true,
   output: {
     path: path.resolve(__dirname, 'build'),

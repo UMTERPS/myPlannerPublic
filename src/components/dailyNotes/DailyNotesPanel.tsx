@@ -4,15 +4,15 @@ import DailyNotesCollection from './DailyNotesCollection';
 import LayoutIds from '../../../constants/LayoutConstants';
 import './DailyNotesPanel.less';
 import { connect } from 'react-redux';
-import { Size } from '../../types/commonTypes';
+import { ISize } from '../../types/commonTypes';
 import { getMondayOfWeek } from '../../services/DateUtilService';
 
-interface DailyNotesPanelProps {
+interface IDailyNotesPanelProps {
   date: Date;
-  size: Size;
+  size: ISize;
 }
 
-const DailyNotesPanel = ({ date, size }: DailyNotesPanelProps) => {
+const DailyNotesPanel = ({ date, size }: IDailyNotesPanelProps) => {
   return (
     <div className="daily-panel" style={{ width: size.width + 'px' }}>
       <DailyNotesHeader date={getMondayOfWeek(date)} />
