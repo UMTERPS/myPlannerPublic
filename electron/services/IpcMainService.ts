@@ -1,8 +1,9 @@
-const { ipcMain } = require('electron');
-const ipcConstants = require('../../constants/IPCContants');
-const _ = require('lodash');
+import { ipcMain } from 'electron';
+import ipcConstants from '../../constants/IPCContants';
+import { isArray, extend, each } from 'lodash';
+import { JsonDB } from 'node-json-db';
 
-module.exports = function registerIpcListeners(db) {
+const registerIpcListeners = (db: JsonDB): void => {
   ipcMain.on(ipcConstants.UPDATE_CONTENT, (event, _token, key, value) => {
     try {
       db.push('/' + key, value);
@@ -18,16 +19,16 @@ module.exports = function registerIpcListeners(db) {
   });
 
   ipcMain.on(ipcConstants.FETCH_CONTENT, (event, _token, keys) => {
-    const _keys = _.isArray(keys) ? keys : new Array(keys);
+    const _keys = isArray(keys) ? keys : new Array(keys);
     const results = {};
     try {
-      _.each(_keys, key => {
+      each(_keys, key => {
         try {
           const _result = db.getData('/' + key);
-          _.extend(results, { [key]: _result });
+          extend(results, { [key]: _result });
         } catch (error) {
           if (error.id === ipcConstants.DATA_NOT_FOUND) {
-            _.extend(results, { [key]: '' });
+            extend(results, { [key]: '' });
           } else {
             throw error;
           }
@@ -46,3 +47,5 @@ module.exports = function registerIpcListeners(db) {
     }
   });
 };
+
+export default registerIpcListeners;

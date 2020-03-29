@@ -1,10 +1,10 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
-const JsonDB = require('node-json-db').JsonDB;
-const Config = require('node-json-db/dist/lib/JsonDBConfig').Config;
-const protocols = require('electron-protocols');
-const registerIpcListeners = require('./electron/services/IpcMainService');
-const layoutConstants = require('./constants/LayoutConstants');
+import { app, BrowserWindow } from 'electron';
+import path from 'path';
+import { JsonDB } from 'node-json-db';
+import { Config } from 'node-json-db/dist/lib/JsonDBConfig';
+import protocols from 'electron-protocols';
+import registerIpcListeners from './electron/services/IpcMainService';
+import layoutConstants from './constants/LayoutConstants';
 
 const _USER_HOME_DIRECTORY = require('os').homedir();
 const _SAVE_AFTER_PUSH = true;
@@ -15,12 +15,15 @@ const _DB_PATHS = {
   darwin: '/Library/Application Support/MyPlanner/MyPlanner',
   linux: 'MyPlanner'
 };
+const isDev = process.env.NODE_ENV !== 'production';
 
 // register Ipc Main listeners, which handle saving & updating requests from Renderer
 registerIpcListeners(
   new JsonDB(
     new Config(
-      _USER_HOME_DIRECTORY + _DB_PATHS[process.platform],
+      isDev
+        ? './MyPlanner.json'
+        : _USER_HOME_DIRECTORY + _DB_PATHS[process.platform],
       _SAVE_AFTER_PUSH,
       _HUMAN_READABLE,
       _SEPARATOR
@@ -34,7 +37,7 @@ let win;
 
 protocols.register(
   'local',
-  protocols.basepath(path.join(app.getAppPath(), 'build'))
+  protocols.basepath(path.join(app.getAppPath(), './build'))
 );
 
 function createWindow() {

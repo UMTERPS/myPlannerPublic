@@ -19,7 +19,6 @@ const postcssLoaderOptions = styles.getPostCssConfig({
 module.exports = {
   mode: 'production',
   target: 'electron-renderer',
-  devtool: 'source-map',
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, CICDConstants.FRONTEND_BUILD_PATH),

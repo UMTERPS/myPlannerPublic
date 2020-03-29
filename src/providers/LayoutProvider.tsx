@@ -3,13 +3,12 @@ import LayoutConstants from '../../constants/LayoutConstants';
 import { bindActionCreators } from 'redux';
 import * as layoutActions from '../redux/actions/layoutActions';
 import { connect } from 'react-redux';
-const _ = require('lodash');
 
 interface ILayoutNode {
   id?: string;
   width: number;
   height: number;
-  children?: Array<ILayoutNode>;
+  children: Array<ILayoutNode>;
 }
 
 class BasicLayoutNode implements ILayoutNode {
@@ -86,20 +85,18 @@ class DailyNote extends BasicLayoutNode {
   }
 }
 
-const getLayout = (root, layout) => {
+const getLayout = (root: ILayoutNode, layout: Object) => {
   if (root.children) {
-    _.each(root.children, child => {
+    root.children.forEach(child => {
       getLayout(child, layout);
     });
   }
 
   if (root.id) {
-    _.extend(layout, {
-      [root.id]: {
-        width: root.width,
-        height: root.height
-      }
-    });
+    layout[root.id] = {
+      width: root.width,
+      height: root.height
+    };
   }
 };
 

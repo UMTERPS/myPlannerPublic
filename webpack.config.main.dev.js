@@ -1,18 +1,16 @@
 const webpack = require('webpack');
 const path = require('path');
-const webpackBundleAnalyzer = require('webpack-bundle-analyzer');
-const CICDConstants = require('./constants/CICDConstants');
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   target: 'electron-main',
   entry: './application.ts',
   output: {
-    path: path.resolve(__dirname, CICDConstants.BACKEND_BUILD_PATH),
+    path: path.resolve(__dirname),
     publicPath: 'local://',
-    filename: 'bundle.js'
+    filename: 'application.js'
   },
   module: {
     rules: [
@@ -34,10 +32,6 @@ module.exports = {
     extensions: ['.ts', '.js']
   },
   plugins: [
-    new webpackBundleAnalyzer.BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: false
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })

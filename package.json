@@ -12,7 +12,7 @@
     "build:ckeditor": "cd ./vendor/ckeditor5 && npm run build",
     "build:main": "webpack --config webpack.config.main.prod.js",
     "build:ui": "webpack --config webpack.config.renderer.dev.js",
-    "start:electron": "electron app.js",
+    "start:electron": "webpack --config webpack.config.main.dev.js && electron ./application.js",
     "start": "npm run build:ui & npm run start:electron",
     "bootstrap": "npm run bootstrap:ckeditor && npm run build:ui & npm run start:electron"
   },
