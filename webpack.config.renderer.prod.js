@@ -19,12 +19,14 @@ const postcssLoaderOptions = styles.getPostCssConfig({
 module.exports = {
   mode: 'production',
   target: 'electron-renderer',
-  devtool: 'source-map',
-  entry: './src/index',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, CICDConstants.FRONTEND_BUILD_PATH),
     publicPath: 'local://',
     filename: 'bundle.js'
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
   },
   plugins: [
     new webpackBundleAnalyzer.BundleAnalyzerPlugin({
@@ -65,6 +67,18 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader', 'eslint-loader']
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            compilerOptions: {
+              declarationMap: false
+            }
+          }
+        }
       },
       {
         test: /(\.css)$/,

@@ -1,9 +1,10 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
-const JsonDB = require('node-json-db').JsonDB;
-const Config = require('node-json-db/dist/lib/JsonDBConfig').Config;
-const protocols = require('electron-protocols');
-const registerIpcListeners = require('./electron/services/IpcMainService');
+import { app, BrowserWindow } from 'electron';
+import path from 'path';
+import { JsonDB } from 'node-json-db';
+import { Config } from 'node-json-db/dist/lib/JsonDBConfig';
+import protocols from 'electron-protocols';
+import registerIpcListeners from './electron/services/IpcMainService';
+import layoutConstants from './constants/LayoutConstants';
 
 const _USER_HOME_DIRECTORY = require('os').homedir();
 const _SAVE_AFTER_PUSH = true;
@@ -11,21 +12,24 @@ const _HUMAN_READABLE = false;
 const _SEPARATOR = '/';
 const _DB_PATHS = {
   win32: '/AppData/Local/MyPlanner/MyPlanner',
-  darwin: '/Library/Application Support/MyPlanner/MyPlanner'
+  darwin: '/Library/Application Support/MyPlanner/MyPlanner',
+  linux: 'MyPlanner'
 };
-const db = new JsonDB(
-  new Config(
-    _USER_HOME_DIRECTORY + _DB_PATHS[process.platform],
-    _SAVE_AFTER_PUSH,
-    _HUMAN_READABLE,
-    _SEPARATOR
-  )
-);
-
-const layoutConstants = require('./constants/LayoutConstants');
+const isDev = process.env.NODE_ENV !== 'production';
 
 // register Ipc Main listeners, which handle saving & updating requests from Renderer
-registerIpcListeners(db);
+registerIpcListeners(
+  new JsonDB(
+    new Config(
+      isDev
+        ? './MyPlanner.json'
+        : _USER_HOME_DIRECTORY + _DB_PATHS[process.platform],
+      _SAVE_AFTER_PUSH,
+      _HUMAN_READABLE,
+      _SEPARATOR
+    )
+  )
+);
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -33,7 +37,7 @@ let win;
 
 protocols.register(
   'local',
-  protocols.basepath(path.join(app.getAppPath(), 'build'))
+  protocols.basepath(path.join(app.getAppPath(), './build'))
 );
 
 function createWindow() {

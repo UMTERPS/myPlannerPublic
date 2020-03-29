@@ -1,6 +1,8 @@
 const path = require('path');
 const { styles } = require('@ckeditor/ckeditor5-dev-utils');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpackBundleAnalyzer = require('webpack-bundle-analyzer');
+const BUILD_PATH = 'build';
 
 process.env.NODE_ENV = 'production';
 
@@ -8,10 +10,10 @@ module.exports = {
   mode: 'development',
   target: 'electron-renderer',
   devtool: 'cheap-module-source-map',
-  entry: './src/index',
+  entry: './src/index.tsx',
   watch: true,
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, BUILD_PATH),
     publicPath: 'local://',
     filename: 'bundle.js'
   },
@@ -23,11 +25,21 @@ module.exports = {
     https: false
   },
   plugins: [
+    new webpackBundleAnalyzer.BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false
+    }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       favicon: './favicon.ico'
     })
   ],
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
+  },
+  optimization: {
+    usedExports: true
+  },
   module: {
     rules: [
       {
@@ -38,6 +50,18 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader', 'eslint-loader']
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            compilerOptions: {
+              declarationMap: false
+            }
+          }
+        }
       },
       {
         test: /(\.css)$/,

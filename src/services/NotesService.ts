@@ -5,40 +5,30 @@ import {
   generateUdidsByDate,
   getMondayOfWeek
 } from './DateUtilService';
+import { IDateNotePayload } from '../types/commonTypes';
 
-const updateDailyNote = data => {
+const updateDailyNote = (data: IDateNotePayload): Promise<void> => {
   const _key = generateUdid(data.date);
   return ipcProvider.updateContent(_key, data.value);
 };
 
-const updateWeeklyNote = data => {
+const updateWeeklyNote = (data: IDateNotePayload): Promise<void> => {
   const _key = generateUwid(getMondayOfWeek(data.date));
   return ipcProvider.updateContent(_key, data.value);
 };
 
-const fetchWeeklyNote = date => {
+const fetchWeeklyNote = (date: Date): Promise<string> => {
   const _uwid = generateUwid(getMondayOfWeek(date));
   return ipcProvider.fetchContentByUdids(_uwid).then(data => {
     return data[_uwid];
   });
 };
 
-const fetchDailyNote = date => {
+const fetchDailyNote = (date: Date): Promise<string> => {
   const udid = generateUdid(date);
   return ipcProvider.fetchContentByUdids(udid).then(data => {
     return data[udid];
   });
 };
 
-const fetchDailyNotes = date => {
-  const udids = generateUdidsByDate(date);
-  return ipcProvider.fetchContentByUdids(udids);
-};
-
-export {
-  updateDailyNote,
-  updateWeeklyNote,
-  fetchWeeklyNote,
-  fetchDailyNote,
-  fetchDailyNotes
-};
+export { updateDailyNote, updateWeeklyNote, fetchWeeklyNote, fetchDailyNote };

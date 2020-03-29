@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LayoutConstants from '../../constants/LayoutConstants';
 import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
 import * as layoutActions from '../redux/actions/layoutActions';
 import { connect } from 'react-redux';
-const _ = require('lodash');
 
-class LayoutRoot {
+interface ILayoutNode {
+  id?: string;
+  width: number;
+  height: number;
+  children: Array<ILayoutNode>;
+}
+
+class BasicLayoutNode implements ILayoutNode {
+  public id: string = '';
+  public width: number = 0;
+  public height: number = 0;
+  public children: Array<ILayoutNode> = new Array();
+}
+
+class LayoutRoot extends BasicLayoutNode {
   constructor(width, height) {
+    super();
     this.width = width;
     this.height = Math.max(height, LayoutConstants.AppMinHeight);
     const dailyNoteWidth = Math.max(width, LayoutConstants.AppMinWidth) * 0.6;
@@ -19,16 +32,18 @@ class LayoutRoot {
   }
 }
 
-class WeekNotesPanel {
+class WeekNotesPanel extends BasicLayoutNode {
   constructor(width, height) {
+    super();
     this.id = LayoutConstants.WeeklyNotesPanel;
     this.width = width;
     this.height = height;
   }
 }
 
-class DailyNotesPanel {
+class DailyNotesPanel extends BasicLayoutNode {
   constructor(width, height) {
+    super();
     this.id = LayoutConstants.DailyNotesPanel;
     this.width = width;
     this.height = height;
@@ -42,16 +57,18 @@ class DailyNotesPanel {
   }
 }
 
-class DailyNotesHeader {
+class DailyNotesHeader extends BasicLayoutNode {
   constructor(width, height) {
+    super();
     this.id = LayoutConstants.DailyNotesHeader;
     this.width = width;
     this.height = height;
   }
 }
 
-class DailyNotesCollection {
+class DailyNotesCollection extends BasicLayoutNode {
   constructor(width, height) {
+    super();
     this.id = LayoutConstants.DailyNotesCollection;
     this.width = width;
     this.height = height;
@@ -59,49 +76,51 @@ class DailyNotesCollection {
   }
 }
 
-class DailyNote {
+class DailyNote extends BasicLayoutNode {
   constructor(width, height) {
+    super();
     this.id = LayoutConstants.DailyNote;
     this.width = width;
     this.height = height;
   }
 }
 
-const getLayout = (root, layout) => {
+const getLayout = (root: ILayoutNode, layout: Object) => {
   if (root.children) {
-    _.each(root.children, child => {
+    root.children.forEach(child => {
       getLayout(child, layout);
     });
   }
 
   if (root.id) {
-    _.extend(layout, {
-      [root.id]: {
-        width: root.width,
-        height: root.height
-      }
-    });
+    layout[root.id] = {
+      width: root.width,
+      height: root.height
+    };
   }
 };
 
+interface ILayoutProviderProps {
+  updateLayout: Function;
+}
+let initilized = false;
+
 // TODO: To convert this into a non react component
-class LayoutProvider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.updateComponetSize = this.updateComponetSize.bind(this);
-    this.updateComponetSize();
-  }
+const LayoutProvider = ({ updateLayout }: ILayoutProviderProps) => {
+  useEffect(() => {
+    if (!initilized) {
+      initilized = true;
+      const spinner = document.getElementById(
+        'index-loading-spinner'
+      ) as HTMLElement;
+      spinner.style.display = 'none';
+      updateComponetSize();
+      window.addEventListener('resize', updateComponetSize);
+    }
+  });
 
-  componentDidMount() {
-    const spinner = document.getElementById('index-loading-spinner');
-    spinner.style.display = 'none';
-
-    this.updateComponetSize();
-    window.addEventListener('resize', this.updateComponetSize);
-  }
-
-  updateComponetSize() {
-    const rootDiv = document.getElementById('app');
+  const updateComponetSize = () => {
+    const rootDiv = document.getElementById('app') as HTMLElement;
     const rootDivWidth = rootDiv.clientWidth;
     const rootDivHeight = rootDiv.clientHeight;
     const layoutTree = new LayoutRoot(rootDivWidth, rootDivHeight);
@@ -109,26 +128,32 @@ class LayoutProvider extends React.Component {
     const layout = {};
 
     getLayout(layoutTree, layout);
-    this.props.updateLayout(layout);
-  }
+    updateLayout(layout);
+  };
 
-  render() {
-    return <React.Fragment />;
-  }
-}
-
-LayoutProvider.propTypes = {
-  updateLayout: PropTypes.func.isRequired
+  return <React.Fragment />;
 };
 
-const mapStateToProps = state => ({
-  layout: state.layout
+const mapStateToProps: any = (state: any) => ({
+  // layout: state.layout
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps: any = (dispatch: any) => {
   return {
     updateLayout: bindActionCreators(layoutActions.updateLayout, dispatch)
   };
+};
+
+export const initLayout = () => {
+  const rootDiv = document.getElementById('app') as HTMLElement;
+  const rootDivWidth = rootDiv.clientWidth;
+  const rootDivHeight = rootDiv.clientHeight;
+  const layoutTree = new LayoutRoot(rootDivWidth, rootDivHeight);
+
+  const layout = {};
+
+  getLayout(layoutTree, layout);
+  return layout;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutProvider);
