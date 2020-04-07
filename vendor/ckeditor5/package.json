@@ -1,11 +1,11 @@
 {
-  "name": "ckeditor5-custom-build",
+  "name": "ckeditors",
   "author": "CKSource",
   "description": "A custom CKEditor 5 build made by the CKEditor 5 online builder.",
   "version": "0.0.1",
   "license": "SEE LICENSE IN LICENSE.md",
   "private": true,
-  "main": "./src/ckeditor.js",
+  "main": "./build/ckeditor.js",
   "files": [
     "build"
   ],

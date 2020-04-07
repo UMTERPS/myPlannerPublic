@@ -142,4 +142,4 @@ EditorInlineBuild.defaultConfig = {
   language: 'en'
 };
 
-export { EditorInlineBuild, EditorClassicBuild };
+export default { EditorInlineBuild, EditorClassicBuild };

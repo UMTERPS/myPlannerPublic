@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './DailyNote.less';
 import { connect } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import { EditorInlineBuild } from '../../../vendor/ckeditor5/src/ckeditor';
+import ckeditors from 'ckeditors';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
 import LayoutIds from '../../../constants/LayoutConstants';
 import {
   saveDailyNote,
-  fetchSingleDailyNote
+  fetchSingleDailyNote,
 } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
 import { ISize } from '../../types/commonTypes';
@@ -18,7 +18,7 @@ const weekMap = [
   'Wednesday',
   'Thursday',
   'Friday',
-  'Saturday'
+  'Saturday',
 ];
 
 interface IDailyNoteProps {
@@ -36,13 +36,13 @@ const DailyNote = ({
   date,
   saveNote,
   fetchSingleDailyNote,
-  size
+  size,
 }: IDailyNoteProps) => {
   const [isEditable, setIsEditable] = useState(false);
   let editor = editors[uid];
   useEffect(() => {
     if (editor) {
-      fetchSingleDailyNote(date).then(content => {
+      fetchSingleDailyNote(date).then((content) => {
         editor.setData(content || '');
       });
       if (isEditable) {
@@ -51,16 +51,16 @@ const DailyNote = ({
     }
   });
 
-  const onInit = initeditor => {
+  const onInit = (initeditor) => {
     editors[uid] = initeditor;
-    fetchSingleDailyNote(date).then(content => {
+    fetchSingleDailyNote(date).then((content) => {
       initeditor.setData(content || '');
     });
   };
 
   const getInlineStyle = () => {
     return {
-      height: size.height + 'px'
+      height: size.height + 'px',
     };
   };
 
@@ -74,7 +74,7 @@ const DailyNote = ({
   const onBlur = () => {
     saveNote({
       date,
-      value: editor.getData()
+      value: editor.getData(),
     });
     lockContent();
   };
@@ -106,7 +106,7 @@ const DailyNote = ({
       >
         <CKEditor
           disabled={!isEditable}
-          editor={EditorInlineBuild}
+          editor={ckeditors.EditorInlineBuild}
           onInit={onInit}
         />
       </div>
@@ -116,14 +116,14 @@ const DailyNote = ({
 
 const mapStateToProps: any = (state: any) => {
   return {
-    size: state.layout[LayoutIds.DailyNote]
+    size: state.layout[LayoutIds.DailyNote],
   };
 };
 
 const mapDispatchToProps: any = (dispatch: any) => {
   return {
     saveNote: bindActionCreators(saveDailyNote, dispatch),
-    fetchSingleDailyNote: bindActionCreators(fetchSingleDailyNote, dispatch)
+    fetchSingleDailyNote: bindActionCreators(fetchSingleDailyNote, dispatch),
   };
 };
 
