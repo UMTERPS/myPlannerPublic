@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import './WeeklyNotesPanel.less';
 import LayoutConstants from '../../../constants/LayoutConstants';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import { EditorClassicBuild } from '../../../vendor/ckeditor5/src/ckeditor';
+import ckeditors from 'ckeditors';
 import {
   fetchWeeklyNote,
-  saveWeeklyNote
+  saveWeeklyNote,
 } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
 import { ISize } from '../../types/commonTypes';
@@ -24,13 +24,13 @@ const WeeklyNotesPanel = ({
   date,
   size,
   fetchWeeklyNote,
-  saveNote
+  saveNote,
 }: IWeeklyNotesPanelProps) => {
   const [isEditable, setIsEditable] = useState(false);
 
   useEffect(() => {
     if (editor) {
-      fetchWeeklyNote(date).then(content => {
+      fetchWeeklyNote(date).then((content) => {
         editor.setData(content || '');
       });
 
@@ -40,9 +40,9 @@ const WeeklyNotesPanel = ({
     }
   });
 
-  const onInit = initeditor => {
+  const onInit = (initeditor) => {
     editor = initeditor;
-    fetchWeeklyNote(date).then(content => {
+    fetchWeeklyNote(date).then((content) => {
       initeditor.setData(content || '');
     });
   };
@@ -54,7 +54,7 @@ const WeeklyNotesPanel = ({
   const onBlur = () => {
     saveNote({
       date,
-      value: editor.getData()
+      value: editor.getData(),
     });
     lockContent();
   };
@@ -69,7 +69,7 @@ const WeeklyNotesPanel = ({
     }
     return {
       width: size.width + 'px',
-      height: size.height + 'px'
+      height: size.height + 'px',
     };
   };
 
@@ -88,24 +88,24 @@ const WeeklyNotesPanel = ({
       )}
       <CKEditor
         disabled={!isEditable}
-        editor={EditorClassicBuild}
+        editor={ckeditors.EditorClassicBuild}
         onInit={onInit}
       />
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     date: state.date.selectedDate,
-    size: state.layout[LayoutConstants.WeeklyNotesPanel]
+    size: state.layout[LayoutConstants.WeeklyNotesPanel],
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchWeeklyNote: bindActionCreators(fetchWeeklyNote, dispatch),
-    saveNote: bindActionCreators(saveWeeklyNote, dispatch)
+    saveNote: bindActionCreators(saveWeeklyNote, dispatch),
   };
 };
 
