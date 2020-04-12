@@ -1,10 +1,5 @@
 import * as ipcProvider from '../providers/IpcRendererProvider';
-import {
-  generateUwid,
-  generateUdid,
-  generateUdidsByDate,
-  getMondayOfWeek
-} from './DateUtilService';
+import { generateUwid, generateUdid, getMondayOfWeek } from './DateUtilService';
 import { IDateNotePayload } from '../types/commonTypes';
 
 const updateDailyNote = (data: IDateNotePayload): Promise<void> => {

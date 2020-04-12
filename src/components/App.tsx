@@ -3,6 +3,9 @@ import 'react-calendar/dist/Calendar.css';
 import DailyNotesPanel from './dailyNotes/DailyNotesPanel';
 import WeeklyNotesPanel from './weeklyNote/WeeklyNotesPanel';
 import './App.less';
+import { getLocale } from '../services/LocaleService';
+
+const locale = getLocale();
 
 class App extends React.Component<any, any> {
   public render(): React.ReactNode {

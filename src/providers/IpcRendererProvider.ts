@@ -49,4 +49,42 @@ const fetchContentByUdids = (udids: string | [string]): Promise<string> => {
   });
 };
 
-export { updateContent, fetchContentByUdids };
+const setLocale = (locale: string): Promise<string> => {
+  const _token = _generateEventToken();
+  ipc.send(ipcConstants.SET_LOCALE, _token, locale);
+  return new Promise((resolve, reject) => {
+    ipc.once(
+      `${ipcConstants.SET_LOCALE + _token}_SUCCESS`,
+      (event, response) => {
+        resolve(response);
+      }
+    );
+    ipc.once(
+      `${ipcConstants.SET_LOCALE + _token}_FAILED`,
+      (event, response) => {
+        reject(response);
+      }
+    );
+  });
+};
+
+const getLocale = (): Promise<string> => {
+  const _token = _generateEventToken();
+  ipc.send(ipcConstants.GET_LOCALE, _token);
+  return new Promise((resolve, reject) => {
+    ipc.once(
+      `${ipcConstants.GET_LOCALE + _token}_SUCCESS`,
+      (event, response) => {
+        resolve(response);
+      }
+    );
+    ipc.once(
+      `${ipcConstants.GET_LOCALE + _token}_FAILED`,
+      (event, response) => {
+        reject(response);
+      }
+    );
+  });
+};
+
+export { updateContent, fetchContentByUdids, setLocale, getLocale };
