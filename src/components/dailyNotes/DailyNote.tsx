@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './DailyNote.less';
 import { connect } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
@@ -7,18 +7,20 @@ import { FaLock, FaLockOpen } from 'react-icons/fa';
 import LayoutIds from '../../../constants/LayoutConstants';
 import {
   saveDailyNote,
-  fetchSingleDailyNote,
+  fetchSingleDailyNote
 } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
 import { ISize } from '../../types/commonTypes';
+import { AppContext } from '../../context/AppContext';
+import { useTranslation } from 'react-i18next';
 const weekMap = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  'SUNDAY',
+  'MONDAY',
+  'TUESDAY',
+  'WEDNESDAY',
+  'THURSDAY',
+  'FRIDAY',
+  'SATURDAY'
 ];
 
 interface IDailyNoteProps {
@@ -36,13 +38,15 @@ const DailyNote = ({
   date,
   saveNote,
   fetchSingleDailyNote,
-  size,
+  size
 }: IDailyNoteProps) => {
   const [isEditable, setIsEditable] = useState(false);
+  const { locale } = useContext(AppContext);
+  const { t } = useTranslation();
   let editor = editors[uid];
   useEffect(() => {
     if (editor) {
-      fetchSingleDailyNote(date).then((content) => {
+      fetchSingleDailyNote(date).then(content => {
         editor.setData(content || '');
       });
       if (isEditable) {
@@ -51,16 +55,16 @@ const DailyNote = ({
     }
   });
 
-  const onInit = (initeditor) => {
+  const onInit = initeditor => {
     editors[uid] = initeditor;
-    fetchSingleDailyNote(date).then((content) => {
+    fetchSingleDailyNote(date).then(content => {
       initeditor.setData(content || '');
     });
   };
 
   const getInlineStyle = () => {
     return {
-      height: size.height + 'px',
+      height: size.height + 'px'
     };
   };
 
@@ -74,7 +78,7 @@ const DailyNote = ({
   const onBlur = () => {
     saveNote({
       date,
-      value: editor.getData(),
+      value: editor.getData()
     });
     lockContent();
   };
@@ -86,7 +90,7 @@ const DailyNote = ({
   return (
     <div className="daily-note" style={getInlineStyle()}>
       <div className={getNoteDateClassName()}>
-        <div className="row-one">{weekMap[date.getDay()]}</div>
+        <div className="row-one">{t(weekMap[date.getDay()])}</div>
         <div className="row-two">
           <div className="date-of-month">{date.getDate()}</div>
           <div className="lock-container">
@@ -105,6 +109,9 @@ const DailyNote = ({
         onBlur={onBlur}
       >
         <CKEditor
+          config={{
+            language: locale
+          }}
           disabled={!isEditable}
           editor={ckeditors.EditorInlineBuild}
           onInit={onInit}
@@ -116,14 +123,14 @@ const DailyNote = ({
 
 const mapStateToProps: any = (state: any) => {
   return {
-    size: state.layout[LayoutIds.DailyNote],
+    size: state.layout[LayoutIds.DailyNote]
   };
 };
 
 const mapDispatchToProps: any = (dispatch: any) => {
   return {
     saveNote: bindActionCreators(saveDailyNote, dispatch),
-    fetchSingleDailyNote: bindActionCreators(fetchSingleDailyNote, dispatch),
+    fetchSingleDailyNote: bindActionCreators(fetchSingleDailyNote, dispatch)
   };
 };
 

@@ -51,12 +51,6 @@ const mapStateToProps: any = (state: any) => {
   };
 };
 
-// const mapDispatchToProps: any = dispatch => {
-//   return {
-//     fetchAllDailyNotes: bindActionCreators(fetchAllDailyNotes, dispatch)
-//   };
-// };
-
 export default connect(
   mapStateToProps
   // mapDispatchToProps

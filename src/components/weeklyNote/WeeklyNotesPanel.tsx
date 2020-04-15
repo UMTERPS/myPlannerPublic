@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
 import './WeeklyNotesPanel.less';
 import LayoutConstants from '../../../constants/LayoutConstants';
@@ -6,10 +6,12 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ckeditors from 'ckeditors';
 import {
   fetchWeeklyNote,
-  saveWeeklyNote,
+  saveWeeklyNote
 } from '../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
 import { ISize } from '../../types/commonTypes';
+import { AppContext } from '../../context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 interface IWeeklyNotesPanelProps {
   date: Date;
@@ -24,13 +26,15 @@ const WeeklyNotesPanel = ({
   date,
   size,
   fetchWeeklyNote,
-  saveNote,
+  saveNote
 }: IWeeklyNotesPanelProps) => {
   const [isEditable, setIsEditable] = useState(false);
+  const { locale } = useContext(AppContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (editor) {
-      fetchWeeklyNote(date).then((content) => {
+      fetchWeeklyNote(date).then(content => {
         editor.setData(content || '');
       });
 
@@ -40,9 +44,9 @@ const WeeklyNotesPanel = ({
     }
   });
 
-  const onInit = (initeditor) => {
+  const onInit = initeditor => {
     editor = initeditor;
-    fetchWeeklyNote(date).then((content) => {
+    fetchWeeklyNote(date).then(content => {
       initeditor.setData(content || '');
     });
   };
@@ -54,7 +58,7 @@ const WeeklyNotesPanel = ({
   const onBlur = () => {
     saveNote({
       date,
-      value: editor.getData(),
+      value: editor.getData()
     });
     lockContent();
   };
@@ -69,7 +73,7 @@ const WeeklyNotesPanel = ({
     }
     return {
       width: size.width + 'px',
-      height: size.height + 'px',
+      height: size.height + 'px'
     };
   };
 
@@ -83,10 +87,13 @@ const WeeklyNotesPanel = ({
     >
       {isEditable ? null : (
         <div className="week-note-title">
-          <div>Notes of the Week</div>
+          <div>{t('WEEKLY_CALENDAR_TITLE')}</div>
         </div>
       )}
       <CKEditor
+        config={{
+          language: locale
+        }}
         disabled={!isEditable}
         editor={ckeditors.EditorClassicBuild}
         onInit={onInit}
@@ -95,17 +102,17 @@ const WeeklyNotesPanel = ({
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     date: state.date.selectedDate,
-    size: state.layout[LayoutConstants.WeeklyNotesPanel],
+    size: state.layout[LayoutConstants.WeeklyNotesPanel]
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     fetchWeeklyNote: bindActionCreators(fetchWeeklyNote, dispatch),
-    saveNote: bindActionCreators(saveWeeklyNote, dispatch),
+    saveNote: bindActionCreators(saveWeeklyNote, dispatch)
   };
 };
 

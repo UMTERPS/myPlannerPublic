@@ -5,20 +5,21 @@ import { connect } from 'react-redux';
 import LayoutIds from '../../../constants/LayoutConstants';
 import DateNavigation from '../dateNavigation/DateNavigation';
 import { ISize } from '../../types/commonTypes';
+import { useTranslation } from 'react-i18next';
 
 const monthMap = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'Septempber',
-  'October',
-  'November',
-  'December'
+  'JANUARY',
+  'FEBRUARY',
+  'MARCH',
+  'APRIL',
+  'MAY',
+  'JUNE',
+  'JULY',
+  'AUGUEST',
+  'SEPTEMPBER',
+  'OCTOBER',
+  'NOVERMBER',
+  'DECEMBER'
 ];
 
 interface IDailyNotesHeaderProps {
@@ -27,20 +28,16 @@ interface IDailyNotesHeaderProps {
 }
 
 const DailyNotesHeader = ({ date, size }: IDailyNotesHeaderProps) => {
+  const { t } = useTranslation();
+  const nth = moment(date).week().toString();
   return (
     <div
       className="daily-note-header-container"
       style={{ height: size.height + 'px' }}
     >
       <div className="daily-note-header-left">
-        <span className="month-title">{monthMap[date.getMonth()]}</span>
-        <span className="week-number">
-          (week{' '}
-          {moment(date)
-            .week()
-            .toString()}
-          )
-        </span>
+        <span className="month-title">{t(monthMap[date.getMonth()])}</span>
+        <span className="week-number">({t('NUM_OF_WEEK', { nth })})</span>
       </div>
       <div className="daily-note-header-center">
         <DateNavigation />
