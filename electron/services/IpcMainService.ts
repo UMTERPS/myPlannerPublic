@@ -23,7 +23,7 @@ const registerIpcListeners = (db: JsonDB): void => {
     const _keys = isArray(keys) ? keys : new Array(keys);
     const results = {};
     try {
-      each(_keys, (key) => {
+      each(_keys, key => {
         try {
           const _result = db.getData('/' + key);
           extend(results, { [key]: _result });
@@ -50,6 +50,7 @@ const registerIpcListeners = (db: JsonDB): void => {
 
   ipcMain.on(ipcConstants.SET_LOCALE, (event, _token, locale) => {
     // FIXME! Not implemented
+    console.log(locale);
     event.sender.send(`${ipcConstants.SET_LOCALE + _token}_SUCCESS`, locale);
   });
 
