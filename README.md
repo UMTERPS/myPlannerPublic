@@ -21,8 +21,12 @@ npm install
 # For first time running
 npm run bootstrap
 
-# For routine development
-npm run start
+# For routine development, run the following command simultaneously
+npm run build:ui
+npm run start:electron
+
+# Whenever there is a locale related change, run
+npm run build:locale
 
 # For bundle project into final package
 npm run deploy
