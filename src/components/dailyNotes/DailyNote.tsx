@@ -13,6 +13,7 @@ import { bindActionCreators } from 'redux';
 import { ISize } from '../../types/commonTypes';
 import { AppContext } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 const weekMap = [
   'SUNDAY',
   'MONDAY',
@@ -83,8 +84,16 @@ const DailyNote = ({
     lockContent();
   };
 
+  const isToday = (): boolean => {
+    return moment(date.getDate()).isSame(new Date().getDate());
+  };
+
   const getNoteDateClassName = () => {
-    return 'daily-note-date' + (isEditable ? ' enabled' : ' disabled');
+    return (
+      'daily-note-date' +
+      (isEditable ? ' enabled' : ' disabled') +
+      (isToday() ? ' today' : '')
+    );
   };
 
   return (

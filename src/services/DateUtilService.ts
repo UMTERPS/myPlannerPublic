@@ -46,7 +46,7 @@ const _generateId = (date: Date): string => {
 
 const getMondayOfWeek = (date: Date): Date => {
   const _date = new Date(date);
-  _date.setDate(date.getDate() - date.getDay() + 1);
+  _date.setDate(date.getDate() - (date.getDay() === 0 ? 7 : 0) + 1); // offset for Sunday
   return _date;
 };
 
