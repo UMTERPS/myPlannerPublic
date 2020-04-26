@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
 import './WeeklyNotesPanel.less';
 import LayoutConstants from '../../../constants/LayoutConstants';
+import { ESCAPE_KEYCODE } from '../../../constants/GeneralConstants';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ckeditors from 'ckeditors';
 import {
@@ -77,6 +78,12 @@ const WeeklyNotesPanel = ({
     };
   };
 
+  const handleKeyDown = event => {
+    if (isEditable && event.keyCode === ESCAPE_KEYCODE) {
+      lockContent();
+    }
+  };
+
   return (
     <div
       className="week-note-container"
@@ -84,6 +91,7 @@ const WeeklyNotesPanel = ({
       onDoubleClick={lockContent}
       onBlur={onBlur}
       style={getStyle()}
+      onKeyDown={handleKeyDown}
     >
       {isEditable ? null : (
         <div className="week-note-title">
