@@ -5,6 +5,7 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ckeditors from 'ckeditors';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
 import LayoutIds from '../../../constants/LayoutConstants';
+import { ESCAPE_KEYCODE } from '../../../constants/GeneralConstants';
 import {
   saveDailyNote,
   fetchSingleDailyNote
@@ -96,8 +97,18 @@ const DailyNote = ({
     );
   };
 
+  const handleKeyDown = event => {
+    if (isEditable && event.keyCode === ESCAPE_KEYCODE) {
+      lockContent();
+    }
+  };
+
   return (
-    <div className="daily-note" style={getInlineStyle()}>
+    <div
+      className="daily-note"
+      style={getInlineStyle()}
+      onKeyDown={handleKeyDown}
+    >
       <div className={getNoteDateClassName()}>
         <div className="row-one">{t(weekMap[date.getDay()])}</div>
         <div className="row-two">

@@ -50,7 +50,6 @@ const registerIpcListeners = (db: JsonDB): void => {
 
   ipcMain.on(ipcConstants.SET_LOCALE, (event, _token, locale) => {
     // FIXME! Not implemented
-    console.log(locale);
     event.sender.send(`${ipcConstants.SET_LOCALE + _token}_SUCCESS`, locale);
   });
 
