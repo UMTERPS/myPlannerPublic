@@ -1,6 +1,7 @@
 {
   "language": "en",
   "translation": {
+    "TODAY": "(Today)",
     "CALENDAR": "Calendar",
     "WEEKLY_CALENDAR_TITLE": "Notes of the Week",
     "NUM_OF_WEEK": "Week {{nth}}",
