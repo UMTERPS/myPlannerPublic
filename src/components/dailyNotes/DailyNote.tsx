@@ -86,15 +86,20 @@ const DailyNote = ({
   };
 
   const isToday = (): boolean => {
-    return moment(date.getDate()).isSame(new Date().getDate());
+    return moment(date).isSame(new Date(), 'date');
   };
 
   const getNoteDateClassName = () => {
     return (
       'daily-note-date' +
       (isEditable ? ' enabled' : ' disabled') +
-      (isToday() ? ' today' : '')
+      (isWeekend() ? ' today' : '')
     );
+  };
+
+  const isWeekend = (): boolean => {
+    const _dayOfWeek = date.getDay();
+    return _dayOfWeek === 6 || _dayOfWeek === 0;
   };
 
   const handleKeyDown = event => {
@@ -112,7 +117,20 @@ const DailyNote = ({
       <div className={getNoteDateClassName()}>
         <div className="row-one">{t(weekMap[date.getDay()])}</div>
         <div className="row-two">
-          <div className="date-of-month">{date.getDate()}</div>
+          <div className="date-of-month">
+            {date.getDate()}
+            {isToday() ? (
+              <div
+                style={{
+                  marginTop: '-0.6em',
+                  fontSize: '0.3em',
+                  textAlign: 'center'
+                }}
+              >
+                {t('TODAY')}
+              </div>
+            ) : null}
+          </div>
           <div className="lock-container">
             {isEditable ? (
               <FaLockOpen onClick={lockContent} />

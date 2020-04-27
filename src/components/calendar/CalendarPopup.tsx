@@ -32,6 +32,27 @@ const CalendarPopup = ({ date, setDate }: ICalendarPopupProps) => {
     }
   };
 
+  const isToday = (_date): boolean => {
+    return moment(_date).isSame(new Date(), 'date');
+  };
+
+  type options = {
+    date: Date;
+    view: any;
+  };
+
+  const tileContentHandler = ({ date, view }: options): JSX.Element => {
+    return (
+      <React.Fragment>
+        {view === 'month' && isToday(date) ? (
+          <div style={{ fontSize: '0.5em', marginTop: '-0.5em' }}>
+            <abbr>{t('TODAY')}</abbr>
+          </div>
+        ) : null}
+      </React.Fragment>
+    );
+  };
+
   return (
     <div className="calendar-popup" id="calendar-popup-id">
       <div className="popup-button-container">
@@ -56,6 +77,7 @@ const CalendarPopup = ({ date, setDate }: ICalendarPopupProps) => {
               calendarType="US"
               value={date}
               view="month"
+              tileContent={tileContentHandler}
             />
             <div className="go-today-container">
               {!moment().isSame(date, 'day') ? (

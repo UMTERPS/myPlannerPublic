@@ -1,6 +1,7 @@
 {
   "language": "zh",
   "translation": {
+    "TODAY": "(今天)",
     "CALENDAR": "日历",
     "WEEKLY_CALENDAR_TITLE": "本周要点",
     "NUM_OF_WEEK": "第{{nth}}周",

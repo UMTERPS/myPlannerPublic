@@ -5,6 +5,7 @@ import {
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import resources from '../locales';
+import 'ckeditors/build/translations/zh-cn';
 
 export const setLocale = (locale: string): void => {
   doSetLocale(locale).then(locale => {
