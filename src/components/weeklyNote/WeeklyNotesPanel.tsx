@@ -87,7 +87,7 @@ const WeeklyNotesPanel = ({
   return (
     <div
       className="week-note-container"
-      title="Double click to edit"
+      title={t('TO_EDIT')}
       onDoubleClick={lockContent}
       onBlur={onBlur}
       style={getStyle()}

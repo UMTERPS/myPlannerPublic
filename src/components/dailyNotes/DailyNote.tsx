@@ -142,7 +142,7 @@ const DailyNote = ({
       </div>
       <div
         className="daily-note-content-container"
-        title="Double click to edit"
+        title={t('TO_EDIT')}
         onDoubleClick={lockContent}
         onBlur={onBlur}
       >
