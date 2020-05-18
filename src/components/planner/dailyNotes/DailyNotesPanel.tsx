@@ -1,11 +1,11 @@
 import React from 'react';
 import DailyNotesHeader from './DailyNotesHeader';
 import DailyNotesCollection from './DailyNotesCollection';
-import LayoutIds from '../../../constants/LayoutConstants';
+import LayoutIds from '../../../../constants/LayoutConstants';
 import './DailyNotesPanel.less';
 import { connect } from 'react-redux';
-import { ISize } from '../../types/commonTypes';
-import { getMondayOfWeek } from '../../services/DateUtilService';
+import { ISize } from '../../../types/commonTypes';
+import { getMondayOfWeek } from '../../../services/DateUtilService';
 
 interface IDailyNotesPanelProps {
   date: Date;

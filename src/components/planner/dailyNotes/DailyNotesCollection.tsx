@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 import DailyNote from './DailyNote';
 import './DailyNotesCollection.less';
 import { connect } from 'react-redux';
-import LayoutIds from '../../../constants/LayoutConstants';
-import { getDailyData } from '../../services/DateUtilService';
+import LayoutIds from '../../../../constants/LayoutConstants';
+import { getDailyData } from '../../../services/DateUtilService';
 // import { bindActionCreators } from 'redux';
 // import { fetchAllDailyNotes } from '../../redux/actions/notesActions';
 

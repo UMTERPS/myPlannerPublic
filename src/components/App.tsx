@@ -1,21 +1,21 @@
 import * as React from 'react';
-import 'react-calendar/dist/Calendar.css';
-import DailyNotesPanel from './dailyNotes/DailyNotesPanel';
-import WeeklyNotesPanel from './weeklyNote/WeeklyNotesPanel';
 import './App.less';
-import { getLocale } from '../services/LocaleService';
+import Planner from './planner/Planner';
+import SideNav from './sideNav/SideNav';
+import { Switch, Route } from 'react-router-dom';
+import Settings from './settings/Settings';
 
-const locale = getLocale();
-
-class App extends React.Component<any, any> {
-  public render(): React.ReactNode {
-    return (
-      <div className="my-planner-container" id="my-plainer-container-id">
-        <DailyNotesPanel />
-        <WeeklyNotesPanel />
-      </div>
-    );
-  }
-}
+const App = () => {
+  return (
+    <div className="App-Container">
+      <SideNav />
+      <Switch>
+        <Route exact path="/settings" component={Settings} />
+        <Route exact path="/planner" component={Planner} />
+        <Route component={Planner} />
+      </Switch>
+    </div>
+  );
+};
 
 export default App;

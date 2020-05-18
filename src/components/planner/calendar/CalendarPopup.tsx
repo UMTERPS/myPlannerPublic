@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import './CalendarPopup.less';
 import { useTranslation } from 'react-i18next';
-import { AppContext } from '../../context/AppContext';
+import { AppContext } from '../../../context/AppContext';
 
 interface ICalendarPopupProps {
   date: Date;

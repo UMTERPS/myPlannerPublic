@@ -1,5 +1,5 @@
 import React from 'react';
-import * as dateActions from '../../redux/actions/dateActions';
+import * as dateActions from '../../../redux/actions/dateActions';
 import { bindActionCreators } from 'redux';
 import CalendarPopup from '../calendar/CalendarPopup';
 import { connect } from 'react-redux';

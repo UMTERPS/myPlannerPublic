@@ -1,5 +1,6 @@
 module.exports = {
   // Layout component Ids
+  SideNav: 'SideNav',
   WeeklyNotesPanel: 'WeeklyNotesPanel',
   DailyNotesPanel: 'DailyNotesPanel',
   DailyNotesCollection: 'DailyNotesCollection',
@@ -9,8 +10,9 @@ module.exports = {
 
   // Layout size
   AppMinHeight: 460,
-  AppMinWidth: 660,
+  AppMinWidth: 750,
   AppDefaultHeight: 600,
-  AppDefaultWidth: 800,
-  DailyNotesHeaderHeight: 40
+  AppDefaultWidth: 850,
+  DailyNotesHeaderHeight: 40,
+  SideNavWidth: 50
 };

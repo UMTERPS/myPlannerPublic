@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.less';
 import App from './components/App';
 import { Provider as ReduxProvider } from 'react-redux';
+import { HashRouter as Router } from 'react-router-dom';
 import LayoutProvider, { initLayout } from './providers/LayoutProvider';
 import { initState } from './redux/reducers/initState';
 import { AppContext } from './context/AppContext';
@@ -28,10 +29,12 @@ storeConfig().then(storeConfig => {
   const configureStore = storeConfig.default;
   render(
     <ReduxProvider store={configureStore(initState)}>
-      <AppContext.Provider value={{ locale }}>
-        <LayoutProvider />
-        <App />
-      </AppContext.Provider>
+      <Router>
+        <AppContext.Provider value={{ locale }}>
+          <LayoutProvider />
+          <App />
+        </AppContext.Provider>
+      </Router>
     </ReduxProvider>,
     document.getElementById('app')
   );

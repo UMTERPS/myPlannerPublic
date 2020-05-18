@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ckeditors from 'ckeditors';
 import { FaLock, FaLockOpen } from 'react-icons/fa';
-import LayoutIds from '../../../constants/LayoutConstants';
-import { ESCAPE_KEYCODE } from '../../../constants/GeneralConstants';
+import LayoutIds from '../../../../constants/LayoutConstants';
+import { ESCAPE_KEYCODE } from '../../../../constants/GeneralConstants';
 import {
   saveDailyNote,
   fetchSingleDailyNote
-} from '../../redux/actions/notesActions';
+} from '../../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
-import { ISize } from '../../types/commonTypes';
-import { AppContext } from '../../context/AppContext';
+import { ISize } from '../../../types/commonTypes';
+import { AppContext } from '../../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 const weekMap = [
@@ -93,7 +93,7 @@ const DailyNote = ({
     return (
       'daily-note-date' +
       (isEditable ? ' enabled' : ' disabled') +
-      (isWeekend() ? ' today' : '')
+      (isWeekend() ? ' weekend' : '')
     );
   };
 

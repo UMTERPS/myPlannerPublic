@@ -23,12 +23,24 @@ class LayoutRoot extends BasicLayoutNode {
     super();
     this.width = width;
     this.height = Math.max(height, LayoutConstants.AppMinHeight);
-    const dailyNoteWidth = Math.max(width, LayoutConstants.AppMinWidth) * 0.6;
-    const weekNoteWidth = Math.max(width, LayoutConstants.AppMinWidth) * 0.4;
+    const panelWidth = width - LayoutConstants.SideNavWidth;
+    const dailyNoteWidth =
+      Math.max(panelWidth, LayoutConstants.AppMinWidth) * 0.6;
+    const weekNoteWidth = panelWidth - dailyNoteWidth;
     this.children = [
       new WeekNotesPanel(weekNoteWidth, height),
-      new DailyNotesPanel(dailyNoteWidth, height)
+      new DailyNotesPanel(dailyNoteWidth, height),
+      new SideNav(LayoutConstants.SideNavWidth, height)
     ];
+  }
+}
+
+class SideNav extends BasicLayoutNode {
+  constructor(width, height) {
+    super();
+    this.id = LayoutConstants.SideNav;
+    this.width = width;
+    this.height = height;
   }
 }
 

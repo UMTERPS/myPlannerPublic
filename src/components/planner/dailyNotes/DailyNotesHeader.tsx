@@ -2,9 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import './DailyNotesHeader.less';
 import { connect } from 'react-redux';
-import LayoutIds from '../../../constants/LayoutConstants';
+import LayoutIds from '../../../../constants/LayoutConstants';
 import DateNavigation from '../dateNavigation/DateNavigation';
-import { ISize } from '../../types/commonTypes';
+import { ISize } from '../../../types/commonTypes';
 import { useTranslation } from 'react-i18next';
 
 const monthMap = [

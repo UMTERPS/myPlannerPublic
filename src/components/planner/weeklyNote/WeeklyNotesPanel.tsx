@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
 import './WeeklyNotesPanel.less';
-import LayoutConstants from '../../../constants/LayoutConstants';
-import { ESCAPE_KEYCODE } from '../../../constants/GeneralConstants';
+import LayoutConstants from '../../../../constants/LayoutConstants';
+import { ESCAPE_KEYCODE } from '../../../../constants/GeneralConstants';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ckeditors from 'ckeditors';
 import {
   fetchWeeklyNote,
   saveWeeklyNote
-} from '../../redux/actions/notesActions';
+} from '../../../redux/actions/notesActions';
 import { bindActionCreators } from 'redux';
-import { ISize } from '../../types/commonTypes';
-import { AppContext } from '../../context/AppContext';
+import { ISize } from '../../../types/commonTypes';
+import { AppContext } from '../../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 
 interface IWeeklyNotesPanelProps {
