@@ -29,6 +29,10 @@ export interface IDateState {
   selectedDate: Date;
 }
 
+export interface ILocaleState {
+  locale: string;
+}
+
 export interface ILayoutState {
   WeeklyNotesPanel?: ISize;
   DailyNotesPanel?: ISize;

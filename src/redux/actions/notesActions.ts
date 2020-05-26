@@ -37,7 +37,7 @@ export const saveWeeklyNote = (data: IDateNotePayload) => {
   };
 };
 
-export const fetchWeeklyNote = (date: IDateNotePayload) => {
+export const fetchWeeklyNote = (date: Date) => {
   return (dispatch: ThunkDispatch<{}, undefined, Action>) => {
     dispatch(setNoteStatus({ status: 'loading' }));
     return fetchWeekly(date).then(data => {
@@ -47,7 +47,7 @@ export const fetchWeeklyNote = (date: IDateNotePayload) => {
   };
 };
 
-export const fetchSingleDailyNote = (date: IDateNotePayload) => {
+export const fetchSingleDailyNote = (date: Date) => {
   return (dispatch: ThunkDispatch<{}, undefined, Action>) => {
     dispatch(setNoteStatus('loading'));
     return fetchDailyNote(date).then(data => {

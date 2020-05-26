@@ -4,6 +4,7 @@ import moment from 'moment';
 import './CalendarPopup.less';
 import { useTranslation } from 'react-i18next';
 import { AppContext } from '../../../context/AppContext';
+import Button from 'antd/es/Button';
 
 interface ICalendarPopupProps {
   date: Date;
@@ -56,13 +57,9 @@ const CalendarPopup = ({ date, setDate }: ICalendarPopupProps) => {
   return (
     <div className="calendar-popup" id="calendar-popup-id">
       <div className="popup-button-container">
-        <button
-          id="popup-button"
-          onClick={toggleCalendar}
-          className="btn btn-sm btn-light"
-        >
-          {t('CALENDAR')}
-        </button>
+        <Button ghost onClick={toggleCalendar} type="primary">
+          <span id="popup-button">{t('CALENDAR')}</span>
+        </Button>
       </div>
       {showCalendar ? (
         <div

@@ -2,7 +2,6 @@ import { ipcMain } from 'electron';
 import ipcConstants from '../../constants/IPCContants';
 import { isArray, extend, each } from 'lodash';
 import { JsonDB } from 'node-json-db';
-import { getEnvLocale } from './LocaleService';
 
 const registerIpcListeners = (db: JsonDB): void => {
   ipcMain.on(ipcConstants.UPDATE_CONTENT, (event, _token, key, value) => {
@@ -49,12 +48,21 @@ const registerIpcListeners = (db: JsonDB): void => {
   });
 
   ipcMain.on(ipcConstants.SET_LOCALE, (event, _token, locale) => {
-    // FIXME! Not implemented
+    db.push('/' + 'locale', locale);
     event.sender.send(`${ipcConstants.SET_LOCALE + _token}_SUCCESS`, locale);
   });
 
   ipcMain.on(ipcConstants.GET_LOCALE, (event, _token) => {
-    const locale = getEnvLocale();
+    let locale: string;
+    try {
+      locale = db.getData('/' + 'locale');
+    } catch (error) {
+      if (error.id === ipcConstants.DATA_NOT_FOUND) {
+        locale = '';
+      } else {
+        throw error;
+      }
+    }
     event.sender.send(`${ipcConstants.GET_LOCALE + _token}_SUCCESS`, locale);
   });
 };

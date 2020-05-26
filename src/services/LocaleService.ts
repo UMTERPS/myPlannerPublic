@@ -7,13 +7,12 @@ import { initReactI18next } from 'react-i18next';
 import resources from '../locales';
 import 'ckeditors/build/translations/zh-cn';
 
-export const setLocale = (locale: string): void => {
-  doSetLocale(locale).then(locale => {
-    return locale;
-  });
+export const setLocale = async (locale: string): Promise<string> => {
+  const status = await doSetLocale(locale);
+  return status;
 };
 
-export const getLocale = async () => {
+export const getLocale = async (): Promise<string> => {
   const ret = await doGetLocale();
   return ret;
 };

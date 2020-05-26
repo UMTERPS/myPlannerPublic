@@ -25,6 +25,9 @@
     "OCTOBER": "October",
     "NOVERMBER": "November",
     "DECEMBER": "December",
-    "TO_EDIT": "Double click to edit"
+    "TO_EDIT": "Double click to edit",
+    "LANGUAGES": "Languages",
+    "ENGLISH": "English",
+    "CHINESE": "中文"
   }
 }

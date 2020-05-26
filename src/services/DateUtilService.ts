@@ -1,7 +1,7 @@
 import IdPrefix from '../../constants/IdConstants';
 import { IDailyData } from '../types/commonTypes';
 
-const getDailyData = (date: Date): [IDailyData] => {
+const getDailyData = (date: Date): Array<IDailyData> => {
   const week = new Array() as [IDailyData];
   // Starting with Monday not Sunday
   const _date = getMondayOfWeek(date);
@@ -13,7 +13,7 @@ const getDailyData = (date: Date): [IDailyData] => {
   return week;
 };
 
-const generateUdidsByDate = (date: Date): [string] => {
+const generateUdidsByDate = (date: Date): Array<string> => {
   const udids = new Array() as [string];
   // Starting with Monday not Sunday
   const _date = getMondayOfWeek(date);

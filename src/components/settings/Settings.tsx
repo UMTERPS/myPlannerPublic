@@ -1,12 +1,40 @@
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './Settings.less';
+import Radio, { RadioChangeEvent } from 'antd/es/radio';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateLocale } from '../../redux/actions/localeActions';
 
-const Settings = () => {
+const Settings = ({ locale, updateLocale }) => {
+  const { t } = useTranslation();
+  const updateLocaleSettings = (event: RadioChangeEvent) => {
+    updateLocale({ locale: event.target.value });
+  };
   return (
-    <div className="Settings-Container">
-      <h1>Settings</h1>
+    <div className="settings-container">
+      <div className="settings-content">
+        <h4>{t('LANGUAGES')}</h4>
+        <hr />
+        <Radio.Group onChange={updateLocaleSettings} defaultValue={locale}>
+          <Radio value={'en-US'}>{t('ENGLISH')}</Radio>
+          <Radio value={'zh-CN'}>{t('CHINESE')}</Radio>
+        </Radio.Group>
+      </div>
     </div>
   );
 };
 
-export default Settings;
+const mapStateToProps: any = (state: any) => {
+  return {
+    locale: state.locale.locale
+  };
+};
+
+const mapDispatchToProps: any = (dispatch: any) => {
+  return {
+    updateLocale: bindActionCreators(updateLocale, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

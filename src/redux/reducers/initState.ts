@@ -1,9 +1,11 @@
-import { IDateState, ILayoutState, notesState } from '../../types/commonTypes';
+import { ILocaleState } from './../../types/commonTypes';
+import { IDateState, ILayoutState, INotesState } from '../../types/commonTypes';
 
 interface IMyPlannerInitialState {
   date: IDateState;
   layout: ILayoutState;
-  notes: notesState;
+  notes: INotesState;
+  locale: ILocaleState;
 }
 
 const initState: IMyPlannerInitialState = {
@@ -13,6 +15,9 @@ const initState: IMyPlannerInitialState = {
   layout: {},
   notes: {
     status: 'loaded'
+  },
+  locale: {
+    locale: ''
   }
 };
 

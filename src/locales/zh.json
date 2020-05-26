@@ -25,6 +25,9 @@
     "OCTOBER": "十月",
     "NOVERMBER": "十一月",
     "DECEMBER": "十二月",
-    "TO_EDIT": "双击进入编辑模式"
+    "TO_EDIT": "双击进入编辑模式",
+    "LANGUAGES": "语言",
+    "ENGLISH": "English",
+    "CHINESE": "中文"
   }
 }

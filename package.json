@@ -23,6 +23,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "@ckeditor/ckeditor5-theme-lark": "^17.0.0",
+    "antd": "^4.2.4",
     "axios": "^0.19.1",
     "bootstrap": "4.3.1",
     "ckeditors": "file:vendor/ckeditor5",
