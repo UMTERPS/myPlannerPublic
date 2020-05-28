@@ -5,14 +5,18 @@ import Radio, { RadioChangeEvent } from 'antd/es/radio';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateLocale } from '../../redux/actions/localeActions';
+import LayoutConstants from '../../../constants/LayoutConstants.js';
 
-const Settings = ({ locale, updateLocale }) => {
+const Settings = ({ locale, size, updateLocale }) => {
   const { t } = useTranslation();
   const updateLocaleSettings = (event: RadioChangeEvent) => {
     updateLocale({ locale: event.target.value });
   };
   return (
-    <div className="settings-container">
+    <div
+      className="settings-container"
+      style={{ height: size.height + 'px', width: size.width + 'px' }}
+    >
       <div className="settings-content">
         <h4>{t('LANGUAGES')}</h4>
         <hr />
@@ -27,7 +31,8 @@ const Settings = ({ locale, updateLocale }) => {
 
 const mapStateToProps: any = (state: any) => {
   return {
-    locale: state.locale.locale
+    locale: state.locale.locale,
+    size: state.layout[LayoutConstants.Settings]
   };
 };
 

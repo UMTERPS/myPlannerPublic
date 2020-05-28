@@ -1,6 +1,7 @@
 module.exports = {
   // Layout component Ids
-  SideNav: 'SideNav',
+  LayoutRoot: 'LayoutRoot',
+  Settings: 'Settings',
   WeeklyNotesPanel: 'WeeklyNotesPanel',
   DailyNotesPanel: 'DailyNotesPanel',
   DailyNotesCollection: 'DailyNotesCollection',

@@ -1,21 +1,37 @@
-import * as React from 'react';
+import React from 'react';
 import './App.less';
 import Planner from './planner/Planner';
-import SideNav from './sideNav/SideNav';
-import { Switch, Route } from 'react-router-dom';
 import Settings from './settings/Settings';
+import Tabs from 'antd/es/tabs';
+import LayoutConstants from '../../constants/LayoutConstants.js';
+import { connect } from 'react-redux';
+import { BsPencil, BsFillGearFill } from 'react-icons/bs';
 
-const App = () => {
+const App = ({ size }) => {
+  const { TabPane } = Tabs;
   return (
     <div className="App-Container">
-      <SideNav />
-      <Switch>
-        <Route exact path="/settings" component={Settings} />
-        <Route exact path="/planner" component={Planner} />
-        <Route component={Planner} />
-      </Switch>
+      <Tabs
+        defaultActiveKey="planner"
+        tabPosition="left"
+        style={{ height: size.height }}
+        tabBarStyle={{}}
+      >
+        <TabPane tab={<BsPencil size={20} />} key="planner">
+          <Planner />
+        </TabPane>
+        <TabPane tab={<BsFillGearFill />} key="settings">
+          <Settings />
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    size: state.layout[LayoutConstants.LayoutRoot]
+  };
+};
+
+export default connect(mapStateToProps)(App);

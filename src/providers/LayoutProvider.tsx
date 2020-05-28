@@ -21,6 +21,7 @@ class BasicLayoutNode implements ILayoutNode {
 class LayoutRoot extends BasicLayoutNode {
   constructor(width, height) {
     super();
+    this.id = LayoutConstants.LayoutRoot;
     this.width = width;
     this.height = Math.max(height, LayoutConstants.AppMinHeight);
     const panelWidth = width - LayoutConstants.SideNavWidth;
@@ -30,15 +31,15 @@ class LayoutRoot extends BasicLayoutNode {
     this.children = [
       new WeekNotesPanel(weekNoteWidth, height),
       new DailyNotesPanel(dailyNoteWidth, height),
-      new SideNav(LayoutConstants.SideNavWidth, height)
+      new Settings(panelWidth, height)
     ];
   }
 }
 
-class SideNav extends BasicLayoutNode {
+class Settings extends BasicLayoutNode {
   constructor(width, height) {
     super();
-    this.id = LayoutConstants.SideNav;
+    this.id = LayoutConstants.Settings;
     this.width = width;
     this.height = height;
   }

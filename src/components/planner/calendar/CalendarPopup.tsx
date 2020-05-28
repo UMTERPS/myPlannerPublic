@@ -4,7 +4,7 @@ import moment from 'moment';
 import './CalendarPopup.less';
 import { useTranslation } from 'react-i18next';
 import { AppContext } from '../../../context/AppContext';
-import Button from 'antd/es/Button';
+import Button from 'antd/es/button';
 
 interface ICalendarPopupProps {
   date: Date;

@@ -25,6 +25,12 @@ const weekMap = [
   'SATURDAY'
 ];
 
+const localeMap = {
+  'en-US': 'en',
+  'zh-CN': 'zh-cn',
+  zh: 'zh-cn'
+};
+
 interface IDailyNoteProps {
   uid: string;
   date: Date;
@@ -72,9 +78,6 @@ const DailyNote = ({
 
   const lockContent = () => {
     setIsEditable(!isEditable);
-    // setNoteDateClass(
-    //   'daily-note-date' + (isEditable ? ' enabled' : ' disabled')
-    // );
   };
 
   const onBlur = () => {
@@ -148,7 +151,7 @@ const DailyNote = ({
       >
         <CKEditor
           config={{
-            language: locale
+            language: localeMap[locale]
           }}
           disabled={!isEditable}
           editor={ckeditors.EditorInlineBuild}
