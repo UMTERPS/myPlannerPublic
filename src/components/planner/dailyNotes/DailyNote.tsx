@@ -93,11 +93,11 @@ const DailyNote = ({
   };
 
   const getNoteDateClassName = () => {
-    return (
-      'daily-note-date' +
-      (isEditable ? ' enabled' : ' disabled') +
-      (isWeekend() ? ' weekend' : '')
-    );
+    return 'daily-note-date' + (isEditable ? ' enabled' : ' disabled');
+  };
+
+  const getWeekendClassName = () => {
+    return isWeekend() ? ' weekend' : '';
   };
 
   const isWeekend = (): boolean => {
@@ -118,7 +118,9 @@ const DailyNote = ({
       onKeyDown={handleKeyDown}
     >
       <div className={getNoteDateClassName()}>
-        <div className="row-one">{t(weekMap[date.getDay()])}</div>
+        <div className={'row-one ' + getWeekendClassName()}>
+          {t(weekMap[date.getDay()])}
+        </div>
         <div className="row-two">
           <div className="date-of-month">
             {date.getDate()}

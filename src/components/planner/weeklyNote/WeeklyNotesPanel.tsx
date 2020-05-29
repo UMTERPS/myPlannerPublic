@@ -21,6 +21,12 @@ interface IWeeklyNotesPanelProps {
   saveNote: Function;
 }
 
+const localeMap = {
+  'en-US': 'en',
+  'zh-CN': 'zh-cn',
+  zh: 'zh-cn'
+};
+
 let editor: any;
 
 const WeeklyNotesPanel = ({
@@ -100,7 +106,7 @@ const WeeklyNotesPanel = ({
       )}
       <CKEditor
         config={{
-          language: locale
+          language: localeMap[locale]
         }}
         disabled={!isEditable}
         editor={ckeditors.EditorClassicBuild}

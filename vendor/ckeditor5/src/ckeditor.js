@@ -13,10 +13,8 @@ import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
 import List from '@ckeditor/ckeditor5-list/src/list.js';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment.js';
-import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor.js';
 import FontSize from '@ckeditor/ckeditor5-font/src/fontsize.js';
 import FontFamily from '@ckeditor/ckeditor5-font/src/fontfamily.js';
-import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight.js';
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline.js';
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough.js';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
@@ -38,10 +36,8 @@ EditorClassicBuild.builtinPlugins = [
   List,
   PasteFromOffice,
   Alignment,
-  FontColor,
   FontSize,
   FontFamily,
-  Highlight,
   HorizontalLine,
   Strikethrough,
   TodoList,
@@ -62,8 +58,6 @@ EditorClassicBuild.defaultConfig = {
       '|',
       'fontFamily',
       'fontSize',
-      'fontColor',
-      'highlight',
       '|',
       'horizontalLine',
       'blockQuote',
@@ -95,10 +89,8 @@ EditorInlineBuild.builtinPlugins = [
   List,
   PasteFromOffice,
   Alignment,
-  FontColor,
   FontSize,
   FontFamily,
-  Highlight,
   HorizontalLine,
   Strikethrough,
   TodoList,
@@ -120,8 +112,6 @@ EditorInlineBuild.defaultConfig = {
       '|',
       'fontFamily',
       'fontSize',
-      'fontColor',
-      'highlight',
       '|',
       'horizontalLine',
       'blockQuote',
