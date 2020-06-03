@@ -36,12 +36,10 @@ initLocale().then(locale => {
     const configureStore = storeConfig.default;
     render(
       <ReduxProvider store={configureStore(initState)}>
-        <Router>
-          <AppContext.Provider value={{ locale }}>
-            <LayoutProvider />
-            <App />
-          </AppContext.Provider>
-        </Router>
+        <AppContext.Provider value={{ locale }}>
+          <LayoutProvider />
+          <App />
+        </AppContext.Provider>
       </ReduxProvider>,
       document.getElementById('app')
     );
