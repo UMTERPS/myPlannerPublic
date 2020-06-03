@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import './index.less';
 import App from './components/App';
 import { Provider as ReduxProvider } from 'react-redux';
-import { HashRouter as Router } from 'react-router-dom';
 import LayoutProvider, { initLayout } from './providers/LayoutProvider';
 import { initState } from './redux/reducers/initState';
 import { AppContext } from './context/AppContext';
