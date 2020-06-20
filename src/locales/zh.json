@@ -28,6 +28,7 @@
     "TO_EDIT": "双击进入编辑模式",
     "LANGUAGES": "语言",
     "ENGLISH": "English",
-    "CHINESE": "中文"
+    "CHINESE": "中文",
+    "DATE_FORMATTER": "YYYY年MMMDo  dddd"
   }
 }

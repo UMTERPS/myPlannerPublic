@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import CalendarPopup from '../calendar/CalendarPopup';
 import { connect } from 'react-redux';
 import './DateNavigation.less';
+import { Button } from 'antd';
+import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
 interface IDateNavigationProps {
   date: Date;
@@ -26,15 +28,15 @@ const DateNavigation = ({ date, setDate }: IDateNavigationProps) => {
   return (
     <div className="date-navi-header">
       <div className="date-navi-left">
-        <button id="prev-week" onClick={goPrevWeek} className="btn btn-sm">
-          &lt;&lt;
-        </button>
+        <Button id="prev-week" onClick={goPrevWeek} className="btn btn-sm">
+          <DoubleLeftOutlined />
+        </Button>
       </div>
       <CalendarPopup date={date} setDate={setDate} />
       <div className="date-navi-right">
-        <button id="next-week" onClick={goNextWeek} className="btn btn-sm">
-          &gt;&gt;
-        </button>
+        <Button id="next-week" onClick={goNextWeek} className="btn btn-sm">
+          <DoubleRightOutlined />
+        </Button>
       </div>
     </div>
   );

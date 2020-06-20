@@ -1,5 +1,6 @@
 .calendar-popup {
   display: flex;
+  margin-top: 2px;
 
   #popup-button {
     color: black;
@@ -15,32 +16,15 @@
   }
 }
 
-.calendar-modal-background {
-  position: absolute;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.67);
-  top: 0px;
-  left: 0px;
+button.calendar-nav-button {
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: black;
+}
+
+.ant-col {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 100%;
-  min-height: 100%;
-
-  .calendar-container {
-    position: relative;
-
-    .react-calendar__tile--now {
-      padding-bottom: 0px;
-    }
-
-    .go-today-container {
-      left: 10px;
-      top: 38px;
-      position: absolute;
-      .go-today-button {
-        font-size: 10px;
-      }
-    }
-  }
 }

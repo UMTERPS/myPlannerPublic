@@ -15,5 +15,5 @@ module.exports = {
   AppDefaultHeight: 600,
   AppDefaultWidth: 850,
   DailyNotesHeaderHeight: 40,
-  SideNavWidth: 50
+  SideNavWidth: 58
 };

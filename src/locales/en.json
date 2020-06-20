@@ -28,6 +28,7 @@
     "TO_EDIT": "Double click to edit",
     "LANGUAGES": "Languages",
     "ENGLISH": "English",
-    "CHINESE": "中文"
+    "CHINESE": "中文",
+    "DATE_FORMATTER": "dddd, MMMM Do   YYYY"
   }
 }

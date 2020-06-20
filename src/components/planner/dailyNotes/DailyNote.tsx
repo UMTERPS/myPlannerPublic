@@ -3,7 +3,7 @@ import './DailyNote.less';
 import { connect } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ckeditors from 'ckeditors';
-import { FaLock, FaLockOpen } from 'react-icons/fa';
+import { LockFilled, UnlockFilled } from '@ant-design/icons';
 import LayoutIds from '../../../../constants/LayoutConstants';
 import { ESCAPE_KEYCODE } from '../../../../constants/GeneralConstants';
 import {
@@ -138,9 +138,9 @@ const DailyNote = ({
           </div>
           <div className="lock-container">
             {isEditable ? (
-              <FaLockOpen onClick={lockContent} />
+              <UnlockFilled onClick={lockContent} />
             ) : (
-              <FaLock onClick={lockContent} />
+              <LockFilled onClick={lockContent} />
             )}
           </div>
         </div>

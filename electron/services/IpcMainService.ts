@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron';
 import ipcConstants from '../../constants/IPCContants';
-import { isArray, extend, each } from 'lodash';
+// import { isArray, extend, each } from 'lodash';
 import { JsonDB } from 'node-json-db';
 
 const registerIpcListeners = (db: JsonDB): void => {
@@ -19,16 +19,16 @@ const registerIpcListeners = (db: JsonDB): void => {
   });
 
   ipcMain.on(ipcConstants.FETCH_CONTENT, (event, _token, keys) => {
-    const _keys = isArray(keys) ? keys : new Array(keys);
+    const _keys = keys && keys instanceof Array ? keys : new Array(keys);
     const results = {};
     try {
-      each(_keys, key => {
+      _keys.forEach(key => {
         try {
           const _result = db.getData('/' + key);
-          extend(results, { [key]: _result });
+          results[key] = _result;
         } catch (error) {
           if (error.id === ipcConstants.DATA_NOT_FOUND) {
-            extend(results, { [key]: '' });
+            results[key] = '';
           } else {
             throw error;
           }

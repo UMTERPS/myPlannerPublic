@@ -5,7 +5,7 @@ import Settings from './settings/Settings';
 import Tabs from 'antd/es/tabs';
 import LayoutConstants from '../../constants/LayoutConstants.js';
 import { connect } from 'react-redux';
-import { BsPencil, BsFillGearFill } from 'react-icons/bs';
+import { SettingFilled, ScheduleFilled } from '@ant-design/icons';
 
 const App = ({ size }) => {
   const { TabPane } = Tabs;
@@ -15,12 +15,12 @@ const App = ({ size }) => {
         defaultActiveKey="planner"
         tabPosition="left"
         style={{ height: size.height }}
-        tabBarStyle={{}}
+        tabBarStyle={{ width: LayoutConstants.SideNavWidth }}
       >
-        <TabPane tab={<BsPencil size={20} />} key="planner">
+        <TabPane tab={<ScheduleFilled />} key="planner">
           <Planner />
         </TabPane>
-        <TabPane tab={<BsFillGearFill />} key="settings">
+        <TabPane tab={<SettingFilled />} key="settings">
           <Settings />
         </TabPane>
       </Tabs>
