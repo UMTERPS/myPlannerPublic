@@ -15,7 +15,6 @@ const App = ({ size }) => {
         defaultActiveKey="planner"
         tabPosition="left"
         style={{ height: size.height }}
-        tabBarStyle={{ width: LayoutConstants.SideNavWidth }}
       >
         <TabPane tab={<ScheduleFilled />} key="planner">
           <Planner />

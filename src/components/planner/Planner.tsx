@@ -1,5 +1,4 @@
 import React from 'react';
-import 'react-calendar/dist/Calendar.css';
 import DailyNotesPanel from './dailyNotes/DailyNotesPanel';
 import WeeklyNotesPanel from './weeklyNote/WeeklyNotesPanel';
 import './Planner.less';
