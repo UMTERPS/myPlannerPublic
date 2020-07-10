@@ -4,10 +4,11 @@ import Planner from './planner/Planner';
 import Settings from './settings/Settings';
 import Tabs from 'antd/es/tabs';
 import LayoutConstants from '../../constants/LayoutConstants.js';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { SettingFilled, ScheduleFilled } from '@ant-design/icons';
 
-const App = ({ size }) => {
+const App = () => {
+  const size = useSelector((state: any) => state.layout[LayoutConstants.LayoutRoot]);
   const { TabPane } = Tabs;
   return (
     <div className="App-Container">
@@ -27,10 +28,4 @@ const App = ({ size }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    size: state.layout[LayoutConstants.LayoutRoot]
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;

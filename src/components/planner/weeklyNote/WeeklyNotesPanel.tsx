@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './WeeklyNotesPanel.less';
 import LayoutConstants from '../../../../constants/LayoutConstants';
 import { ESCAPE_KEYCODE } from '../../../../constants/GeneralConstants';
@@ -9,17 +9,8 @@ import {
   fetchWeeklyNote,
   saveWeeklyNote
 } from '../../../redux/actions/notesActions';
-import { bindActionCreators } from 'redux';
-import { ISize } from '../../../types/commonTypes';
 import { AppContext } from '../../../context/AppContext';
 import { useTranslation } from 'react-i18next';
-
-interface IWeeklyNotesPanelProps {
-  date: Date;
-  size: ISize;
-  fetchWeeklyNote: Function;
-  saveNote: Function;
-}
 
 const localeMap = {
   'en-US': 'en',
@@ -29,19 +20,17 @@ const localeMap = {
 
 let editor: any;
 
-const WeeklyNotesPanel = ({
-  date,
-  size,
-  fetchWeeklyNote,
-  saveNote
-}: IWeeklyNotesPanelProps) => {
+const WeeklyNotesPanel = () => {
+  const date = useSelector((state: any) => state.date.selectedDate);
+  const size = useSelector((state: any) => state.layout[LayoutConstants.WeeklyNotesPanel]);
+  const dispatch = useDispatch();
   const [isEditable, setIsEditable] = useState(false);
   const { locale } = useContext(AppContext);
   const { t } = useTranslation();
 
   useEffect(() => {
     if (editor) {
-      fetchWeeklyNote(date).then(content => {
+      dispatch(fetchWeeklyNote(date)).then(content => {
         editor.setData(content || '');
       });
 
@@ -53,7 +42,7 @@ const WeeklyNotesPanel = ({
 
   const onInit = initeditor => {
     editor = initeditor;
-    fetchWeeklyNote(date).then(content => {
+    dispatch(fetchWeeklyNote(date)).then(content => {
       initeditor.setData(content || '');
     });
   };
@@ -63,10 +52,10 @@ const WeeklyNotesPanel = ({
   };
 
   const onBlur = () => {
-    saveNote({
+    dispatch(saveWeeklyNote({
       date,
       value: editor.getData()
-    });
+    }));
     lockContent();
   };
 
@@ -116,18 +105,4 @@ const WeeklyNotesPanel = ({
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    date: state.date.selectedDate,
-    size: state.layout[LayoutConstants.WeeklyNotesPanel]
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchWeeklyNote: bindActionCreators(fetchWeeklyNote, dispatch),
-    saveNote: bindActionCreators(saveWeeklyNote, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(WeeklyNotesPanel);
+export default WeeklyNotesPanel;

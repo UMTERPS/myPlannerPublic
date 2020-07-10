@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import * as dateActions from '../../../redux/actions/dateActions';
-import { bindActionCreators } from 'redux';
 import CalendarPopup from '../calendar/CalendarPopup';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './DateNavigation.less';
 import { Button } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
-interface IDateNavigationProps {
-  date: Date;
-  setDate: Function;
-}
+const DateNavigation = () => {
+  const date = useSelector((state: any) => state.date.selectedDate);
+  const dispatch = useDispatch();
+  const setDate = useCallback(
+    (data) => dispatch(dateActions.updateSelectedDate(data)),
+    [dispatch]
+  );
 
-const DateNavigation = ({ date, setDate }: IDateNavigationProps) => {
   const goPrevWeek = () => {
     const _date = new Date(date);
     _date.setDate(date.getDate() - 7);
@@ -42,16 +43,4 @@ const DateNavigation = ({ date, setDate }: IDateNavigationProps) => {
   );
 };
 
-const mapStateToProps: any = (state: any): any => {
-  return {
-    date: state.date.selectedDate
-  };
-};
-
-const mapDisptchToProps: any = (dispatch: any) => {
-  return {
-    setDate: bindActionCreators(dateActions.updateSelectedDate, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDisptchToProps)(DateNavigation);
+export default DateNavigation;

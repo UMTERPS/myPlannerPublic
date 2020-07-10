@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './DailyNote.less';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ckeditors from 'ckeditors';
 import { LockFilled, UnlockFilled } from '@ant-design/icons';
@@ -10,11 +10,10 @@ import {
   saveDailyNote,
   fetchSingleDailyNote
 } from '../../../redux/actions/notesActions';
-import { bindActionCreators } from 'redux';
-import { ISize } from '../../../types/commonTypes';
 import { AppContext } from '../../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+
 const weekMap = [
   'SUNDAY',
   'MONDAY',
@@ -34,27 +33,23 @@ const localeMap = {
 interface IDailyNoteProps {
   uid: string;
   date: Date;
-  saveNote: Function;
-  fetchSingleDailyNote: Function;
-  size: ISize;
 }
 
 let editors: any = {};
 
 const DailyNote = ({
   uid,
-  date,
-  saveNote,
-  fetchSingleDailyNote,
-  size
+  date
 }: IDailyNoteProps) => {
+  const size = useSelector((state: any) => state.layout[LayoutIds.DailyNote]);
+  const dispatch = useDispatch();
   const [isEditable, setIsEditable] = useState(false);
   const { locale } = useContext(AppContext);
   const { t } = useTranslation();
   let editor = editors[uid];
   useEffect(() => {
     if (editor) {
-      fetchSingleDailyNote(date).then(content => {
+      dispatch(fetchSingleDailyNote(date)).then(content => {
         editor.setData(content || '');
       });
       if (isEditable) {
@@ -65,7 +60,7 @@ const DailyNote = ({
 
   const onInit = initeditor => {
     editors[uid] = initeditor;
-    fetchSingleDailyNote(date).then(content => {
+    dispatch(fetchSingleDailyNote(date)).then(content => {
       initeditor.setData(content || '');
     });
   };
@@ -81,10 +76,10 @@ const DailyNote = ({
   };
 
   const onBlur = () => {
-    saveNote({
+    dispatch(saveDailyNote({
       date,
       value: editor.getData()
-    });
+    }));
     lockContent();
   };
 
@@ -164,17 +159,4 @@ const DailyNote = ({
   );
 };
 
-const mapStateToProps: any = (state: any) => {
-  return {
-    size: state.layout[LayoutIds.DailyNote]
-  };
-};
-
-const mapDispatchToProps: any = (dispatch: any) => {
-  return {
-    saveNote: bindActionCreators(saveDailyNote, dispatch),
-    fetchSingleDailyNote: bindActionCreators(fetchSingleDailyNote, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DailyNote);
+export default DailyNote;
