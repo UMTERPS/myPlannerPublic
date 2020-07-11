@@ -1,10 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import './DailyNotesHeader.less';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import LayoutIds from '../../../../constants/LayoutConstants';
 import DateNavigation from '../dateNavigation/DateNavigation';
-import { ISize } from '../../../types/commonTypes';
 import { useTranslation } from 'react-i18next';
 
 const monthMap = [
@@ -24,10 +23,10 @@ const monthMap = [
 
 interface IDailyNotesHeaderProps {
   date: Date;
-  size: ISize;
 }
 
-const DailyNotesHeader = ({ date, size }: IDailyNotesHeaderProps) => {
+const DailyNotesHeader = ({ date }: IDailyNotesHeaderProps) => {
+  const size = useSelector((state: any) => state.layout[LayoutIds.DailyNotesHeader]);
   const { t } = useTranslation();
   const nth = moment(date).week().toString();
   return (
@@ -47,10 +46,4 @@ const DailyNotesHeader = ({ date, size }: IDailyNotesHeaderProps) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    size: state.layout[LayoutIds.DailyNotesHeader]
-  };
-};
-
-export default connect(mapStateToProps)(DailyNotesHeader);
+export default DailyNotesHeader;

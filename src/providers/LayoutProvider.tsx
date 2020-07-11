@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import LayoutConstants from '../../constants/LayoutConstants';
-import { bindActionCreators } from 'redux';
 import * as layoutActions from '../redux/actions/layoutActions';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 interface ILayoutNode {
   id?: string;
@@ -113,13 +112,11 @@ const getLayout = (root: ILayoutNode, layout: Object) => {
   }
 };
 
-interface ILayoutProviderProps {
-  updateLayout: Function;
-}
 let initilized = false;
 
 // TODO: To convert this into a non react component
-const LayoutProvider = ({ updateLayout }: ILayoutProviderProps) => {
+const LayoutProvider = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
     if (!initilized) {
       initilized = true;
@@ -141,20 +138,10 @@ const LayoutProvider = ({ updateLayout }: ILayoutProviderProps) => {
     const layout = {};
 
     getLayout(layoutTree, layout);
-    updateLayout(layout);
+    dispatch(layoutActions.updateLayout(layout));
   };
 
   return <React.Fragment />;
-};
-
-const mapStateToProps: any = (state: any) => ({
-  // layout: state.layout
-});
-
-const mapDispatchToProps: any = (dispatch: any) => {
-  return {
-    updateLayout: bindActionCreators(layoutActions.updateLayout, dispatch)
-  };
 };
 
 export const initLayout = () => {
@@ -169,4 +156,4 @@ export const initLayout = () => {
   return layout;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LayoutProvider);
+export default LayoutProvider;

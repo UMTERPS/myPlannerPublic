@@ -2,15 +2,17 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import './Settings.less';
 import Radio, { RadioChangeEvent } from 'antd/es/radio';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { updateLocale } from '../../redux/actions/localeActions';
 import LayoutConstants from '../../../constants/LayoutConstants.js';
 
-const Settings = ({ locale, size, updateLocale }) => {
+const Settings = () => {
+  const locale = useSelector((state: any) => state.locale.locale);
+  const size = useSelector((state: any) => state.layout[LayoutConstants.Settings]);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const updateLocaleSettings = (event: RadioChangeEvent) => {
-    updateLocale({ locale: event.target.value });
+    dispatch(updateLocale({ locale: event.target.value }));
   };
   return (
     <div
@@ -29,17 +31,4 @@ const Settings = ({ locale, size, updateLocale }) => {
   );
 };
 
-const mapStateToProps: any = (state: any) => {
-  return {
-    locale: state.locale.locale,
-    size: state.layout[LayoutConstants.Settings]
-  };
-};
-
-const mapDispatchToProps: any = (dispatch: any) => {
-  return {
-    updateLocale: bindActionCreators(updateLocale, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default Settings;
