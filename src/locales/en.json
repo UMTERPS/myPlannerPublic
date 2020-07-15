@@ -29,6 +29,9 @@
     "LANGUAGES": "Languages",
     "ENGLISH": "English",
     "CHINESE": "中文",
-    "DATE_FORMATTER": "dddd, MMMM Do   YYYY"
+    "DATE_FORMATTER": "dddd, MMMM Do   YYYY",
+    "RELOAD_APP": "To apply the changes, we need to reload the application.",
+    "RELOAD_NOW": "Reload now",
+    "RELOAD_LATER": "Later"
   }
 }
