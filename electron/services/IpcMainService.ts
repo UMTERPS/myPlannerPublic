@@ -1,6 +1,5 @@
 import { ipcMain } from 'electron';
 import ipcConstants from '../../constants/IPCContants';
-// import { isArray, extend, each } from 'lodash';
 import { JsonDB } from 'node-json-db';
 
 const registerIpcListeners = (db: JsonDB): void => {
@@ -47,23 +46,36 @@ const registerIpcListeners = (db: JsonDB): void => {
     }
   });
 
-  ipcMain.on(ipcConstants.SET_LOCALE, (event, _token, locale) => {
-    db.push('/' + 'locale', locale);
-    event.sender.send(`${ipcConstants.SET_LOCALE + _token}_SUCCESS`, locale);
+  ipcMain.on(ipcConstants.UPDATE_SETTINGS, (event, _token, settings) => {
+    Object.keys(settings).forEach(key => {
+      db.push('/settings/' + key, settings[key]);
+    });
+    event.sender.send(
+      `${ipcConstants.UPDATE_SETTINGS + _token}_SUCCESS`,
+      settings
+    );
   });
 
-  ipcMain.on(ipcConstants.GET_LOCALE, (event, _token) => {
-    let locale: string;
+  ipcMain.on(ipcConstants.GET_SETTINGS, (event, _token) => {
+    let settings: Object;
     try {
-      locale = db.getData('/' + 'locale');
+      settings = db.getData('/' + 'settings');
     } catch (error) {
       if (error.id === ipcConstants.DATA_NOT_FOUND) {
-        locale = '';
+        // If no settings found, init it with default values
+        settings = {
+          locale: '',
+          theme: ''
+        };
+        db.push('/settings', settings);
       } else {
         throw error;
       }
     }
-    event.sender.send(`${ipcConstants.GET_LOCALE + _token}_SUCCESS`, locale);
+    event.sender.send(
+      `${ipcConstants.GET_SETTINGS + _token}_SUCCESS`,
+      settings
+    );
   });
 };
 

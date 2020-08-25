@@ -1,29 +1,20 @@
-// @import '~antd/es/style/themes/index.less';
-// @import '~antd/lib/style/themes/dark.less';
 @import '~antd/dist/antd.less';
+@import '../themes/theme.less';
+
 @primary-color: black;
-@component-background: #f0f0f0;
 
 .App-Container {
   display: flex;
 
-  .ant-tabs-left-content {
-    padding-left: 0px;
-  }
-  .ant-tabs-left {
+  div.ant-tabs-left {
     border-right: 1px solid black !important;
     padding-right: 1px;
     .ant-tabs-nav-wrap {
-      background-color: @component-background;
       .ant-tabs-tab {
         margin-bottom: 0;
 
         span.anticon {
           margin-right: 0px;
-        }
-
-        &.ant-tabs-tab-active {
-          background-color: #aaaaaa;
         }
       }
 

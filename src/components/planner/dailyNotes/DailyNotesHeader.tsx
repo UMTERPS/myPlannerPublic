@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import LayoutIds from '../../../../constants/LayoutConstants';
 import DateNavigation from '../dateNavigation/DateNavigation';
 import { useTranslation } from 'react-i18next';
-
 const monthMap = [
   'JANUARY',
   'FEBRUARY',
@@ -26,7 +25,9 @@ interface IDailyNotesHeaderProps {
 }
 
 const DailyNotesHeader = ({ date }: IDailyNotesHeaderProps) => {
-  const size = useSelector((state: any) => state.layout[LayoutIds.DailyNotesHeader]);
+  const size = useSelector(
+    (state: any) => state.layout[LayoutIds.DailyNotesHeader]
+  );
   const { t } = useTranslation();
   const nth = moment(date).week().toString();
   return (

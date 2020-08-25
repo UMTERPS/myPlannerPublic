@@ -8,10 +8,13 @@ import { useSelector } from 'react-redux';
 import { SettingFilled, ScheduleFilled } from '@ant-design/icons';
 
 const App = () => {
-  const size = useSelector((state: any) => state.layout[LayoutConstants.LayoutRoot]);
+  const size = useSelector(
+    (state: any) => state.layout[LayoutConstants.LayoutRoot]
+  );
+  const theme = useSelector((state: any) => state.settings.theme);
   const { TabPane } = Tabs;
   return (
-    <div className="App-Container">
+    <div className={'App-Container ' + theme}>
       <Tabs
         defaultActiveKey="planner"
         tabPosition="left"

@@ -37,16 +37,14 @@ interface IDailyNoteProps {
 
 let editors: any = {};
 
-const DailyNote = ({
-  uid,
-  date
-}: IDailyNoteProps) => {
+const DailyNote = ({ uid, date }: IDailyNoteProps) => {
   const size = useSelector((state: any) => state.layout[LayoutIds.DailyNote]);
   const dispatch = useDispatch();
   const [isEditable, setIsEditable] = useState(false);
   const { locale } = useContext(AppContext);
   const { t } = useTranslation();
   let editor = editors[uid];
+
   useEffect(() => {
     if (editor) {
       dispatch(fetchSingleDailyNote(date)).then(content => {
@@ -76,10 +74,12 @@ const DailyNote = ({
   };
 
   const onBlur = () => {
-    dispatch(saveDailyNote({
-      date,
-      value: editor.getData()
-    }));
+    dispatch(
+      saveDailyNote({
+        date,
+        value: editor.getData()
+      })
+    );
     lockContent();
   };
 
@@ -88,7 +88,7 @@ const DailyNote = ({
   };
 
   const getNoteDateClassName = () => {
-    return 'daily-note-date' + (isEditable ? ' enabled' : ' disabled');
+    return 'daily-note-date ' + (isEditable ? ' enabled' : ' disabled');
   };
 
   const getWeekendClassName = () => {
@@ -113,7 +113,7 @@ const DailyNote = ({
       onKeyDown={handleKeyDown}
     >
       <div className={getNoteDateClassName()}>
-        <div className={'row-one ' + getWeekendClassName()}>
+        <div className={'row-one' + getWeekendClassName()}>
           {t(weekMap[date.getDay()])}
         </div>
         <div className="row-two">

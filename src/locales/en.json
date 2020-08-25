@@ -32,6 +32,9 @@
     "DATE_FORMATTER": "dddd, MMMM Do   YYYY",
     "RELOAD_APP": "To apply the changes, we need to reload the application.",
     "RELOAD_NOW": "Reload now",
-    "RELOAD_LATER": "Later"
+    "RELOAD_LATER": "Later",
+    "THEME_SETTING_TITLE": "Theme",
+    "THEME_LIGHT": "Light",
+    "THEME_DARK": "Dark"
   }
 }

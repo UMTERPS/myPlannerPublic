@@ -1,0 +1,11 @@
+{
+  "theme": "light",
+  "values": {
+    "background": "#eeeeee",
+    "edit-bacdground": "#ffffff",
+    "color": "#000000",
+    "border-color": "#dddddd",
+    "highlight": "#cccccc",
+    "highlight-red": "#e31b1b"
+  }
+}

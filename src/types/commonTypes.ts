@@ -29,8 +29,14 @@ export interface IDateState {
   selectedDate: Date;
 }
 
-export interface ILocaleState {
+export interface ISettingsState {
   locale: string;
+  theme: string;
+}
+
+export interface ISettingsUpdater {
+  locale?: string;
+  theme?: string;
 }
 
 export interface ILayoutState {

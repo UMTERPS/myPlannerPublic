@@ -1,23 +1,24 @@
+import { ISettingsState, ISettingsUpdater } from './../types/commonTypes';
 import {
-  setLocale as doSetLocale,
-  getLocale as doGetLocale
+  getSettings as doGetSettings,
+  updateSettings as doUpdateSettings
 } from '../providers/IpcRendererProvider';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import resources from '../locales';
 import 'ckeditors/build/translations/zh-cn';
 
-export const setLocale = async (locale: string): Promise<string> => {
-  const status = await doSetLocale(locale);
-  return status;
+export const getSettings = async (): Promise<ISettingsState> => {
+  return doGetSettings();
 };
 
-export const getLocale = async (): Promise<string> => {
-  const ret = await doGetLocale();
-  return ret;
+export const updateSettings = async (
+  settings: ISettingsUpdater
+): Promise<ISettingsUpdater> => {
+  return doUpdateSettings(settings);
 };
 
-export default locale => {
+export const initI18n = locale => {
   i18n
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({

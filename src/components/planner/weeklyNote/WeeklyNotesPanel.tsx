@@ -22,7 +22,9 @@ let editor: any;
 
 const WeeklyNotesPanel = () => {
   const date = useSelector((state: any) => state.date.selectedDate);
-  const size = useSelector((state: any) => state.layout[LayoutConstants.WeeklyNotesPanel]);
+  const size = useSelector(
+    (state: any) => state.layout[LayoutConstants.WeeklyNotesPanel]
+  );
   const dispatch = useDispatch();
   const [isEditable, setIsEditable] = useState(false);
   const { locale } = useContext(AppContext);
@@ -52,10 +54,12 @@ const WeeklyNotesPanel = () => {
   };
 
   const onBlur = () => {
-    dispatch(saveWeeklyNote({
-      date,
-      value: editor.getData()
-    }));
+    dispatch(
+      saveWeeklyNote({
+        date,
+        value: editor.getData()
+      })
+    );
     lockContent();
   };
 

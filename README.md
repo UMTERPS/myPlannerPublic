@@ -2,8 +2,6 @@
 
 A simple planner where you could log or plan your daily work. It is a completely offline app, which means it doesn't require an Internet connection to run and you may not be able to sync your data between your devices.
 
-
-
 ## Supported Platforms
 
 MyPlanner is known to run on the following host platforms:
@@ -11,8 +9,6 @@ MyPlanner is known to run on the following host platforms:
 - Windows (32/64 bit)
 - macOS (formerly known as OS X)
 - Linux (x86/x86_64)
-
-
 
 ## Key components and libraries
 
@@ -22,8 +18,6 @@ MyPlanner is known to run on the following host platforms:
 4. Ant Design (antd). UI library. Will try to eventually replace any other UI libraries in this projects with Ant Design.
 5. i18next. For i18n support.
 6. lowdb. A simple local file-based database, which stores data in json format.
-
-
 
 ## How to run
 
@@ -37,10 +31,13 @@ npm install
 npm run build:ckeditor
 
 # 3. Whenever there is a locale related change, run
-# This command needs to be re-run if there is an update in the locale files
 npm run build:locale
 
-# 4. For routine development, run the following command simultaneously
+# 4. Whenever there is any change to theme, please update
+# the content under src/themes folder and run
+npm run build:theme
+
+# 5. For routine development, run the following command simultaneously
 npm run build:ui
 npm run start:electron
 
@@ -48,11 +45,9 @@ npm run start:electron
 npm run deploy
 ```
 
-
-
 ## Important Todos
 
-1. Theme.
+1. Theme. (done)
 2. Import and export user preference and data.
 3. Support data encryptions ( pro version?).
 4. **Testing**
@@ -61,4 +56,3 @@ npm run deploy
 7. Global text search ( pro version?)
 8. Mobile version (react-native)
 9. Online version
-

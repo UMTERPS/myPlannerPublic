@@ -31,7 +31,10 @@
     "CHINESE": "中文",
     "DATE_FORMATTER": "YYYY年MMMDo  dddd",
     "RELOAD_APP": "为使设置生效，我们需要重新加载应用。",
-    "RELOAD_NOW": "立即加载",
-    "RELOAD_LATER": "稍后再说"
+    "RELOAD_NOW": "立即重载",
+    "RELOAD_LATER": "稍后再说",
+    "THEME_SETTING_TITLE": "主题",
+    "THEME_LIGHT": "明亮模式",
+    "THEME_DARK": "黑暗模式"
   }
 }

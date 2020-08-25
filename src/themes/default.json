@@ -1,0 +1,11 @@
+{
+  "theme": "default",
+  "values": {
+    "background": "#aaaaaa",
+    "edit-bacdground": "#dddddd",
+    "color": "#000000",
+    "border-color": "#999999",
+    "highlight": "#888888",
+    "highlight-red": "#b41616"
+  }
+}

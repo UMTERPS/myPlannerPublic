@@ -9,6 +9,7 @@
     "deploy": "npm run bootstrap:ckeditor && npm run build && npm run build:main && node ./packager.js",
     "build": "webpack --config webpack.config.renderer.prod.js",
     "bootstrap:ckeditor": "cd ./vendor/ckeditor5 && npm install && npm run build",
+    "build:theme": "cd ./src/themes && node ./buildThemes.js",
     "build:locale": "cd ./src/locales && node ./combineLocales.js",
     "build:ckeditor": "cd ./vendor/ckeditor5 && npm run build",
     "build:main": "webpack --config webpack.config.main.prod.js",

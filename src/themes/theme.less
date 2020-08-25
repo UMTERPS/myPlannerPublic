@@ -1,0 +1,134 @@
+
+@default-background: #aaaaaa;
+@default-edit-bacdground: #dddddd;
+@default-color: #000000;
+@default-border-color: #999999;
+@default-highlight: #888888;
+@default-highlight-red: #b41616;
+
+
+@light-background: #eeeeee;
+@light-edit-bacdground: #ffffff;
+@light-color: #000000;
+@light-border-color: #dddddd;
+@light-highlight: #cccccc;
+@light-highlight-red: #e31b1b;
+
+
+.App-Container {
+  div.ant-tabs-left {
+    div.ant-tabs-nav-wrap {
+      background-color: @default-background;
+      .ant-tabs-tab.ant-tabs-tab-active {
+        background-color: @default-highlight;
+      }
+    }
+  }
+
+  .settings-container {
+    background-color: @default-background;
+    label {
+      color: @default-color;
+    }
+  }
+
+  .daily-note-header-container {
+    background-color: @default-background;
+    button.ant-btn {
+      background-color: @default-background;
+    }
+  }
+
+  .daily-note {
+    .daily-note-date.disabled {
+      border-right: 1px dashed @default-border-color;
+      background-color: @default-background;
+    }
+    .daily-note-date {
+      .weekend {
+        color: @default-highlight-red;
+      }
+      .row-two {
+        .lock-container {
+          color: @default-highlight;
+        }
+      }
+    }
+    .daily-note-content-container {
+      div.ck-editor__editable_inline.ck-read-only {
+        background-color: @default-background;
+      }
+    }
+  }
+
+  .week-note-container {
+    .week-note-title {
+      background-color: @default-background;
+    }
+    .ck-editor
+      > .ck-editor__main
+      > div.ck-editor__editable_inline.ck-read-only {
+      background-color: @default-background;
+    }
+  }
+}
+
+
+.App-Container.light {
+  div.ant-tabs-left {
+    div.ant-tabs-nav-wrap {
+      background-color: @light-background;
+      .ant-tabs-tab.ant-tabs-tab-active {
+        background-color: @light-highlight;
+      }
+    }
+  }
+
+  .settings-container {
+    background-color: @light-background;
+    label {
+      color: @light-color;
+    }
+  }
+
+  .daily-note-header-container {
+    background-color: @light-background;
+    button.ant-btn {
+      background-color: @light-background;
+    }
+  }
+
+  .daily-note {
+    .daily-note-date.disabled {
+      border-right: 1px dashed @light-border-color;
+      background-color: @light-background;
+    }
+    .daily-note-date {
+      .weekend {
+        color: @light-highlight-red;
+      }
+      .row-two {
+        .lock-container {
+          color: @light-highlight;
+        }
+      }
+    }
+    .daily-note-content-container {
+      div.ck-editor__editable_inline.ck-read-only {
+        background-color: @light-background;
+      }
+    }
+  }
+
+  .week-note-container {
+    .week-note-title {
+      background-color: @light-background;
+    }
+    .ck-editor
+      > .ck-editor__main
+      > div.ck-editor__editable_inline.ck-read-only {
+      background-color: @light-background;
+    }
+  }
+}
+

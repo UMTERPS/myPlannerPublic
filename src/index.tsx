@@ -6,7 +6,11 @@ import { Provider as ReduxProvider } from 'react-redux';
 import LayoutProvider, { initLayout } from './providers/LayoutProvider';
 import { initState } from './redux/reducers/initState';
 import { AppContext } from './context/AppContext';
-import initI18n, { setLocale, getLocale } from './services/LocaleService';
+import {
+  initI18n,
+  getSettings,
+  updateSettings
+} from './services/SettingsService';
 
 const storeConfig = () => {
   return process.env.NODE_ENV === 'production'
@@ -14,29 +18,29 @@ const storeConfig = () => {
     : import('./redux/configureStore.dev');
 };
 
-const initLocale = async () => {
-  let locale = await getLocale();
+const init = async () => {
+  let { locale, theme } = await getSettings();
   if (!locale) {
     // get locale info from electron renderer browser navigator
     locale = window.navigator.language;
     // send locale info back to electron main process to save it into preferences
-    await setLocale(locale);
+    await updateSettings({ locale });
   }
   // init i18next with the locale string
   initI18n(locale);
 
-  return locale;
+  return { locale, theme };
 };
 
-initLocale().then(locale => {
+init().then(settings => {
   initState.layout = initLayout();
-  initState.locale = { locale };
+  initState.settings = settings;
 
   storeConfig().then(storeConfig => {
     const configureStore = storeConfig.default;
     render(
       <ReduxProvider store={configureStore(initState)}>
-        <AppContext.Provider value={{ locale }}>
+        <AppContext.Provider value={{ locale: settings.locale }}>
           <LayoutProvider />
           <App />
         </AppContext.Provider>
