@@ -7,7 +7,7 @@ const { serialHooks } = require('electron-packager/src/hooks');
 
 const config_darwin = {
   dir: CICDConstants.TEMPORARY_BUNDLE_BUILD_PATH,
-  icon: './favicon.icns',
+  icon: './favi.icns',
   overwrite: true,
   platform: 'darwin',
   ignore: 'report.html',
@@ -23,7 +23,7 @@ const config_darwin = {
 // TODO: Currently, unable to packager win32 exe on Mac
 const config_windows = {
   dir: CICDConstants.TEMPORARY_BUNDLE_BUILD_PATH,
-  icon: './favicon.icns',
+  icon: './favicon.ico',
   overwrite: true,
   platform: 'win32',
   arch: 'x64',
