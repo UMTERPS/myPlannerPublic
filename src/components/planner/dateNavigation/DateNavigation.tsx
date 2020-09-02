@@ -3,14 +3,14 @@ import * as dateActions from '../../../redux/actions/dateActions';
 import CalendarPopup from '../calendar/CalendarPopup';
 import { useSelector, useDispatch } from 'react-redux';
 import './DateNavigation.less';
-import { Button } from 'antd';
+import Button from 'antd/es/button';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
 const DateNavigation = () => {
   const date = useSelector((state: any) => state.date.selectedDate);
   const dispatch = useDispatch();
   const setDate = useCallback(
-    (data) => dispatch(dateActions.updateSelectedDate(data)),
+    data => dispatch(dateActions.updateSelectedDate(data)),
     [dispatch]
   );
 

@@ -5,20 +5,7 @@ import { useSelector } from 'react-redux';
 import LayoutIds from '../../../../constants/LayoutConstants';
 import DateNavigation from '../dateNavigation/DateNavigation';
 import { useTranslation } from 'react-i18next';
-const monthMap = [
-  'JANUARY',
-  'FEBRUARY',
-  'MARCH',
-  'APRIL',
-  'MAY',
-  'JUNE',
-  'JULY',
-  'AUGUEST',
-  'SEPTEMPBER',
-  'OCTOBER',
-  'NOVERMBER',
-  'DECEMBER'
-];
+import { monthMap } from '../../../constants';
 
 interface IDailyNotesHeaderProps {
   date: Date;

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Settings.less';
 import Radio, { RadioChangeEvent } from 'antd/es/radio';
-import { Modal } from 'antd';
+import Modal from 'antd/es/modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLocale, updateTheme } from '../../redux/actions/settingsActions';
 import LayoutConstants from '../../../constants/LayoutConstants.js';

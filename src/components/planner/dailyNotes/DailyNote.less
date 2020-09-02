@@ -44,6 +44,7 @@
 
   .daily-note-content-container {
     flex: 1 1 auto;
+    position: relative;
 
     .ck.ck-editor__editable_inline > :last-child {
       margin-bottom: 0px;
@@ -75,6 +76,12 @@
       &.ck-read-only {
         border-radius: 0px;
       }
+    }
+    .full-screen-toggle {
+      position: absolute;
+      cursor: pointer;
+      right: 5px;
+      bottom: 0px;
     }
   }
 }

@@ -3,7 +3,11 @@ import './DailyNote.less';
 import { useSelector, useDispatch } from 'react-redux';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ckeditors from 'ckeditors';
-import { LockFilled, UnlockFilled } from '@ant-design/icons';
+import {
+  LockFilled,
+  UnlockFilled,
+  FullscreenOutlined
+} from '@ant-design/icons';
 import LayoutIds from '../../../../constants/LayoutConstants';
 import { ESCAPE_KEYCODE } from '../../../../constants/GeneralConstants';
 import {
@@ -13,31 +17,17 @@ import {
 import { AppContext } from '../../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-
-const weekMap = [
-  'SUNDAY',
-  'MONDAY',
-  'TUESDAY',
-  'WEDNESDAY',
-  'THURSDAY',
-  'FRIDAY',
-  'SATURDAY'
-];
-
-const localeMap = {
-  'en-US': 'en',
-  'zh-CN': 'zh-cn',
-  zh: 'zh-cn'
-};
+import { weekMap, localeMap } from '../../../constants';
 
 interface IDailyNoteProps {
+  openModalEditor: Function;
   uid: string;
   date: Date;
 }
 
 let editors: any = {};
 
-const DailyNote = ({ uid, date }: IDailyNoteProps) => {
+const DailyNote = ({ openModalEditor, uid, date }: IDailyNoteProps) => {
   const size = useSelector((state: any) => state.layout[LayoutIds.DailyNote]);
   const dispatch = useDispatch();
   const [isEditable, setIsEditable] = useState(false);
@@ -106,6 +96,14 @@ const DailyNote = ({ uid, date }: IDailyNoteProps) => {
     }
   };
 
+  const showModalEditor = event => {
+    openModalEditor({
+      date,
+      uid,
+      content: editor.getData()
+    });
+  };
+
   return (
     <div
       className="daily-note"
@@ -154,6 +152,9 @@ const DailyNote = ({ uid, date }: IDailyNoteProps) => {
           editor={ckeditors.EditorInlineBuild}
           onInit={onInit}
         />
+        <div className="full-screen-toggle" onClick={showModalEditor}>
+          <FullscreenOutlined />
+        </div>
       </div>
     </div>
   );

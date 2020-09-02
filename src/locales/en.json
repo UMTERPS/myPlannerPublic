@@ -35,6 +35,7 @@
     "RELOAD_LATER": "Later",
     "THEME_SETTING_TITLE": "Theme",
     "THEME_LIGHT": "Light",
-    "THEME_DARK": "Dark"
+    "THEME_DARK": "Dark",
+    "DATE_TITLE": "{{month}} {{date}}, {{year}}"
   }
 }

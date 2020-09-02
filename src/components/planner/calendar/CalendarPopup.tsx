@@ -3,7 +3,11 @@ import moment, { Moment } from 'moment';
 import './CalendarPopup.less';
 import { useTranslation } from 'react-i18next';
 import { AppContext } from '../../../context/AppContext';
-import { Button, Calendar, Modal, Row, Col } from 'antd';
+import Button from 'antd/es/button';
+import Calendar from 'antd/es/calendar';
+import Modal from 'antd/es/modal';
+import Row from 'antd/es/row';
+import Col from 'antd/es/col';
 import {
   LeftOutlined,
   RightOutlined,
