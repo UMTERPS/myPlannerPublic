@@ -8,6 +8,9 @@ import Calendar from 'antd/es/calendar';
 import Modal from 'antd/es/modal';
 import Row from 'antd/es/row';
 import Col from 'antd/es/col';
+import ConfigProvider from 'antd/es/config-provider';
+import en_GB from 'antd/es/locale/en_GB';
+import zh_CN from 'antd/es/locale/zh_CN';
 import {
   LeftOutlined,
   RightOutlined,
@@ -25,6 +28,7 @@ const CalendarPopup = ({ date, setDate }: ICalendarPopupProps) => {
   const [calendarDispalyDate, setCalendarDispalyDate] = useState(date);
   const { t } = useTranslation();
   const { locale } = useContext(AppContext);
+  const calendarLocale = locale === 'en-US' ? en_GB : zh_CN;
   moment.locale(locale);
 
   const goBackToToday = () => {
@@ -149,12 +153,14 @@ const CalendarPopup = ({ date, setDate }: ICalendarPopupProps) => {
       >
         {/* FixMe: Antd calendar's display range is bound to the selected date. 
           Need to see if they can be unbound. */}
-        <Calendar
-          fullscreen={false}
-          value={moment(calendarDispalyDate)}
-          headerRender={calendarHeaderRenderer}
-          onChange={updateDate}
-        />
+        <ConfigProvider locale={calendarLocale}>
+          <Calendar
+            fullscreen={false}
+            value={moment(calendarDispalyDate)}
+            headerRender={calendarHeaderRenderer}
+            onChange={updateDate}
+          />
+        </ConfigProvider>
       </Modal>
     </div>
   );
