@@ -1,11 +1,45 @@
 import { ipcMain } from 'electron';
 import ipcConstants from '../../constants/IPCContants';
 import { JsonDB } from 'node-json-db';
+import { Config } from 'node-json-db/dist/lib/JsonDBConfig';
+import path from 'path';
 
-const registerIpcListeners = (db: JsonDB): void => {
+export type ListenerConfig = {
+  DBPath: string;
+  saveAfterPush: boolean;
+  humanReadable: boolean;
+  separator: string;
+};
+
+const registerIpcListeners = (config: ListenerConfig): void => {
+  const { DBPath, saveAfterPush, humanReadable, separator } = config;
+  // for personal data;
+  // should be encrypted when that functionality is ready
+  // should be able to be imported/exported
+  const dataDB = new JsonDB(
+    new Config(
+      path.join(DBPath, 'MyPlanner'),
+      saveAfterPush,
+      humanReadable,
+      separator
+    )
+  );
+
+  // for settings/preferences;
+  // don't have to be encrypted
+  // optional to be imported/exported
+  const prefDB = new JsonDB(
+    new Config(
+      path.join(DBPath, 'Settings'),
+      saveAfterPush,
+      humanReadable,
+      separator
+    )
+  );
+
   ipcMain.on(ipcConstants.UPDATE_CONTENT, (event, _token, key, value) => {
     try {
-      db.push('/' + key, value);
+      dataDB.push('/' + key, value);
       event.sender.send(`${ipcConstants.UPDATE_CONTENT + _token}_SUCCESS`, {
         [key]: value
       });
@@ -23,7 +57,7 @@ const registerIpcListeners = (db: JsonDB): void => {
     try {
       _keys.forEach(key => {
         try {
-          const _result = db.getData('/' + key);
+          const _result = dataDB.getData('/' + key);
           results[key] = _result;
         } catch (error) {
           if (error.id === ipcConstants.DATA_NOT_FOUND) {
@@ -48,7 +82,7 @@ const registerIpcListeners = (db: JsonDB): void => {
 
   ipcMain.on(ipcConstants.UPDATE_SETTINGS, (event, _token, settings) => {
     Object.keys(settings).forEach(key => {
-      db.push('/settings/' + key, settings[key]);
+      prefDB.push('/settings/' + key, settings[key]);
     });
     event.sender.send(
       `${ipcConstants.UPDATE_SETTINGS + _token}_SUCCESS`,
@@ -59,7 +93,7 @@ const registerIpcListeners = (db: JsonDB): void => {
   ipcMain.on(ipcConstants.GET_SETTINGS, (event, _token) => {
     let settings: Object;
     try {
-      settings = db.getData('/' + 'settings');
+      settings = prefDB.getData('/' + 'settings');
     } catch (error) {
       if (error.id === ipcConstants.DATA_NOT_FOUND) {
         // If no settings found, init it with default values
@@ -67,7 +101,7 @@ const registerIpcListeners = (db: JsonDB): void => {
           locale: '',
           theme: ''
         };
-        db.push('/settings', settings);
+        prefDB.push('/settings', settings);
       } else {
         throw error;
       }

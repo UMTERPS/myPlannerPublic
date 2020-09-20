@@ -11,25 +11,19 @@ const _SAVE_AFTER_PUSH = true;
 const _HUMAN_READABLE = false;
 const _SEPARATOR = '/';
 const _DB_PATHS = {
-  win32: '/AppData/Local/MyPlanner/MyPlanner',
-  darwin: '/Library/Application Support/MyPlanner/MyPlanner',
+  win32: '/AppData/Local/MyPlanner',
+  darwin: '/Library/Application Support/MyPlanner',
   linux: 'MyPlanner'
 };
 const isDev = process.env.NODE_ENV !== 'production';
 
-// register Ipc Main listeners, which handle saving & updating requests from Renderer
-registerIpcListeners(
-  new JsonDB(
-    new Config(
-      isDev
-        ? './MyPlanner.json'
-        : _USER_HOME_DIRECTORY + _DB_PATHS[process.platform],
-      _SAVE_AFTER_PUSH,
-      _HUMAN_READABLE,
-      _SEPARATOR
-    )
-  )
-);
+// register Ipc Main listeners, which handles persistent data changes
+registerIpcListeners({
+  DBPath: isDev ? '.' : _USER_HOME_DIRECTORY + _DB_PATHS[process.platform],
+  saveAfterPush: _SAVE_AFTER_PUSH,
+  humanReadable: _HUMAN_READABLE,
+  separator: _SEPARATOR
+});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
