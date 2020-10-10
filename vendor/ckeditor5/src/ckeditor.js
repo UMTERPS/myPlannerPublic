@@ -17,7 +17,6 @@ import FontSize from '@ckeditor/ckeditor5-font/src/fontsize.js';
 import FontFamily from '@ckeditor/ckeditor5-font/src/fontfamily.js';
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline.js';
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough.js';
-import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
@@ -40,7 +39,6 @@ EditorClassicBuild.builtinPlugins = [
   FontFamily,
   HorizontalLine,
   Strikethrough,
-  TodoList,
   Underline,
   Essentials,
   Paragraph
@@ -66,7 +64,6 @@ EditorClassicBuild.defaultConfig = {
       '|',
       'bulletedList',
       'numberedList',
-      'todoList',
       'alignment',
       'indent',
       'outdent',
@@ -93,7 +90,6 @@ EditorInlineBuild.builtinPlugins = [
   FontFamily,
   HorizontalLine,
   Strikethrough,
-  TodoList,
   Underline,
   Essentials,
   Paragraph
@@ -120,7 +116,6 @@ EditorInlineBuild.defaultConfig = {
       '|',
       'bulletedList',
       'numberedList',
-      'todoList',
       'alignment',
       'indent',
       'outdent',
