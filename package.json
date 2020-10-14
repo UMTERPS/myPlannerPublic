@@ -24,6 +24,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
     "@ckeditor/ckeditor5-react": "^2.1.0",
+    "@ckeditor/ckeditor5-theme-lark": "^23.0.0",
     "antd": "^4.2.4",
     "axios": "^0.19.1",
     "bootstrap": "4.3.1",

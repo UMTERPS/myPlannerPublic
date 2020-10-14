@@ -1,7 +1,5 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
-import { JsonDB } from 'node-json-db';
-import { Config } from 'node-json-db/dist/lib/JsonDBConfig';
 import protocols from 'electron-protocols';
 import registerIpcListeners from './electron/services/IpcMainService';
 import layoutConstants from './constants/LayoutConstants';
