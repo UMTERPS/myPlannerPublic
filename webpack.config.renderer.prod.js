@@ -22,8 +22,7 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, CICDConstants.FRONTEND_BUILD_PATH),
-    publicPath: 'local://',
-    filename: 'bundle.js'
+    filename: 'index.js'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js']

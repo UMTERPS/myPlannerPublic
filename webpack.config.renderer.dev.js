@@ -1,10 +1,9 @@
 const path = require('path');
 const { styles } = require('@ckeditor/ckeditor5-dev-utils');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpackBundleAnalyzer = require('webpack-bundle-analyzer');
 const BUILD_PATH = 'build';
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 module.exports = {
   mode: 'development',
@@ -13,22 +12,10 @@ module.exports = {
   entry: './src/index.tsx',
   watch: true,
   output: {
-    path: path.resolve(__dirname, BUILD_PATH),
-    publicPath: 'local://',
-    filename: 'bundle.js'
-  },
-  devServer: {
-    stats: 'minimal',
-    overlay: true,
-    historyApiFallback: true,
-    disableHostCheck: true,
-    https: false
+    path: path.join(__dirname, BUILD_PATH),
+    filename: 'index.js'
   },
   plugins: [
-    new webpackBundleAnalyzer.BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: false
-    }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       favicon: './favicon.ico'

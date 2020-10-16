@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const CICDConstants = require('./constants/CICDConstants');
 
 process.env.NODE_ENV = 'development';
 
@@ -9,8 +10,7 @@ module.exports = {
   entry: './application.ts',
   output: {
     path: path.resolve(__dirname),
-    publicPath: 'local://',
-    filename: 'application.js'
+    filename: CICDConstants.BACKEND_APP_ENTRY
   },
   module: {
     rules: [

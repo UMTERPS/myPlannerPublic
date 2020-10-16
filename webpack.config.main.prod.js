@@ -11,8 +11,7 @@ module.exports = {
   entry: './application.ts',
   output: {
     path: path.resolve(__dirname, CICDConstants.BACKEND_BUILD_PATH),
-    publicPath: 'local://',
-    filename: 'bundle.js'
+    filename: CICDConstants.BACKEND_APP_ENTRY
   },
   module: {
     rules: [

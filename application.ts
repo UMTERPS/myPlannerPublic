@@ -1,6 +1,5 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
-import protocols from 'electron-protocols';
 import registerIpcListeners from './electron/services/IpcMainService';
 import layoutConstants from './constants/LayoutConstants';
 
@@ -27,11 +26,6 @@ registerIpcListeners({
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
-protocols.register(
-  'local',
-  protocols.basepath(path.join(app.getAppPath(), './build'))
-);
-
 function createWindow() {
   // Creating the browser window.
   win = new BrowserWindow({
@@ -45,7 +39,9 @@ function createWindow() {
   });
 
   // load index html
-  win.loadURL('local://index.html');
+  win.loadURL(
+    'file://' + path.resolve(app.getAppPath(), 'build', 'index.html')
+  );
 
   win.on('reload', event => {
     event.preventDefault();

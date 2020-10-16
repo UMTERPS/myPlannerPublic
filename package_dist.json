@@ -1,8 +1,8 @@
 {
   "name": "MyPlanner",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "A simple local planner, with which you may easily log your daily work.",
-  "main": "bundle.js",
+  "main": "app.js",
   "keywords": ["productivity"],
   "author": "",
   "license": "ISC"

@@ -40,6 +40,11 @@ npm run build:theme
 # 5. For routine development, run the following command simultaneously
 npm run build:ui
 npm run start:electron
+# Or if you wish to run above two commands together:
+npm start
+
+#6. To pack current frontend and backend code into asar files, run
+npm run asar-pack
 
 # For bundle project into final package
 npm run deploy
