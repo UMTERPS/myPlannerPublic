@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import registerIpcListeners from './electron/services/IpcMainService';
 import layoutConstants from './constants/LayoutConstants';
+import Logger from './electron/logger';
 
 const _USER_HOME_DIRECTORY = require('os').homedir();
 const _SAVE_AFTER_PUSH = true;
@@ -13,6 +14,9 @@ const _DB_PATHS = {
   linux: 'MyPlanner'
 };
 const isDev = process.env.NODE_ENV !== 'production';
+
+const logger = Logger.getLogger();
+logger.info('**************** Application Start ********************');
 
 // register Ipc Main listeners, which handles persistent data changes
 registerIpcListeners({
@@ -27,6 +31,7 @@ registerIpcListeners({
 let win;
 
 function createWindow() {
+  logger.info('Creating window');
   // Creating the browser window.
   win = new BrowserWindow({
     minHeight: layoutConstants.AppMinHeight,
@@ -56,6 +61,7 @@ function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    logger.info('--------------------- Application Stop ---------------------');
     win = null;
   });
 }
