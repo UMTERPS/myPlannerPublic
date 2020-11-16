@@ -1,6 +1,6 @@
 {
   "name": "my-planner",
-  "version": "0.1.1-beta",
+  "version": "0.1.1",
   "description": "A simple local planner, with which you may easily log your daily work.",
   "main": "app.js",
   "scripts": {
@@ -26,6 +26,7 @@
     "@ckeditor/ckeditor5-theme-lark": "23.0.0",
     "antd": "4.2.4",
     "axios": "0.19.1",
+    "axios-retry": "3.1.9",
     "bootstrap": "4.3.1",
     "ckeditors": "file:vendor/ckeditor5",
     "i18next": "19.4.0",

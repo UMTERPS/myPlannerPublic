@@ -1,6 +1,6 @@
 {
   "name": "MyPlanner",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "A simple local planner, with which you may easily log your daily work.",
   "main": "app.js",
   "keywords": ["productivity"],

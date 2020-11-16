@@ -1,8 +1,11 @@
-import { app, BrowserWindow } from 'electron';
-import path from 'path';
-import registerIpcListeners from './electron/services/IpcMainService';
-import layoutConstants from './constants/LayoutConstants';
+import { configCatSDK } from './config/index';
+import { app } from 'electron';
+import { registerIpcListeners } from './electron/services';
 import Logger from './electron/logger';
+import { Updater } from './electron/services';
+import { BrowserWindowsManager } from './electron/managers';
+import { isDev } from './electron/utils';
+import * as configcat from 'configcat-node';
 
 const _USER_HOME_DIRECTORY = require('os').homedir();
 const _SAVE_AFTER_PUSH = true;
@@ -13,7 +16,8 @@ const _DB_PATHS = {
   darwin: '/Library/Application Support/MyPlanner',
   linux: 'MyPlanner'
 };
-const isDev = process.env.NODE_ENV !== 'production';
+
+const _MAIN_WINDOW_ = 'main';
 
 const logger = Logger.getLogger();
 logger.info('**************** Application Start ********************');
@@ -26,55 +30,48 @@ registerIpcListeners({
   separator: _SEPARATOR
 });
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let win;
+const configCatClient = configcat.createClientWithManualPoll(configCatSDK, {
+  logger
+});
 
-function createWindow() {
-  logger.info('Creating window');
-  // Creating the browser window.
-  win = new BrowserWindow({
-    minHeight: layoutConstants.AppMinHeight,
-    minWidth: layoutConstants.AppMinWidth,
-    height: layoutConstants.AppDefaultHeight,
-    width: layoutConstants.AppDefaultWidth,
-    webPreferences: {
-      nodeIntegration: true
+const run = () => {
+  configCatClient.forceRefreshAsync().then(async () => {
+    const enabled = await configCatClient.getValueAsync(
+      'UPDATER_ENABLED',
+      false
+    );
+
+    if (enabled) {
+      const updater = new Updater();
+      updater.init().then(() => {
+        // This method will be called when Electron has finished
+        // initialization and is ready to create browser windows.
+        // Some APIs can only be used after this event occurs.
+
+        if (updater.needUpdate()) {
+          updater.updateApp();
+        }
+
+        BrowserWindowsManager.createNewWindow(_MAIN_WINDOW_);
+
+        // Try to download potential remote update package
+        if (updater.hasRemoteUpdate()) {
+          updater.downloadPatch();
+        }
+      });
+    } else {
+      BrowserWindowsManager.createNewWindow(_MAIN_WINDOW_);
     }
   });
+};
 
-  // load index html
-  win.loadURL(
-    'file://' + path.resolve(app.getAppPath(), 'build', 'index.html')
-  );
-
-  win.on('reload', event => {
-    event.preventDefault();
-    return;
-  });
-
-  // Open the DevTools.
-  // win.webContents.openDevTools();
-
-  // Emitted when the window is closed.
-  win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    logger.info('--------------------- Application Stop ---------------------');
-    win = null;
-  });
-}
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', run);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
+  logger.info('--------------------- Application Stop ---------------------');
   if (process.platform !== 'darwin') {
     app.quit();
   }
@@ -83,7 +80,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (win === null) {
-    createWindow();
+  if (!BrowserWindowsManager.getWindow(_MAIN_WINDOW_)) {
+    BrowserWindowsManager.createNewWindow(_MAIN_WINDOW_);
   }
 });

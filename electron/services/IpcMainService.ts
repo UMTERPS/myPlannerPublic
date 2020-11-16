@@ -1,7 +1,6 @@
+import { DataStoreManager } from '../managers';
 import { ipcMain } from 'electron';
 import ipcConstants from '../../constants/IPCContants';
-import { JsonDB } from 'node-json-db';
-import { Config } from 'node-json-db/dist/lib/JsonDBConfig';
 import path from 'path';
 
 export type ListenerConfig = {
@@ -16,25 +15,27 @@ const registerIpcListeners = (config: ListenerConfig): void => {
   // for personal data;
   // should be encrypted when that functionality is ready
   // should be able to be imported/exported
-  const dataDB = new JsonDB(
-    new Config(
-      path.join(DBPath, 'MyPlanner'),
+  const dataDB = DataStoreManager.createDataStore(
+    'MyPlanner',
+    path.join(DBPath, 'MyPlanner'),
+    {
       saveAfterPush,
       humanReadable,
       separator
-    )
+    }
   );
 
   // for settings/preferences;
   // don't have to be encrypted
   // optional to be imported/exported
-  const prefDB = new JsonDB(
-    new Config(
-      path.join(DBPath, 'Settings'),
+  const prefDB = DataStoreManager.createDataStore(
+    'Settings',
+    path.join(DBPath, 'Settings'),
+    {
       saveAfterPush,
       humanReadable,
       separator
-    )
+    }
   );
 
   ipcMain.on(ipcConstants.UPDATE_CONTENT, (event, _token, key, value) => {
@@ -113,4 +114,4 @@ const registerIpcListeners = (config: ListenerConfig): void => {
   });
 };
 
-export default registerIpcListeners;
+export { registerIpcListeners };

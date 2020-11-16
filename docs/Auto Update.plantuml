@@ -1,0 +1,30 @@
+@startuml AutoUpdate
+
+start
+if (update package exists in temp folder) then (yes)
+    : 1. Replace current app.asar with the new one
+     2. Update current application version;
+    : Run data migration job if there is any;
+else (no)
+endif
+    : 1. Start main application
+     2. Start syncing with remote;
+if (Remote has new Version?) then (yes)
+    if (Major update?) then (yes)
+        : Prompt the user to go to the 
+         link to download the dmg file;
+    else (no)
+        : 1. Clean up any existing temp directory.
+         2. Start downloading update package
+         3. Mark updae package as done when 
+             download is successful;
+        if (Minor update?) then (yes)
+            : Prompt the user to reload the application;
+        else (no)
+        endif
+    endif
+else (no)
+endif
+stop
+
+@enduml
