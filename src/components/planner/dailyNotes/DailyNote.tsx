@@ -42,6 +42,13 @@ const DailyNote = ({ openModalEditor, uid, date }: IDailyNoteProps) => {
       });
       if (isEditable) {
         editor.editing.view.focus();
+      } else {
+        setTimeout(() => {
+          const checkItems = editor.sourceElement.querySelectorAll('.todo-list__label');
+          checkItems.forEach(element => {
+            element.querySelector('input').disabled = true;
+          });
+        });
       }
     }
   });
@@ -70,7 +77,17 @@ const DailyNote = ({ openModalEditor, uid, date }: IDailyNoteProps) => {
         value: editor.getData()
       })
     );
-    lockContent();
+    /**
+     * ckeditor triggers blur event when click on checkbox,
+     * so here we need to confirm if the editor element is really
+     * blurred; we also need to delay the lock to prevent conflict with
+     * editor's render process.
+     */
+    setTimeout(() => {
+      if (editor.sourceElement.classList.contains('ck-blurred')) {
+        lockContent();
+      }
+    }, 150);
   };
 
   const isToday = (): boolean => {

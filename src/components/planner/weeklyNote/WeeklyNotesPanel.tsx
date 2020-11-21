@@ -38,6 +38,13 @@ const WeeklyNotesPanel = () => {
 
       if (isEditable) {
         editor.editing.view.focus();
+      } else {
+        setTimeout(() => {
+          const checkItems = editor.sourceElement.nextElementSibling.querySelectorAll('.todo-list__label');
+          checkItems.forEach(element => {
+            element.querySelector('input').disabled = true;
+          });
+        });
       }
     }
   });
@@ -60,7 +67,12 @@ const WeeklyNotesPanel = () => {
         value: editor.getData()
       })
     );
-    lockContent();
+    setTimeout(() => {
+      const contentElement = editor.sourceElement.nextElementSibling.querySelector('.ck-editor__editable');
+      if (contentElement.classList.contains('ck-blurred')) {
+        lockContent();
+      }
+    }, 150);
   };
 
   const getStyle = () => {

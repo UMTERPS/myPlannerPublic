@@ -11,6 +11,7 @@ import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
 import List from '@ckeditor/ckeditor5-list/src/list.js';
+import TodoList from '@ckeditor/ckeditor5-list/src/todolist.js';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment.js';
 import FontSize from '@ckeditor/ckeditor5-font/src/fontsize.js';
@@ -33,6 +34,7 @@ EditorClassicBuild.builtinPlugins = [
   Heading,
   Indent,
   List,
+  TodoList,
   PasteFromOffice,
   Alignment,
   FontSize,
@@ -64,6 +66,7 @@ EditorClassicBuild.defaultConfig = {
       '|',
       'bulletedList',
       'numberedList',
+      'todoList',
       'alignment',
       'indent',
       'outdent',
@@ -84,6 +87,7 @@ EditorInlineBuild.builtinPlugins = [
   Heading,
   Indent,
   List,
+  TodoList,
   PasteFromOffice,
   Alignment,
   FontSize,
@@ -116,6 +120,7 @@ EditorInlineBuild.defaultConfig = {
       '|',
       'bulletedList',
       'numberedList',
+      'todoList',
       'alignment',
       'indent',
       'outdent',
