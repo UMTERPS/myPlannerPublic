@@ -6,6 +6,9 @@ module.exports = {
 @<<themeName>>-border-color: <<border-color>>;
 @<<themeName>>-highlight: <<highlight>>;
 @<<themeName>>-highlight-red: <<highlight-red>>;
+@<<themeName>>-checkbox-color: <<checkbox-color>>;
+@<<themeName>>-checkbox-background: <<checkbox-background>>;
+@<<themeName>>-checkbox-border: <<checkbox-border>>;
 
 `,
   styleSheetTemplate: `
@@ -53,6 +56,17 @@ module.exports = {
         background-color: @<<themeName>>-background;
       }
     }
+    .ck-content .todo-list .todo-list__label {
+      > input[checked]{
+        &::before {
+          background: @<<themeName>>-checkbox-background;
+          border-color: @<<themeName>>-checkbox-border;
+        }
+        &::after {
+          border-color: @<<themeName>>-checkbox-color;
+        }
+      }
+    }
   }
 
   .week-note-container {
@@ -63,6 +77,17 @@ module.exports = {
       > .ck-editor__main
       > div.ck-editor__editable_inline.ck-read-only {
       background-color: @<<themeName>>-background;
+    }
+    .ck-content .todo-list .todo-list__label {
+      > input[checked]{
+        &::before {
+          background: @<<themeName>>-checkbox-background;
+          border-color: @<<themeName>>-checkbox-border;
+        }
+        &::after {
+          border-color: @<<themeName>>-checkbox-color;
+        }
+      }
     }
   }
 }

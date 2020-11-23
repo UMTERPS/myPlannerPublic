@@ -1,11 +1,14 @@
 {
   "theme": "default",
   "values": {
-    "background": "#aaaaaa",
-    "edit-bacdground": "#dddddd",
-    "color": "#000000",
-    "border-color": "#999999",
-    "highlight": "#888888",
-    "highlight-red": "#b41616"
+    "background": "#aaa",
+    "edit-bacdground": "#ddd",
+    "color": "#000",
+    "border-color": "#999",
+    "highlight": "#888",
+    "highlight-red": "#b41616",
+    "checkbox-color": "#eee",
+    "checkbox-background": "#555",
+    "checkbox-border": "#666"
   }
 }

@@ -1,10 +1,13 @@
 
-@default-background: #aaaaaa;
-@default-edit-bacdground: #dddddd;
-@default-color: #000000;
-@default-border-color: #999999;
-@default-highlight: #888888;
+@default-background: #aaa;
+@default-edit-bacdground: #ddd;
+@default-color: #000;
+@default-border-color: #999;
+@default-highlight: #888;
 @default-highlight-red: #b41616;
+@default-checkbox-color: #eee;
+@default-checkbox-background: #555;
+@default-checkbox-border: #666;
 
 
 @light-background: #eeeeee;
@@ -13,6 +16,9 @@
 @light-border-color: #dddddd;
 @light-highlight: #cccccc;
 @light-highlight-red: #e31b1b;
+@light-checkbox-color: #333;
+@light-checkbox-background: #ddd;
+@light-checkbox-border: #666;
 
 
 .App-Container {
@@ -59,6 +65,17 @@
         background-color: @default-background;
       }
     }
+    .ck-content .todo-list .todo-list__label {
+      > input[checked]{
+        &::before {
+          background: @default-checkbox-background;
+          border-color: @default-checkbox-border;
+        }
+        &::after {
+          border-color: @default-checkbox-color;
+        }
+      }
+    }
   }
 
   .week-note-container {
@@ -69,6 +86,17 @@
       > .ck-editor__main
       > div.ck-editor__editable_inline.ck-read-only {
       background-color: @default-background;
+    }
+    .ck-content .todo-list .todo-list__label {
+      > input[checked]{
+        &::before {
+          background: @default-checkbox-background;
+          border-color: @default-checkbox-border;
+        }
+        &::after {
+          border-color: @default-checkbox-color;
+        }
+      }
     }
   }
 }
@@ -118,6 +146,17 @@
         background-color: @light-background;
       }
     }
+    .ck-content .todo-list .todo-list__label {
+      > input[checked]{
+        &::before {
+          background: @light-checkbox-background;
+          border-color: @light-checkbox-border;
+        }
+        &::after {
+          border-color: @light-checkbox-color;
+        }
+      }
+    }
   }
 
   .week-note-container {
@@ -128,6 +167,17 @@
       > .ck-editor__main
       > div.ck-editor__editable_inline.ck-read-only {
       background-color: @light-background;
+    }
+    .ck-content .todo-list .todo-list__label {
+      > input[checked]{
+        &::before {
+          background: @light-checkbox-background;
+          border-color: @light-checkbox-border;
+        }
+        &::after {
+          border-color: @light-checkbox-color;
+        }
+      }
     }
   }
 }

@@ -6,6 +6,9 @@
     "color": "#000000",
     "border-color": "#dddddd",
     "highlight": "#cccccc",
-    "highlight-red": "#e31b1b"
+    "highlight-red": "#e31b1b",
+    "checkbox-color": "#333",
+    "checkbox-background": "#ddd",
+    "checkbox-border": "#666"
   }
 }
